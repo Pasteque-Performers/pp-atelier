@@ -1,10 +1,8 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-const Overview = () => {
-  return (
+const Overview = () => (
    <div>Overview</div>
-  )
-};
+);
 
 export default Overview;

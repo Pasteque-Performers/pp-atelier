@@ -1,6 +1,14 @@
 {
-  "extends": "airbnb-base",
+  "extends": [
+    "airbnb-base",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react"
+  ],
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "import/extensions": ["error", "always", { "ignorePackages": true, "jsx": "always" }],
+    "no-unused-vars":"warn"
   }
 }

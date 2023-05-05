@@ -1,9 +1,7 @@
 import React from 'react';
 
-const QaSection = () => {
-  return (
+const QaSection = () => (
     <div>This is the Q&A Section</div>
-  )
-}
+);
 
 export default QaSection;

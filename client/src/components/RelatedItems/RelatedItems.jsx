@@ -1,9 +1,7 @@
 import React from 'react';
 
-const RelatedItems = () => {
-  return (
+const RelatedItems = () => (
     <div>This is related items</div>
-  )
-}
+);
 
-export default RelatedItems
+export default RelatedItems;
