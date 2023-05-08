@@ -10,7 +10,6 @@
     "react-dev": "npx webpack --watch",
     "lint": "eslint .",
     "eslint:clear": "eslint --no-cache ."
-
   },
   "repository": {
     "type": "git",
@@ -38,11 +37,15 @@
     "webpack": "^5.82.0"
   },
   "devDependencies": {
+    "css-loader": "^6.7.3",
     "eslint": "^8.39.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-react": "^7.32.2",
+    "sass": "^1.62.1",
+    "sass-loader": "^13.2.2",
+    "style-loader": "^3.3.2",
     "webpack-cli": "^5.0.2"
   }
 }
