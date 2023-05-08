@@ -5,6 +5,6 @@ const controller = require('./controllers/index.js');
 router.get('/products', controller.products.get);
 router.get('/productsquery', controller.productsQuery.get);
 
-router.get('/qa/questions', controller.questions.getAllQuestions);
-router.get('/qa/questions/answers'); // double check this
+router.get('/reviews', controller.reviews.get);
+
 module.exports = router;
