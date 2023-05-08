@@ -1,7 +1,8 @@
 import React from 'react';
+import Products from './ProductList.jsx';
 
 const RelatedItems = () => (
-<div>This is related items</div>
+<Products />
 );
 
 export default RelatedItems;
