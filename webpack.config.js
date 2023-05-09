@@ -45,6 +45,4 @@ module.exports = {
       },
     ],
   },
-  jest: jestConfig,
-  testEnvironment: 'jest-environment-jsdom',
 };
