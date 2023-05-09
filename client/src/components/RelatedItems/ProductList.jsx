@@ -3,23 +3,31 @@ import axios from 'axios';
 import CreateRelated from './CreateRelated.jsx';
 
 const Products = () => {
-  const [defaultProduct, setDefault] = useState(40344);
+  const [defaultProductID, setDefault] = useState(40344);
+  const [defaultProduct, setDefaultProduct] = useState([]);
   const defaultHandler = (e) => {
     setDefault(e);
   };
   const [list, setList] = useState([]);
   useEffect(() => {
-    console.log(defaultProduct);
+    axios({
+      url: '/classes/productsquery',
+      method: 'get',
+      params: {
+        id: defaultProductID,
+      },
+    })
+      .then((res) => { setDefaultProduct(res.data); });
     axios({
       url: '/classes/productsquery',
       method: 'get',
       params: {
         page: 'related',
-        id: defaultProduct,
+        id: defaultProductID,
       },
     })
       .then((res) => { setList(res.data); });
-  }, [defaultProduct]);
+  }, [defaultProductID]);
   return (
     <>
     {list.map((product, index) => <CreateRelated
