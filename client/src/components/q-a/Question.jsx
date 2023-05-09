@@ -1,11 +1,12 @@
 import React from 'react';
+import Answer from './Answer.jsx';
 
 const Question = ({ question }) => (
-  <div>Individual Question
-    <div>Q: {question.id}</div>
-    <div>Helpful? {question.helpfulness}</div>
+  <div>
+    <div>Q: {question.question_body}</div>
+    <div>Helpful? {question.question_helpfulness}</div>
     <button>Add an Answer</button>
-    <div></div>
+    <Answer />
   </div>
 );
 

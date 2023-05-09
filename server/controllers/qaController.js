@@ -4,8 +4,7 @@ const axios = require('axios');
 module.exports = {
   getAllQuestions: (req, res) => {
     const productId = req.params.product_id;
-    const { page } = req.query;
-    const { count } = req.query;
+    const { page, count } = req.params;
     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${productId}&page=${page}&count=${count}`, {
       headers: {
         Authorization: process.env.TOKEN,
