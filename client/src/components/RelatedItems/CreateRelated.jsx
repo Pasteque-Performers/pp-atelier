@@ -27,7 +27,7 @@ const CreateRelated = ({ id, handler, defaultProduct }) => {
         togglePopUp();
       }}>compare</button>
       {popUp && <Compare features1={list.features}
-      features2={defaultProduct.features} name1={list.name} name2={defaultProduct.name}/>}
+      features2={defaultProduct.features} name1={list.name} name2={defaultProduct.name} />}
     <div>Category: {list.category}</div>
     <div>Product Name: {list.name}</div>
     <div>Price: {list.default_price}</div>

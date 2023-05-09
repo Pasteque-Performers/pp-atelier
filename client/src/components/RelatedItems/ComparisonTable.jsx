@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ComparisonTable = ({ hasFeature1, hasFeature2, combinedFeatures, name1, name2 }) => (
-  <table>
+  <table data-testid="comparison-table">
     <tbody>
     <tr>
       <th>{name1}</th>
