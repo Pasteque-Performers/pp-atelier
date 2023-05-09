@@ -31,6 +31,13 @@ const Compare = ({features1, features2, name1, name2}) => {
       hasFeature2.push(false);
     }
   });
+  container2.forEach((item) => {
+    if (!(container1.includes(item))) {
+      hasFeature2.push(true);
+      combinedFeatures.push(item);
+      hasFeature1.push(false);
+    }
+  });
   return (
     <ComparisonTable hasFeature1={hasFeature1} hasFeature2={hasFeature2}
     combinedFeatures={combinedFeatures} name1={name1} name2={name2} />
