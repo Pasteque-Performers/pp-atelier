@@ -1,13 +1,14 @@
-require("dotenv").config();
-var path = require("path");
-var SRC_DIR = path.join(__dirname, "/client/src");
-var DIST_DIR = path.join(__dirname, "/client/dist");
+require('dotenv').config();
+const path = require('path');
+
+const SRC_DIR = path.join(__dirname, '/client/src');
+const DIST_DIR = path.join(__dirname, '/client/dist');
 
 module.exports = {
   mode: 'development',
   entry: `${SRC_DIR}/index.jsx`,
   output: {
-    filename: "bundle.js",
+    filename: 'bundle.js',
     path: DIST_DIR,
   },
   devtool: 'source-map',
@@ -17,21 +18,29 @@ module.exports = {
         test: /\.(js|jsx)?/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             presets: [
-              "@babel/preset-env",
-              "@babel/preset-react"
+              '@babel/preset-env',
+              '@babel/preset-react',
             ],
             plugins: [
-              ["@babel/plugin-transform-runtime",
+              ['@babel/plugin-transform-runtime',
                 {
-                  "regenerator": true
-                }
-              ]
-            ]
-          }
+                  regenerator: true,
+                },
+              ],
+            ],
+          },
         },
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
       },
     ],
   },
