@@ -11,24 +11,23 @@ const QaBody = ({ productId }) => {
     const count = 999;
     let questionsList = [];
 
-    const innerFunc = () => {
+    const recursiveRequest = () => {
       axios.get(`/classes/qa/questions/${productId}/${pageCount}/${count}`)
         .then((results) => {
           questionsList = [...questionsList, ...results.data];
-          console.log('Questions list values:', questionsList);
           if (results.data.length > 0) {
             pageCount += 1;
-            innerFunc();
+            recursiveRequest();
           } else {
             setQuestions(questionsList);
-            setShowQuestions(questionsList.slice(0, 4));
+            setShowQuestions(questionsList.slice(0, 2));
           }
         })
         .catch((error) => {
           console.log('Error getting questions from product', error);
         });
     };
-    innerFunc();
+    recursiveRequest();
   };
 
   const loadMoreQuestions = () => {

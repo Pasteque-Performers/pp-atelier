@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const Answer = ({ answer }) => {
   const date = new Date(answer.date);
