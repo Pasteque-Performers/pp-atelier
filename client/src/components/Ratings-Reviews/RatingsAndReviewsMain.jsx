@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
+import AddReviewModalMain from './AddReviewModal/AddReviewModalMain.jsx';
 
 const RatingsAndReviewsMain = () => (
-    <div>This is the main component for Ratings and reviews</div>
+    <div>
+
+    <AddReviewModalMain/>
+
+    </div>
 );
 
 export default RatingsAndReviewsMain;

@@ -32,6 +32,7 @@
     "nodemon": "^2.0.22",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "styled-components": "^6.0.0-rc.1",
     "supertest": "^6.3.3",
     "webpack": "^5.82.0"
   },
