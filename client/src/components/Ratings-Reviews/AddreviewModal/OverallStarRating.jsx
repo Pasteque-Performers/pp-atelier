@@ -21,7 +21,7 @@ const OverallStarRating = () => {
         filled={index <= rating}
         className={'material-symbols-outlined'}
         onClick={() => handleClick(index)}
-      >
+        data-testid="star-icon">
       star
       </StarIcon>
     ))}
