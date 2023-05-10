@@ -3,31 +3,34 @@ const axios = require('axios');
 
 module.exports = {
   getAllQuestions: (req, res) => {
-    const productId = 11;
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${productId}`, {
+    const productId = req.params.product_id;
+    const { page, count } = req.params;
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${productId}&page=${page}&count=${count}`, {
       headers: {
         Authorization: process.env.TOKEN,
       },
     })
       .then((response) => {
         console.log('Response from getting all questions:', response.data.results);
-        res.sendStatus(200);
+        res.status(200).send(response.data.results);
       })
       .catch((error) => {
-        console.log('Error getting data for all messages', error);
+        console.log('Error getting data for all messages', error.response.data);
         res.sendStatus(404);
       });
   },
   getAnswers: (req, res) => {
-    const questionId = 10;
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?question_id=${questionId}/answers`, {
+    const questionId = req.params.question_id;
+    const { page } = req.params;
+    const { count } = req.params;
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionId}/answers?page=${page}&count=${count}`, {
       headers: {
         Authorization: process.env.TOKEN,
       },
     })
       .then(((response) => {
-        console.log('Response for all answers of given question', response);
-        res.sendStatus(200);
+        console.log('Response for all answers of given question', response.data.results);
+        res.status(200).send(response.data.results);
       }))
       .catch((error) => {
         console.log('Error getting answers for question', error);
