@@ -7,7 +7,7 @@ router.get('/productsquery', controller.productsQuery.get);
 
 router.get('/reviews', controller.reviews.get);
 
-router.get('/qa/questions/:product_id/:page/:count', controller.questions.getAllQuestions);
-router.get('/qa/questions/:question_id/answers/:page/:count', controller.questions.getAnswers);
+router.get('/qa/questions/', controller.questions.getAllQuestions);
+router.get('/qa/questions/:question_id/answers', controller.questions.getAnswers);
 
 module.exports = router;

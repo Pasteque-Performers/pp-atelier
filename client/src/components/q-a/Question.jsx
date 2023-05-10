@@ -12,7 +12,12 @@ const Question = ({ question }) => {
     let answersList = [];
 
     const recursiveRequest = () => {
-      axios.get(`/classes/qa/questions/${question.question_id}/answers/${pageCount}/${count}`)
+      axios.get(`/classes/qa/questions/${question.question_id}/answers/`, {
+        params: {
+          page: pageCount,
+          count,
+        },
+      })
         .then((results) => {
           answersList = [...answersList, ...results.data];
           if (results.data.length > 0) {
