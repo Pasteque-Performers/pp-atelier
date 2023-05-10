@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Answer from './Answer.jsx';
 
-const Question = ({ question }) => {
+const Question = ({ question, getQuestions }) => {
   const [answers, setAnswers] = useState([]);
   const [showAnswers, setShowAnswers] = useState([]);
+  const [clicked, setClicked] = useState(false);
 
   const getAnswers = (page) => {
     let pageCount = page;
@@ -39,6 +40,10 @@ const Question = ({ question }) => {
     setShowAnswers(answers);
   };
 
+  const updateQuestionHelpfulness = () => {
+
+  };
+
   useEffect(() => {
     getAnswers(1);
   }, [question.question_id]);
@@ -46,7 +51,8 @@ const Question = ({ question }) => {
   return (
     <div>
       <div>Q: {question.question_body}</div>
-      <div>Helpful? <button>Yes({question.question_helpfulness})</button></div>
+      <div>Helpful? {!clicked ? <button onClick={updateQuestionHelpfulness}>
+        Yes({question.question_helpfulness})</button> : question.question_helpfulness}</div>
       <button>Add an Answer</button>
       <ul>
           {answers.length ? showAnswers.map((answer, i) => (

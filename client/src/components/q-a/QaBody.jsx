@@ -62,7 +62,7 @@ const QaBody = ({ productId }) => {
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {questions.length ? showQuestions.map((question, i) => (
           <li key={i}>
-            <Question question={question} />
+            <Question question={question} getQuestions={getQuestions} />
           </li>
         )) : <li>Loading Questions...</li>}
       </ul>
