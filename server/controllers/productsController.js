@@ -13,7 +13,7 @@ module.exports = {
     };
 
     return axios(options)
-      .then((data) => { res.send(data.data); })
+      .then((data) => { res.status(200).send(data.data); })
       .catch((err) => { console.error(err); });
   },
 };
