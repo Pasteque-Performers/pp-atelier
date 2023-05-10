@@ -6,6 +6,9 @@
   "plugins": [
     "react"
   ],
+  "env": {
+    "jest": true
+  },
   "rules": {
     "no-console": "off",
     "import/extensions": ["error", "always", { "ignorePackages": true, "jsx": "always" }],

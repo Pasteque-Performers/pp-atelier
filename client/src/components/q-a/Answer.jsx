@@ -8,7 +8,7 @@ const Answer = ({ answer }) => {
     <div>
       <div>A: {answer.body}</div>
       <div>By: {answer.answerer_name}, {formattedDate}</div>
-      <div>Helpful? <button>Yes({answer.helpfullness})</button></div>
+      <div>Helpful? <button>Yes({answer.helpfulness})</button></div>
       <button>Report</button>
     </div>
   );
