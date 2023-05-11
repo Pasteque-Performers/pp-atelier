@@ -12,13 +12,20 @@ const QaBody = ({ productId }) => {
     let questionsList = [];
 
     const recursiveRequest = () => {
-      axios.get(`/classes/qa/questions/${productId}/${pageCount}/${count}`)
+      axios.get('/classes/qa/questions', {
+        params: {
+          product_id: productId,
+          page: pageCount,
+          count,
+        },
+      })
         .then((results) => {
           questionsList = [...questionsList, ...results.data];
           if (results.data.length > 0) {
             pageCount += 1;
             recursiveRequest();
           } else {
+            console.log('Questions ids and bodys', questionsList[1].question_body, questionsList[1].question_id, questionsList[2].question_body, questionsList[2].question_id);
             setQuestions(questionsList);
             setShowQuestions(questionsList.slice(0, 2));
           }
@@ -34,16 +41,29 @@ const QaBody = ({ productId }) => {
     setShowQuestions(questions);
   };
 
+  const searchQuestions = (input) => {
+    if (input) {
+      const searchResult = questions.filter((question) => question.question_body
+        .toLowerCase().includes(input.toLowerCase()));
+      setShowQuestions(searchResult);
+    }
+    if (!input) {
+      setShowQuestions(questions.slice(0, 2));
+    }
+  };
+
   useEffect(() => {
     getQuestions(1);
   }, [productId]);
 
   return (
     <div>
+      <h3>Search for a Question</h3>
+      <input type="text" placeholder="Type in your question" onChange={(e) => searchQuestions(e.target.value)}/>
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {questions.length ? showQuestions.map((question, i) => (
           <li key={i}>
-            <Question question={question} />
+            <Question question={question} getQuestions={getQuestions} />
           </li>
         )) : <li>Loading Questions...</li>}
       </ul>

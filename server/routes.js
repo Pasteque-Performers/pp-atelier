@@ -9,7 +9,13 @@ router.get('/productsquery', controller.productsQuery.get);
 
 router.get('/reviews', controller.reviews.get);
 
-router.get('/qa/questions/:product_id/:page/:count', controller.questions.getAllQuestions);
-router.get('/qa/questions/:question_id/answers/:page/:count', controller.questions.getAnswers);
+router.get('/qa/questions/', controller.questions.getAllQuestions);
+router.get('/qa/questions/:question_id/answers', controller.questions.getAnswers);
+router.put('/qa/questions/:question_id/helpful', controller.questions.updateQuestionHelpfulness);
+router.put('/qa/answers/:answer_id/helpful', controller.questions.updateAnswerHelpfulness);
+router.put('/qa/answers/:answer_id/report', controller.questions.reportAnswer);
+router.put('/qa/questions/:question_id/report', controller.questions.reportQuestion);
+router.post('/qa/questions', controller.questions.addQuestion);
+router.post('/qa/questions/:question_id/answers', controller.questions.addAnswer);
 
 module.exports = router;
