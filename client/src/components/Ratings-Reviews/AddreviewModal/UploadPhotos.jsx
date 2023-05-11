@@ -1,4 +1,48 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+
+const ImagePreviewContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+`;
+
+const ImagePreview = styled.div`
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const Image = styled.img`
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+`;
+
+const ImageName = styled.div`
+  text-align: center;
+  font-size: 0.8rem;
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const FileInput = styled.input`
+  display: none;
+`;
+
+const FileInputLabel = styled.label`
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: #e0e0e0;
+  }
+`;
 
 const UploadPhotos = () => {
   const [selectedPhotos, setSelectedPhotos] = useState([]);
@@ -10,15 +54,17 @@ const UploadPhotos = () => {
 
   return (
     <div>
-      <div>Selected photos:</div>
+    <ImagePreviewContainer>
       {selectedPhotos.map((photo, index) => (
-          <div key={index}>
-            <img src={URL.createObjectURL(photo)} alt={photo.name} width='100'/>
-            <div>{photo.name}</div>
-          </div>
+        <ImagePreview key={index}>
+          <Image src={URL.createObjectURL(photo)} alt={photo.name} />
+          <ImageName>{photo.name}</ImageName>
+        </ImagePreview>
       ))}
-      <input type='file' multiple onChange={handlePhotoInputChange}/>
-    </div>
+    </ImagePreviewContainer>
+    <FileInputLabel htmlFor="photo-upload">Upload Photos</FileInputLabel>
+    <FileInput id="photo-upload" type='file' multiple onChange={handlePhotoInputChange} />
+  </div>
   );
 };
 

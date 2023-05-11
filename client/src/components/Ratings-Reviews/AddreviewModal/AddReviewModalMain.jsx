@@ -42,17 +42,39 @@ const Title = styled.h2`
     text-align: center;
 `;
 
+const ComponentTitle = styled.h3`
+  margin-top: 1.5rem;  // Adjust the top margin for more spacing between components
+  margin-bottom: 0.5rem;  // Space below the title
+  font-size: 1.2rem;  // Adjust the font size as needed
+  color: #333;  // Adjust the color as needed
+`;
+
 const AddReviewModalMain = () => (
   <ModalOverlay>
     <ModalContainer>
        <Title>Write your Review Here</Title>
+       <ComponentTitle>Overall rating (mandatory)</ComponentTitle>
        <OverallStarRating/>
+
+       <ComponentTitle>Do you recommend this product? (mandatory)</ComponentTitle>
        <DoYouRecommend/>
+
+       <ComponentTitle>Characteristics (mandatory)</ComponentTitle>
        <ProductCharacteristics/>
+
+       <ComponentTitle>Review summary</ComponentTitle>
        <ReviewSummary/>
+
+       <ComponentTitle>Review body (mandatory)</ComponentTitle>
        <ReviewBody/>
+
+       <ComponentTitle>Upload your photos</ComponentTitle>
        <UploadPhotos/>
+
+       <ComponentTitle>What is your nickname (mandatory)</ComponentTitle>
        <DisplayName/>
+
+       <ComponentTitle>Your email (mandatory)</ComponentTitle>
        <ReviewEmail/>
     </ModalContainer>
   </ModalOverlay>
