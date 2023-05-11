@@ -20,6 +20,6 @@ const UploadPhotos = () => {
       <input type='file' multiple onChange={handlePhotoInputChange}/>
     </div>
   );
-}
+};
 
 export default UploadPhotos;

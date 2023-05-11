@@ -1,4 +1,33 @@
 import React, { useState } from "react";
+import styled from 'styled-components';
+
+const CharacteristicsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+`;
+
+const CharacteristicSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+`;
+
+const CharacteristicLabel = styled.label`
+  font-size: 16px;
+  margin-bottom: 5px;
+`;
+
+const RadioContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 5px;
+`;
+
+const RadioButton = styled.input.attrs({ type: 'radio' })`
+  margin-right: 10px;
+`;
 
 const ProductCharacteristics = () => {
   const [characteristics, setCharacteristics] = useState({
@@ -60,116 +89,105 @@ const ProductCharacteristics = () => {
   };
 
   return (
-    <div>
-      <div>{characteristics.size ? `Selected: ${characteristics.size} - ${meanings.size[characteristics.size]}` : 'None selected'}</div>
-      <div>
-        <label> Size:
-          <input type='radio' name='size' value='1' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='size' value='2' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='size' value='3' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='size' value='4' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='size' value='5' onChange={handleRadioChange} />
-        </label>
-      </div>
-      <div>{characteristics.width ? `Selected: ${characteristics.width} - ${meanings.width[characteristics.width]}` : 'None selected'}</div>
-      <div>
-        <label> Width:
-          <input type='radio' name='width' value='1' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='width' value='2' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='width' value='3' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='width' value='4' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='width' value='5' onChange={handleRadioChange} />
-        </label>
-      </div>
-      <div>{characteristics.comfort ? `Selected: ${characteristics.comfort} - ${meanings.comfort[characteristics.comfort]}` : 'None selected'}</div>
-      <div>
-        <label> Comfort:
-          <input type='radio' name='comfort' value='1' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='comfort' value='2' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='comfort' value='3' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='comfort' value='4' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='comfort' value='5' onChange={handleRadioChange} />
-        </label>
-      </div>
-      <div>{characteristics.quality ? `Selected: ${characteristics.quality} - ${meanings.quality[characteristics.quality]}` : 'None selected'}</div>
-      <div>
-        <label> Quality:
-          <input type='radio' name='quality' value='1' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='quality' value='2' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='quality' value='3' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='quality' value='4' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='quality' value='5' onChange={handleRadioChange} />
-        </label>
-      </div>
-      <div>{characteristics.length ? `Selected: ${characteristics.length} - ${meanings.length[characteristics.length]}` : 'None selected'}</div>
-      <div>
-        <label> Length:
-          <input type='radio' name='length' value='1' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='length' value='2' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='length' value='3' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='length' value='4' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='length' value='5' onChange={handleRadioChange} />
-        </label>
-      </div>
-      <div>{characteristics.fit ? `Selected: ${characteristics.fit} - ${meanings.fit[characteristics.fit]}` : 'None selected'}</div>
-      <div>
-        <label> Fit:
-          <input type='radio' name='fit' value='1' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='fit' value='2' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='fit' value='3' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='fit' value='4' onChange={handleRadioChange} />
-        </label>
-        <label>
-          <input type='radio' name='fit' value='5' onChange={handleRadioChange} />
-        </label>
-      </div>
-    </div>
+    <CharacteristicsContainer>
+      <CharacteristicSection>
+        <CharacteristicLabel>Size</CharacteristicLabel>
+        <RadioContainer>
+          {Object.entries(meanings.size).map(([value, meaning]) => (
+            <div key={value}>
+              <RadioButton
+              name='size'
+              value={value}
+              onChange={handleRadioChange}/>
+            </div>
+          ))}
+        </RadioContainer>
+        <div>
+          {characteristics.size ? `Selected: ${characteristics.size} - ${meanings.size[characteristics.size]}` : 'None Selected'}
+        </div>
+      </CharacteristicSection>
+
+      <CharacteristicSection>
+        <CharacteristicLabel>Width</CharacteristicLabel>
+        <RadioContainer>
+          {Object.entries(meanings.width).map(([value, meaning]) => (
+            <div key={value}>
+              <RadioButton
+              name='width'
+              value={value}
+              onChange={handleRadioChange}/>
+            </div>
+          ))}
+        </RadioContainer>
+        <div>
+        {characteristics.width ? `Selected: ${characteristics.width} - ${meanings.width[characteristics.width]}` : 'None Selected'}
+        </div>
+      </CharacteristicSection>
+      <CharacteristicSection>
+        <CharacteristicLabel>Comfort</CharacteristicLabel>
+        <RadioContainer>
+          {Object.entries(meanings.comfort).map(([value, meaning]) => (
+            <div key={value}>
+              <RadioButton
+              name='comfort'
+              value={value}
+              onChange={handleRadioChange}/>
+            </div>
+          ))}
+        </RadioContainer>
+        <div>
+          {characteristics.comfort ? `Selected: ${characteristics.comfort} - ${meanings.comfort[characteristics.comfort]}` : 'None Selected'}
+        </div>
+      </CharacteristicSection>
+      <CharacteristicSection>
+        <CharacteristicLabel>Quality</CharacteristicLabel>
+        <RadioContainer>
+          {Object.entries(meanings.quality).map(([value, meaning]) => (
+            <div key={value}>
+              <RadioButton
+              name='quality'
+              value={value}
+              onChange={handleRadioChange}/>
+            </div>
+          ))}
+        </RadioContainer>
+        <div>
+          {characteristics.quality ? `Selected: ${characteristics.quality} - ${meanings.quality[characteristics.quality]}` : 'None Selected'}
+        </div>
+      </CharacteristicSection>
+      <CharacteristicSection>
+        <CharacteristicLabel>Length</CharacteristicLabel>
+        <RadioContainer>
+          {Object.entries(meanings.length).map(([value, meaning]) => (
+            <div key={value}>
+              <RadioButton
+              name='length'
+              value={value}
+              onChange={handleRadioChange}/>
+            </div>
+          ))}
+        </RadioContainer>
+        <div>
+          {characteristics.length ? `Selected: ${characteristics.length} - ${meanings.length[characteristics.length]}` : 'None Selected'}
+        </div>
+      </CharacteristicSection>
+      <CharacteristicSection>
+        <CharacteristicLabel>Fit</CharacteristicLabel>
+        <RadioContainer>
+          {Object.entries(meanings.fit).map(([value, meaning]) => (
+            <div key={value}>
+              <RadioButton
+              name='fit'
+              value={value}
+              onChange={handleRadioChange}/>
+            </div>
+          ))}
+        </RadioContainer>
+        <div>
+          {characteristics.fit ? `Selected: ${characteristics.fit} - ${meanings.fit[characteristics.fit]}` : 'None Selected'}
+        </div>
+      </CharacteristicSection>
+    </CharacteristicsContainer>
   );
 };
 
