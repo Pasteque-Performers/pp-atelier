@@ -44,6 +44,11 @@ const Question = ({ question, getQuestions }) => {
     setShowAnswers(answers);
   };
 
+  const collaposeAnswersList = () => {
+    setLoadedAnswers(false);
+    setShowAnswers(answers.slice(0, 4));
+  };
+
   const updateQuestionHelpfulness = () => {
     const questionId = question.question_id;
     axios.put(`/classes/qa/questions/${questionId}/helpful`, null)
@@ -55,9 +60,16 @@ const Question = ({ question, getQuestions }) => {
       .catch((error) => console.log('Error updating question helpfulness:', error));
   };
 
-  const collaposeAnswersList = () => {
-    setLoadedAnswers(false);
-    setShowAnswers(answers.slice(0, 4));
+  const reportQuestion = () => {
+    const questionId = question.question_id;
+    axios.put(`/classes/qa/questions/${questionId}/report`, null)
+      .then(() => {
+        console.log('Successfully reported question');
+        getQuestions(1);
+      })
+      .catch((error) => {
+        console.log('Error reporting question', error);
+      });
   };
 
   useEffect(() => {
@@ -70,7 +82,9 @@ const Question = ({ question, getQuestions }) => {
       <div>Helpful? {!helpfulQuestions.includes(question.question_id)
         ? <button onClick={updateQuestionHelpfulness}>
         Yes({question.question_helpfulness})</button>
-        : <span>Yes({question.question_helpfulness})</span>}</div>
+        : <span>Yes({question.question_helpfulness})</span>}
+        <button onClick={reportQuestion}>Report Question</button>
+        </div>
       <button>Add an Answer</button>
       <ul>
           {answers.length ? showAnswers.map((answer, i) => (

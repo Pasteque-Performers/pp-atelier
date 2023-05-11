@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 const Answer = ({
@@ -18,6 +18,18 @@ const Answer = ({
       .catch((error) => console.log('Error updating answer helpfulness', error));
   };
 
+  const reportAnswer = () => {
+    const answerId = answer.answer_id;
+    axios.put(`/classes/qa/answers/${answerId}/report`, null)
+      .then(() => {
+        console.log('Sucessfully reported answer');
+        getAnswers(1);
+      })
+      .catch((error) => {
+        console.log('Error reporting answer', error);
+      });
+  };
+
   return (
     <div>
       <div>A: {answer.body}</div>
@@ -31,7 +43,7 @@ const Answer = ({
         ? <button onClick={setAnswerHelpfulness}>Yes({answer.helpfulness})</button>
         : <span>Yes({answer.helpfulness})</span>}
       </div>
-      <button>Report</button>
+      <button onClick={reportAnswer}>Report</button>
     </div>
   );
 };

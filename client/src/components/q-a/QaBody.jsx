@@ -26,6 +26,9 @@ const QaBody = ({ productId }) => {
           if (results.data.length > 0) {
             pageCount += 1;
             recursiveRequest();
+          } else if (loadedQuestions) {
+            setQuestions(questionsList);
+            setShowQuestions(questionsList);
           } else {
             setQuestions(questionsList);
             setShowQuestions(questionsList.slice(0, 2));
@@ -72,7 +75,8 @@ const QaBody = ({ productId }) => {
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {questions.length ? showQuestions.map((question, i) => (
           <li key={i}>
-            <Question question={question} getQuestions={getQuestions} />
+            <Question question={question} getQuestions={getQuestions}
+            setLoadedQuestions={setLoadedQuestions} loadedQuestions={loadedQuestions}/>
           </li>
         )) : <li>Loading Questions...</li>}
       </ul>
