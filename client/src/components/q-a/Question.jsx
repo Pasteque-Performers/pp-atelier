@@ -5,7 +5,9 @@ import Answer from './Answer.jsx';
 const Question = ({ question, getQuestions }) => {
   const [answers, setAnswers] = useState([]);
   const [showAnswers, setShowAnswers] = useState([]);
-  const [clicked, setClicked] = useState(false);
+  const [loadedAnswers, setLoadedAnswers] = useState(false);
+  // Find a way to store this state in the cookie for user sessions if needed
+  const [helpfulQuestions, setHelpfulQuestions] = useState([]);
 
   const getAnswers = (page) => {
     let pageCount = page;
@@ -37,6 +39,7 @@ const Question = ({ question, getQuestions }) => {
   };
 
   const loadMoreAnswers = () => {
+    setLoadedAnswers(true);
     setShowAnswers(answers);
   };
 
@@ -44,10 +47,16 @@ const Question = ({ question, getQuestions }) => {
     const questionId = question.question_id;
     axios.put(`/classes/qa/questions/${questionId}/helpful`, null)
       .then(() => {
+        setHelpfulQuestions([...helpfulQuestions, questionId]);
         console.log('Sucessfully updated question helpfulness');
         getQuestions(1);
       })
       .catch((error) => console.log('Error updating question helpfulness:', error));
+  };
+
+  const collaposeAnswersList = () => {
+    setLoadedAnswers(false);
+    setShowAnswers(answers.slice(0, 4));
   };
 
   useEffect(() => {
@@ -57,8 +66,10 @@ const Question = ({ question, getQuestions }) => {
   return (
     <div>
       <div>Q: {question.question_body}</div>
-      <div>Helpful? {!clicked ? <button onClick={updateQuestionHelpfulness}>
-        Yes({question.question_helpfulness})</button> : question.question_helpfulness}</div>
+      <div>Helpful? {!helpfulQuestions.includes(question.question_id)
+        ? <button onClick={updateQuestionHelpfulness}>
+        Yes({question.question_helpfulness})</button>
+        : <span>Yes({question.question_helpfulness})</span>}</div>
       <button>Add an Answer</button>
       <ul>
           {answers.length ? showAnswers.map((answer, i) => (
@@ -67,8 +78,12 @@ const Question = ({ question, getQuestions }) => {
             </li>
           )) : <li>No answers yet</li>}
         </ul>
-        {showAnswers.length !== answers.length ? <button onClick={loadMoreAnswers}>
-          Load More Answers</button> : null}
+        {showAnswers.length < answers.length && !loadedAnswers && (
+        <button onClick={loadMoreAnswers}>Load More Answers</button>
+        )}
+        {loadedAnswers && (
+          <button onClick={collaposeAnswersList}>Collapse Answers List</button>
+        )}
     </div>
   );
 };

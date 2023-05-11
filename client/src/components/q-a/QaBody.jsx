@@ -6,6 +6,7 @@ const QaBody = ({ productId }) => {
   const [questions, setQuestions] = useState([]);
   const [showQuestions, setShowQuestions] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [loadedQuestions, setLoadedQuestions] = useState(false);
 
   const getQuestions = (page) => {
     let pageCount = page;
@@ -38,6 +39,7 @@ const QaBody = ({ productId }) => {
   };
 
   const loadMoreQuestions = () => {
+    setLoadedQuestions(true);
     setShowQuestions(questions);
   };
 
@@ -52,6 +54,11 @@ const QaBody = ({ productId }) => {
       setSearching(false);
       setShowQuestions(questions.slice(0, 2));
     }
+  };
+
+  const collapseQuestionsList = () => {
+    setLoadedQuestions(false);
+    setShowQuestions(questions.slice(0, 2));
   };
 
   useEffect(() => {
@@ -69,8 +76,11 @@ const QaBody = ({ productId }) => {
           </li>
         )) : <li>Loading Questions...</li>}
       </ul>
-      {showQuestions.length !== questions.length && searching === false
-        ? <button onClick={loadMoreQuestions}>Load More Questions</button> : null}
+      {showQuestions.length < questions.length && searching === false && loadedQuestions === false
+      && (
+      <button onClick={loadMoreQuestions}>Load More Questions</button>
+      )}
+      {loadedQuestions && (<button onClick={collapseQuestionsList}>Collapse Questions</button>)}
       <button>Ask a Question</button>
     </div>
   );
