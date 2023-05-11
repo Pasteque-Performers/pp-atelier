@@ -5,10 +5,11 @@ import Question from './Question.jsx';
 const QaBody = ({ productId }) => {
   const [questions, setQuestions] = useState([]);
   const [showQuestions, setShowQuestions] = useState([]);
+  const [searching, setSearching] = useState(false);
 
   const getQuestions = (page) => {
     let pageCount = page;
-    const count = 999;
+    const count = 100;
     let questionsList = [];
 
     const recursiveRequest = () => {
@@ -42,11 +43,13 @@ const QaBody = ({ productId }) => {
 
   const searchQuestions = (input) => {
     if (input) {
+      setSearching(true);
       const searchResult = questions.filter((question) => question.question_body
         .toLowerCase().includes(input.toLowerCase()));
       setShowQuestions(searchResult);
     }
     if (!input) {
+      setSearching(false);
       setShowQuestions(questions.slice(0, 2));
     }
   };
@@ -66,8 +69,8 @@ const QaBody = ({ productId }) => {
           </li>
         )) : <li>Loading Questions...</li>}
       </ul>
-      {showQuestions.length !== questions.length ? <button onClick={loadMoreQuestions}>
-        Load More Questions</button> : null}
+      {showQuestions.length !== questions.length && searching === false
+        ? <button onClick={loadMoreQuestions}>Load More Questions</button> : null}
       <button>Ask a Question</button>
     </div>
   );

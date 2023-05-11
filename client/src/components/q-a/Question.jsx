@@ -9,7 +9,7 @@ const Question = ({ question, getQuestions }) => {
 
   const getAnswers = (page) => {
     let pageCount = page;
-    const count = 999;
+    const count = 100;
     let answersList = [];
 
     const recursiveRequest = () => {
