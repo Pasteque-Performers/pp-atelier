@@ -27,7 +27,6 @@ const Question = ({ question, getQuestions }) => {
           } else {
             setAnswers(answersList);
             setShowAnswers(answersList.slice(0, 4));
-            console.log('Answers data and id', answersList[1], answersList[2]);
           }
         })
         .catch((error) => {

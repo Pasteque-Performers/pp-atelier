@@ -25,7 +25,6 @@ const QaBody = ({ productId }) => {
             pageCount += 1;
             recursiveRequest();
           } else {
-            console.log('Questions ids and bodys', questionsList[1].question_body, questionsList[1].question_id, questionsList[2].question_body, questionsList[2].question_id);
             setQuestions(questionsList);
             setShowQuestions(questionsList.slice(0, 2));
           }
