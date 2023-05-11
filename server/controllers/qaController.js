@@ -99,9 +99,50 @@ module.exports = {
       });
   },
   addQuestion: (req, res) => {
+    const { body, name, email } = req.body;
+    const productId = req.body.product_id;
 
+    axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions', {
+      body,
+      name,
+      email,
+      product_id: productId,
+    }, {
+      headers: {
+        Authorization: process.env.TOKEN,
+      },
+    })
+      .then(() => {
+        console.log('Successfully posted new question');
+        res.sendStatus(201);
+      })
+      .catch((error) => {
+        console.log('Error posting new question', error);
+        res.sendStatus(404);
+      });
   },
   addAnswer: (req, res) => {
-
+    const {
+      body, name, email, photos,
+    } = req.body;
+    const questionId = req.params.question_id;
+    axios.post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionId}/answers`, {
+      body,
+      name,
+      email,
+      photos,
+    }, {
+      headers: {
+        Authorization: process.env.TOKEN,
+      },
+    })
+      .then(() => {
+        console.log('Successfully posted new answer');
+        res.sendStatus(201);
+      })
+      .catch((error) => {
+        console.log('Error posting new answer', error);
+        res.sendStatus(404);
+      });
   },
 };
