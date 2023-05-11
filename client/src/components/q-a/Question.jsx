@@ -41,7 +41,13 @@ const Question = ({ question, getQuestions }) => {
   };
 
   const updateQuestionHelpfulness = () => {
-
+    const questionId = question.question_id;
+    axios.put(`/classes/qa/questions/${questionId}/helpful`, null)
+      .then(() => {
+        console.log('Sucessfully updated question helpfulness');
+        getQuestions(1);
+      })
+      .catch((error) => console.log('Error updating question helpfulness:', error));
   };
 
   useEffect(() => {
