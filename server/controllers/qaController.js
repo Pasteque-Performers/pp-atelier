@@ -67,10 +67,36 @@ module.exports = {
       });
   },
   reportAnswer: (req, res) => {
-
+    const answerId = req.params.answer_id;
+    axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answerId}/report`, null, {
+      headers: {
+        Authorization: process.env.TOKEN,
+      },
+    })
+      .then(() => {
+        console.log('Succesfully reported answer');
+        res.sendStatus(204);
+      })
+      .catch((error) => {
+        console.log('Error reporting answer', error);
+        res.sendStatus(404);
+      });
   },
   reportQuestion: (req, res) => {
-
+    const questionId = req.params.question_id;
+    axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionId}/report`, null, {
+      headers: {
+        Authorization: process.env.TOKEN,
+      },
+    })
+      .then(() => {
+        console.log('Succesfully reported question');
+        res.sendStatus(204);
+      })
+      .catch((error) => {
+        console.log('Error reporting question', error);
+        res.sendStatus(404);
+      });
   },
   addQuestion: (req, res) => {
 
