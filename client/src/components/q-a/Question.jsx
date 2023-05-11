@@ -6,6 +6,7 @@ const Question = ({ question, getQuestions }) => {
   const [answers, setAnswers] = useState([]);
   const [showAnswers, setShowAnswers] = useState([]);
   const [loadedAnswers, setLoadedAnswers] = useState(false);
+  const [helpfulAnswers, setHelpfulAnswers] = useState([]);
   // Find a way to store this state in the cookie for user sessions if needed
   const [helpfulQuestions, setHelpfulQuestions] = useState([]);
 
@@ -74,7 +75,8 @@ const Question = ({ question, getQuestions }) => {
       <ul>
           {answers.length ? showAnswers.map((answer, i) => (
             <li key={i}>
-              <Answer answer={answer}/>
+              <Answer answer={answer} getAnswers={getAnswers}
+              helpfulAnswers={helpfulAnswers} setHelpfulAnswers={setHelpfulAnswers}/>
             </li>
           )) : <li>No answers yet</li>}
         </ul>
