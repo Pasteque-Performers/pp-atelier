@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Information from './Information.jsx';
-import StaticStarRating from './StaticStarRating.jsx'
+import StaticStarRating from './StaticStarRating.jsx';
 
 const Overview = () => {
   const [product, setProduct] = useState(null);
