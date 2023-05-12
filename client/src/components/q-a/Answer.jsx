@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ImageModal from './ImageModal.jsx';
 
 const Answer = ({
   answer, getAnswers, helpfulAnswers, setHelpfulAnswers,
 }) => {
   const date = new Date(answer.date);
   const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).format(date);
+  const [showFullImg, setShowFullImg] = useState(false);
+  const [image, setImage] = useState('');
 
   const setAnswerHelpfulness = () => {
     const answerId = answer.answer_id;
@@ -30,10 +33,23 @@ const Answer = ({
       });
   };
 
+  useEffect(() => {
+    if (showFullImg) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [showFullImg]);
+
   return (
     <div>
+      {showFullImg && <ImageModal image={image} setShowFullImg={setShowFullImg}/> }
       <div>A: {answer.body}</div>
       { answer.photos.length ? answer.photos.map((photo, i) => <img
+      onClick={() => {
+        setShowFullImg(!showFullImg);
+        setImage(photo.url);
+      }}
       src={photo.url}
       key={i}
       alt="Answer Img"
