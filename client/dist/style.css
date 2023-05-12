@@ -1,0 +1,39 @@
+
+.relatedItems, .outfits{
+  display: flex;
+}
+
+.relatedItem, .outfit, .outfits .add{
+  position: relative;
+  display: inline-block flex;
+  overflow-wrap: break-word;
+  width: 200px;
+  height: 300px;
+}
+
+.toggleCurrent, .add{
+  display: inline-block;
+  width: 50px;
+}
+
+.compareButton{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.relatedItem .trait, .outfit .trait{
+  display: flex;
+}
+
+.relatedItem .image, .outfit .image {
+  width: 100px;
+  height: 125px;
+}
+
+.compare {
+  position: fixed;
+  z-index: 5;
+  background-color: grey;
+}
+

@@ -1,7 +1,9 @@
 import React from 'react';
 import ComparisonTable from './ComparisonTable.jsx';
 
-const Compare = ({features1, features2, name1, name2}) => {
+const Compare = ({
+  features1, features2, name1, name2,
+}) => {
   const toPhrase = (obj) => {
     if (!obj.value && obj.feature) {
       return obj.feature;
@@ -39,8 +41,10 @@ const Compare = ({features1, features2, name1, name2}) => {
     }
   });
   return (
-    <ComparisonTable hasFeature1={hasFeature1} hasFeature2={hasFeature2}
-    combinedFeatures={combinedFeatures} name1={name1} name2={name2} />
+    <div>
+      <ComparisonTable hasFeature1={hasFeature1} hasFeature2={hasFeature2}
+      combinedFeatures={combinedFeatures} name1={name1} name2={name2} />
+    </div>
   );
 };
 

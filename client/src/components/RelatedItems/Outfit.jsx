@@ -24,15 +24,15 @@ const Outfit = ({ defaultProduct }) => {
   };
   const nextHandler = () => {
     const first = list.indexOf(currentList[0]);
-    setCurrentList(list.slice(first + 1, first + 5));
+    setCurrentList(list.slice(first + 1, first + 4));
   };
   const previousHandler = () => {
     const first = list.indexOf(currentList[0]);
-    setCurrentList(list.slice(first - 1, first + 3));
+    setCurrentList(list.slice(first - 1, first + 2));
   };
 
   useEffect(() => {
-    if (list.length <= 4) {
+    if (list.length <= 3) {
       toggleShowNext(false);
     } else {
       toggleShowNext(true);
@@ -48,18 +48,22 @@ const Outfit = ({ defaultProduct }) => {
   }, [currentList, list]);
 
   useEffect(() => {
-    setCurrentList(list.slice(0, 4));
+    setCurrentList(list.slice(0, 3));
   }, [list]);
 
   return (
-    <div>
+    <div className="outfits">
+      <div className="toggleCurrent">
       {showPrevious && <button onClick={previousHandler}>previous</button>}
-    <div>
+      </div>
+      <div className="add">
       <button onClick={addHandler}>add outfit</button>
+      </div>
       {currentList.map((product, index) => <CreateOutfit
     key={index} product={product} handler={deleteHandler} />)}
-    </div>
+    <div className="toggleCurrent">
     {showNext && <button onClick={nextHandler}>next</button>}
+    </div>
     </div>
   );
 };
