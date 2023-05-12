@@ -3,8 +3,10 @@ import styled from 'styled-components';
 
 const StarIcon = styled.i`
   font-size: 24px;
-  color: ${(props) => (props.filled ? 'yellow' : 'lightgray')};
+  color: ${(props) => (props.filled ? '#ffd700' : 'lightgray')};
   cursor: pointer;
+  font-variation-settings: ${(props) => (props.filled ? "'FILL' 1" : "'FILL' 0")};
+  margin-right: 5px;
 `;
 
 const OverallStarRating = () => {
@@ -19,7 +21,7 @@ const OverallStarRating = () => {
       <StarIcon
         key={index}
         filled={index <= rating}
-        className={'material-symbols-outlined'}
+        className={`material-symbols-outlined ${index <= rating ? 'filled' : ''}`}
         onClick={() => handleClick(index)}
         data-testid="star-icon">
       star

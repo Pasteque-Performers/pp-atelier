@@ -28,4 +28,27 @@ module.exports = {
         res.status(500).send();
       });
   },
+  getMeta: (req, res) => {
+    const options = {
+      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta',
+      method: 'get',
+      headers: {
+        'User-Agent': 'request',
+        Authorization: process.env.TOKEN,
+      },
+      params: {
+        product_id: 40344,
+      },
+    };
+
+    return axios(options)
+      .then((response) => {
+        console.log('Successfully got review meta data', response.data);
+        res.status(200).send(response.data);
+      })
+      .catch((err) => {
+        console.error('Error getting meta data fro reviews', err);
+        res.status(500).send();
+      });
+  },
 };
