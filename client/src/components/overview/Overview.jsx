@@ -1,31 +1,29 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Information from './Information.jsx';
+import StaticStarRating from './StaticStarRating.jsx'
 
-// Child components
-const ImageGallery = () => (
-   <div>Image Gallery</div>
-);
+const Overview = () => {
+  const [product, setProduct] = useState(null);
 
-const ProductInformation = () => (
-  <div>Product Information</div>
-);
+  useEffect(() => {
+    // Replace 40344 with the actual product ID you want to fetch
+    axios.get('classes/products/40344')
+      .then((response) => {
+        setProduct(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error.response || error);
+      });
+  }, []);
 
-const StyleSelector = () => (
-  <div>Style Selector</div>
-);
-
-const AddToCart = () => (
-  <div>Add To Cart</div>
-);
-
-const Overview = () => (
-  <div>
-    <h1>Overview</h1>
-    <ImageGallery />
-    <ProductInformation />
-    <StyleSelector />
-    <AddToCart />
-  </div>
-);
+  return (
+    <div>
+      <h1>Overview</h1>
+      <StaticStarRating />
+      <Information product={product} />
+    </div>
+  );
+};
 
 export default Overview;

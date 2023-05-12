@@ -2,15 +2,25 @@ import React from 'react';
 // import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
-  const { image, category, title, price, overview } = product;
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+  const {
+    name,
+    slogan,
+    description,
+    category,
+    default_price,
+  } = product;
 
   return (
     <div className="product-card">
-      <img className="product-image" src={image} alt={title} />
+      <h3 className="product-name">{name}</h3>
+      <p className="product-slogan">{slogan}</p>
+      <p className="product-description">{description}</p>
       <p className="product-category">{category}</p>
-      <h3 className="product-title">{title}</h3>
-      <p className="product-price">${price.toFixed(2)}</p>
-      <p className="product-overview">{overview}</p>
+      <p className="product-price">${(default_price && !isNaN(parseFloat(default_price))) ? parseFloat(default_price).toFixed(2) : 'N/A'}</p>
     </div>
   );
 };
