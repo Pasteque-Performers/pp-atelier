@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Question from './Question.jsx';
+import QuestionModal from './QuestionModal.jsx';
 
 const QaBody = ({ productId }) => {
   const [questions, setQuestions] = useState([]);
   const [showQuestions, setShowQuestions] = useState([]);
   const [searching, setSearching] = useState(false);
   const [loadedQuestions, setLoadedQuestions] = useState(false);
+  const [displayModal, setDisplayModal] = useState(false);
 
   const getQuestions = (page) => {
     let pageCount = page;
@@ -68,8 +70,18 @@ const QaBody = ({ productId }) => {
     getQuestions(1);
   }, [productId]);
 
+  useEffect(() => {
+    if (displayModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [displayModal]);
+
   return (
     <div>
+      {displayModal && <QuestionModal getQuestions={getQuestions}
+      productId={productId} setDisplayModal={setDisplayModal}/>}
       <h3>Search for a Question</h3>
       <input type="text" placeholder="Type in your question" onChange={(e) => searchQuestions(e.target.value)}/>
       <ul style={{ listStyle: 'none', padding: 0 }}>
@@ -85,7 +97,7 @@ const QaBody = ({ productId }) => {
       <button onClick={loadMoreQuestions}>Load More Questions</button>
       )}
       {loadedQuestions && (<button onClick={collapseQuestionsList}>Collapse Questions</button>)}
-      <button>Ask a Question</button>
+      <button onClick={() => setDisplayModal(true)}>Ask a Question</button>
     </div>
   );
 };
