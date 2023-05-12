@@ -24,7 +24,7 @@ const ModalOverlay = styled.div`
 
 const ModalContainer = styled.div`
     background-color: white;
-    width: 80%;
+    width: 90%;
     max-width: 500px;
     max-height: 90vh;
     overflow-y: auto;
@@ -43,10 +43,9 @@ const Title = styled.h2`
 `;
 
 const ComponentTitle = styled.h3`
-  margin-top: 1.5rem;  // Adjust the top margin for more spacing between components
-  margin-bottom: 0.5rem;  // Space below the title
-  font-size: 1.2rem;  // Adjust the font size as needed
-  color: #333;  // Adjust the color as needed
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  color: #333;
 `;
 
 const AddReviewModalMain = () => (

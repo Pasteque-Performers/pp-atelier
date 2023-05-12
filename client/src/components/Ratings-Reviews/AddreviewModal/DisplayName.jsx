@@ -8,7 +8,7 @@ padding: 10px;
 
 const Input = styled.textarea`
 width: 60%;
-height: 40px;
+height: 15px;
 padding: 6px;
 font-size: 12px;
 border: 1px solid #ccc;
