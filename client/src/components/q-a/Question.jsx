@@ -35,7 +35,7 @@ const Question = ({
           }
         })
         .catch((error) => {
-          console.log('Error getting answers from question', error);
+          console.log(`Error getting answers from question ${question.question_body}`, error);
         });
     };
     recursiveRequest();

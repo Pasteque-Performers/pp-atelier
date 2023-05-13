@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import QaBody from './QaBody.jsx';
 
 const QaSection = () => {
-  const [productId, setProductId] = useState(40346);
+  const [productId, setProductId] = useState(40350);
 
   return (
     <section>
