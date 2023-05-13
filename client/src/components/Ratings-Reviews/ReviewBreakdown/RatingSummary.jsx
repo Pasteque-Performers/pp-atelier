@@ -6,14 +6,14 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 const StarContainer = styled.div`
 display: inline-block;
 position: relative;
-font-size: 50px;
+font-size: 25px;
 color: #ddd;
 `;
 
 const FilledStarIcon = styled.div`
 display: inline-block;
 position: relative;
-width: ${props => props.width}%;
+width: ${(props) => props.width}%;
 overflow: hidden;
 color: #ffd700;
 white-space: nowrap;
@@ -26,6 +26,28 @@ left: 0;
 top: 0;
 color: #ddd;
 z-index: 0;
+`;
+
+const ProgressBarContainer = styled.div`
+width: 30%;
+height: 10px;
+background-color: #ddd;
+border-radius: 5px;
+display: inline-block;
+vertical-align: middle;
+margin: 0 10px;
+`;
+
+const ProgressBarFill = styled.div`
+height: 100%;
+background-color: #008000;
+border-radius: inherit;
+width: ${(props) => props.percentage}%;
+`;
+
+const Label = styled.span`
+display: inline-block;
+vertical-align: middle;
 `;
 
 const RatingSummary = () => {
@@ -74,7 +96,18 @@ const RatingSummary = () => {
           <EmptyStarIcon icon={faStar} />
         </StarContainer>
       ))}
-      <p>Total reviews: {totalReviews}</p>
+      <div>
+    {[1, 2, 3, 4, 5].map((index) => (
+      <div key={index}>
+        <Label>{index} star</Label>
+        <ProgressBarContainer>
+          <ProgressBarFill percentage={(parseInt(exampleData[index], 10) / totalReviews) * 100} />
+        </ProgressBarContainer>
+        <Label>{Math.round((parseInt(exampleData[index], 10) / totalReviews) * 100)}%</Label>
+      </div>
+    ))}
+    <p>Total reviews: {totalReviews}</p>
+  </div>
     </div>
   );
 };
