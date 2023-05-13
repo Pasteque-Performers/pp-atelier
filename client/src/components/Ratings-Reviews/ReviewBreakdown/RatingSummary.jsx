@@ -6,7 +6,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 const StarContainer = styled.div`
 display: inline-block;
 position: relative;
-font-size: 25px;
+font-size: 20px;
 color: #ddd;
 `;
 
@@ -29,7 +29,7 @@ z-index: 0;
 `;
 
 const ProgressBarContainer = styled.div`
-width: 30%;
+width: 20%;
 height: 10px;
 background-color: #ddd;
 border-radius: 5px;
@@ -53,6 +53,7 @@ vertical-align: middle;
 const RatingSummary = () => {
   const [rating, setRating] = useState(0);
   const [totalReviews, setTotalReviews] = useState(0);
+  const [recommendationPercentage, setRecommendationPercentage] = useState();
 
   const exampleData = {
     1: '139',
@@ -60,6 +61,11 @@ const RatingSummary = () => {
     3: '316',
     4: '301',
     5: '668',
+  };
+
+  const recommended = {
+    false: '418',
+    true: '1207',
   };
 
   useEffect(() => {
@@ -73,6 +79,10 @@ const RatingSummary = () => {
     const averageRating = totalRatings / totalResponses;
     setRating(averageRating);
     setTotalReviews(totalResponses);
+
+    const recommendationRatio = parseInt(recommended.true, 10) / (parseInt(recommended.true, 10)
+     + parseInt(recommended.false, 10));
+    setRecommendationPercentage(Math.round(recommendationRatio * 100));
   }, []);
 
   const fillAmount = (index) => {
@@ -96,8 +106,9 @@ const RatingSummary = () => {
           <EmptyStarIcon icon={faStar} />
         </StarContainer>
       ))}
+      <p>{recommendationPercentage}% of reviewers recommend this product.</p>
       <div>
-    {[1, 2, 3, 4, 5].map((index) => (
+    {[5, 4, 3, 2, 1].map((index) => (
       <div key={index}>
         <Label>{index} star</Label>
         <ProgressBarContainer>
@@ -107,8 +118,8 @@ const RatingSummary = () => {
       </div>
     ))}
     <p>Total reviews: {totalReviews}</p>
-  </div>
     </div>
+   </div>
   );
 };
 
