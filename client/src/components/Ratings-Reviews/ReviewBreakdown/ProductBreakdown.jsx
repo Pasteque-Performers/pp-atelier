@@ -1,6 +1,50 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 
+const BreakdownContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  width: auto;
+`;
+
+const BreakdownBarContainer = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 200px;
+  height: 10px;
+  background-color: #333;
+  margin-bottom: 10px;
+  position: relative;
+`;
+
+const BreakdownIcon = styled.div`
+  position: absolute;
+  bottom: 100%;
+  left: ${(props) => props.value}%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 20px solid #000;
+`;
+
+const BreakdownLabel = styled.div`
+  font-size: 14px;
+  margin-bottom: 5px;
+`;
+
+const ScaleLabel = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 200px;
+  font-size: 12px;
+  margin-top: 5px;
+`;
+
 const ProductBreakdown = () => {
   const exampleData = {
     Fit: {
@@ -20,53 +64,37 @@ const ProductBreakdown = () => {
       value: '3.3322222222222222',
     },
   };
-
   const meanings = {
-    size: {
-      1: 'A size too small',
-      2: '½ a size too small',
-      3: 'Perfect',
-      4: '½ a size too big',
-      5: 'A size too wide',
-    },
-    width: {
-      1: 'Too narrow',
-      2: 'Slightly narrow',
-      3: 'Perfect',
-      4: 'Slightly wide',
-      5: 'Too wide',
-    },
-    comfort: {
-      1: 'A size too small',
-      2: 'Slightly uncomfortable',
-      3: 'Ok',
-      4: 'Comfortable',
-      5: 'Perfect',
-    },
-    quality: {
-      1: 'Poor',
-      2: 'Below average',
-      3: 'Perfect',
-      4: 'Pretty great',
-      5: 'Perfect',
-    },
-    length: {
-      1: 'Runs Short',
-      2: 'Runs slightly short',
-      3: 'Perfect',
-      4: 'Runs slightly long',
-      5: 'Runs long',
-    },
-    fit: {
-      1: 'Runs tight',
-      2: 'Runs slightly tight',
-      3: 'Perfect',
-      4: 'Runs slightly long',
-      5: 'Runs long',
-    },
+    size: ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'],
+    width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
+    comfort: ['A size too small', 'Slightly uncomfortable', 'Ok', 'Comfortable', 'Perfect'],
+    quality: ['Poor', 'Below average', 'Perfect', 'Pretty great', 'Perfect'],
+    length: ['Runs Short', 'Runs slightly short', 'Perfect', 'Runs slightly long', 'Runs long'],
+    fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'],
   };
+
+  const breakdownData = Object.keys(exampleData).map((key) => ({
+    key,
+    value: parseFloat(exampleData[key].value),
+    scale: meanings[key.toLowerCase()],
+  }));
+
   return (
-    <div>Characteristics</div>
+    <div>
+      {breakdownData.map(({ key, value, scale }) => (
+        <BreakdownContainer key={key}>
+          <BreakdownLabel>{key}</BreakdownLabel>
+          <BreakdownBarContainer>
+            <BreakdownIcon value={((value - 1) / 4) * 100} />
+          </BreakdownBarContainer>
+          <ScaleLabel>
+            <span>{scale[0]}</span>
+            <span>{scale[2]}</span>
+            <span>{scale[4]}</span>
+          </ScaleLabel>
+        </BreakdownContainer>
+      ))}
+    </div>
   );
 };
 
