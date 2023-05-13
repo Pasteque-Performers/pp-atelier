@@ -25,7 +25,6 @@ const Answer = ({
     const answerId = answer.answer_id;
     axios.put(`/classes/qa/answers/${answerId}/report`, null)
       .then(() => {
-        console.log('Sucessfully reported answer');
         getAnswers(1);
       })
       .catch((error) => {
@@ -47,6 +46,7 @@ const Answer = ({
       <div>A: {answer.body}</div>
       { answer.photos.length ? answer.photos.map((photo, i) => <img
       onClick={() => {
+        console.log(photo.url);
         setShowFullImg(!showFullImg);
         setImage(photo.url);
       }}

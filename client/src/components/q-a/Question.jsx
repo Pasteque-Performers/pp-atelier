@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Answer from './Answer.jsx';
+import AnswerModal from './AnswerModal.jsx';
 
-const Question = ({ question, getQuestions }) => {
+const Question = ({
+  question, getQuestions, helpfulQuestions, setHelpfulQuestions,
+}) => {
   const [answers, setAnswers] = useState([]);
   const [showAnswers, setShowAnswers] = useState([]);
   const [loadedAnswers, setLoadedAnswers] = useState(false);
   const [helpfulAnswers, setHelpfulAnswers] = useState([]);
-  // Find a way to store this state in the cookie for user sessions if needed
-  const [helpfulQuestions, setHelpfulQuestions] = useState([]);
+  const [displayModal, setDisplayModal] = useState(false);
 
   const getAnswers = (page) => {
     let pageCount = page;
@@ -54,7 +56,6 @@ const Question = ({ question, getQuestions }) => {
     axios.put(`/classes/qa/questions/${questionId}/helpful`, null)
       .then(() => {
         setHelpfulQuestions([...helpfulQuestions, questionId]);
-        console.log('Sucessfully updated question helpfulness');
         getQuestions(1);
       })
       .catch((error) => console.log('Error updating question helpfulness:', error));
@@ -64,7 +65,6 @@ const Question = ({ question, getQuestions }) => {
     const questionId = question.question_id;
     axios.put(`/classes/qa/questions/${questionId}/report`, null)
       .then(() => {
-        console.log('Successfully reported question');
         getQuestions(1);
       })
       .catch((error) => {
@@ -76,8 +76,18 @@ const Question = ({ question, getQuestions }) => {
     getAnswers(1);
   }, [question.question_id]);
 
+  useEffect(() => {
+    if (displayModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [displayModal]);
+
   return (
     <div>
+      {displayModal && <AnswerModal setDisplayModal={setDisplayModal}
+      questionId={question.question_id} getAnswers={getAnswers} question={question.question_body}/>}
       <div>Q: {question.question_body}</div>
       <div>Helpful? {!helpfulQuestions.includes(question.question_id)
         ? <button onClick={updateQuestionHelpfulness}>
@@ -85,7 +95,7 @@ const Question = ({ question, getQuestions }) => {
         : <span>Yes({question.question_helpfulness})</span>}
         <button onClick={reportQuestion}>Report Question</button>
         </div>
-      <button>Add an Answer</button>
+      <button onClick={() => setDisplayModal(true)}>Add an Answer</button>
       <ul>
           {answers.length ? showAnswers.map((answer, i) => (
             <li key={i}>

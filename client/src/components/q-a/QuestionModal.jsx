@@ -35,7 +35,6 @@ const QuestionModal = ({ getQuestions, productId, setDisplayModal }) => {
       product_id: productId,
     })
       .then(() => {
-        console.log('Successfully posted new question');
         getQuestions(1);
       })
       .catch((error) => {
@@ -50,6 +49,7 @@ const QuestionModal = ({ getQuestions, productId, setDisplayModal }) => {
         postQuestion();
         setDisplayModal(false);
       }}>
+        <h1>Ask your question about the product</h1>
         <label>Your Question:
           <input type='text' onChange={(e) => setBody(e.target.value)}/>
         </label>

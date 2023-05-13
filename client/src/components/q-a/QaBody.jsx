@@ -9,6 +9,8 @@ const QaBody = ({ productId }) => {
   const [searching, setSearching] = useState(false);
   const [loadedQuestions, setLoadedQuestions] = useState(false);
   const [displayModal, setDisplayModal] = useState(false);
+  // Find a way to store this state in the cookie for user sessions if needed
+  const [helpfulQuestions, setHelpfulQuestions] = useState([]);
 
   const getQuestions = (page) => {
     let pageCount = page;
@@ -88,7 +90,7 @@ const QaBody = ({ productId }) => {
         {questions.length ? showQuestions.map((question, i) => (
           <li key={i}>
             <Question question={question} getQuestions={getQuestions}
-            setLoadedQuestions={setLoadedQuestions} loadedQuestions={loadedQuestions}/>
+            setHelpfulQuestions={setHelpfulQuestions} helpfulQuestions={helpfulQuestions}/>
           </li>
         )) : <li>Loading Questions...</li>}
       </ul>
