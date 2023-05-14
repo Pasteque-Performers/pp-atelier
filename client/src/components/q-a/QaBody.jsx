@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Question from './Question.jsx';
+import QuestionModal from './QuestionModal.jsx';
 
 const QaBody = ({ productId }) => {
   const [questions, setQuestions] = useState([]);
   const [showQuestions, setShowQuestions] = useState([]);
+  const [searching, setSearching] = useState(false);
+  const [loadedQuestions, setLoadedQuestions] = useState(false);
+  const [displayModal, setDisplayModal] = useState(false);
+  // Find a way to store this state in the cookie for user sessions if needed
+  const [helpfulQuestions, setHelpfulQuestions] = useState([]);
 
   const getQuestions = (page) => {
     let pageCount = page;
-    const count = 999;
+    const count = 100;
     let questionsList = [];
 
     const recursiveRequest = () => {
@@ -24,8 +30,10 @@ const QaBody = ({ productId }) => {
           if (results.data.length > 0) {
             pageCount += 1;
             recursiveRequest();
+          } else if (loadedQuestions) {
+            setQuestions(questionsList);
+            setShowQuestions(questionsList);
           } else {
-            console.log('Questions ids and bodys', questionsList[1].question_body, questionsList[1].question_id, questionsList[2].question_body, questionsList[2].question_id);
             setQuestions(questionsList);
             setShowQuestions(questionsList.slice(0, 2));
           }
@@ -38,38 +46,60 @@ const QaBody = ({ productId }) => {
   };
 
   const loadMoreQuestions = () => {
+    setLoadedQuestions(true);
     setShowQuestions(questions);
   };
 
   const searchQuestions = (input) => {
     if (input) {
+      setSearching(true);
       const searchResult = questions.filter((question) => question.question_body
         .toLowerCase().includes(input.toLowerCase()));
       setShowQuestions(searchResult);
     }
     if (!input) {
+      setSearching(false);
       setShowQuestions(questions.slice(0, 2));
     }
+  };
+
+  const collapseQuestionsList = () => {
+    setLoadedQuestions(false);
+    setShowQuestions(questions.slice(0, 2));
   };
 
   useEffect(() => {
     getQuestions(1);
   }, [productId]);
 
+  useEffect(() => {
+    if (displayModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [displayModal]);
+
   return (
     <div>
+      {displayModal && <QuestionModal getQuestions={getQuestions}
+      productId={productId} setDisplayModal={setDisplayModal}/>}
       <h3>Search for a Question</h3>
       <input type="text" placeholder="Type in your question" onChange={(e) => searchQuestions(e.target.value)}/>
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {questions.length ? showQuestions.map((question, i) => (
           <li key={i}>
-            <Question question={question} getQuestions={getQuestions} />
+            <Question question={question} getQuestions={getQuestions}
+            setHelpfulQuestions={setHelpfulQuestions} helpfulQuestions={helpfulQuestions}/>
           </li>
         )) : <li>Loading Questions...</li>}
       </ul>
-      {showQuestions.length !== questions.length ? <button onClick={loadMoreQuestions}>
-        Load More Questions</button> : null}
-      <button>Ask a Question</button>
+      {showQuestions.length < questions.length && searching === false && loadedQuestions === false
+      && (
+      <button onClick={loadMoreQuestions}>Load More Questions</button>
+      )}
+      {loadedQuestions && (<button onClick={collapseQuestionsList}>Collapse Questions</button>)}
+      <button onClick={() => setDisplayModal(true)}>Ask a Question</button>
     </div>
   );
 };

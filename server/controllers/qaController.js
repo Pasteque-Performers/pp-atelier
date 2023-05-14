@@ -42,7 +42,6 @@ module.exports = {
       },
     })
       .then(() => {
-        console.log('Successfully updated Helpfulness count of question');
         res.sendStatus(204);
       })
       .catch((error) => {
@@ -58,7 +57,6 @@ module.exports = {
       },
     })
       .then(() => {
-        console.log('Successfully updated Helpfulness count of answer');
         res.sendStatus(204);
       })
       .catch((error) => {
@@ -74,7 +72,6 @@ module.exports = {
       },
     })
       .then(() => {
-        console.log('Succesfully reported answer');
         res.sendStatus(204);
       })
       .catch((error) => {
@@ -90,7 +87,6 @@ module.exports = {
       },
     })
       .then(() => {
-        console.log('Succesfully reported question');
         res.sendStatus(204);
       })
       .catch((error) => {
@@ -113,7 +109,6 @@ module.exports = {
       },
     })
       .then(() => {
-        console.log('Successfully posted new question');
         res.sendStatus(201);
       })
       .catch((error) => {
@@ -137,7 +132,6 @@ module.exports = {
       },
     })
       .then(() => {
-        console.log('Successfully posted new answer');
         res.sendStatus(201);
       })
       .catch((error) => {
