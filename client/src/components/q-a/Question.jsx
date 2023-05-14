@@ -1,10 +1,29 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import Answer from './Answer.jsx';
 import AnswerModal from './AnswerModal.jsx';
 
+const AnswerElement = styled.li`
+  margin-top: 10px;
+`;
+
+const QuestionButtonContainer = styled.div`
+  max-width: 1100px;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const QuestionAndReportBtns = styled.div`
+  display: flex;
+  justify-content: space-between;
+  max-width: 500px;
+  gap: 20px;
+`;
+
 const Question = ({
-  question, getQuestions, helpfulQuestions, setHelpfulQuestions,
+  question, getQuestions, helpfulQuestions, setHelpfulQuestions, setReportedQuestion,
 }) => {
   const [answers, setAnswers] = useState([]);
   const [showAnswers, setShowAnswers] = useState([]);
@@ -14,7 +33,7 @@ const Question = ({
 
   const getAnswers = (page) => {
     let pageCount = page;
-    const count = 100;
+    const count = 900;
     let answersList = [];
 
     const recursiveRequest = () => {
@@ -65,11 +84,21 @@ const Question = ({
     const questionId = question.question_id;
     axios.put(`/classes/qa/questions/${questionId}/report`, null)
       .then(() => {
-        getQuestions(1);
+        setReportedQuestion(questionId);
       })
       .catch((error) => {
         console.log('Error reporting question', error);
       });
+  };
+
+  const setReportedAnswer = (answerId) => {
+    const updatedAnswers = answers.filter((answer) => answer.answer_id !== answerId);
+    setAnswers(updatedAnswers);
+    if (loadedAnswers === false) {
+      setShowAnswers(updatedAnswers.slice(0, 2));
+    } else {
+      setShowAnswers(updatedAnswers);
+    }
   };
 
   useEffect(() => {
@@ -88,20 +117,25 @@ const Question = ({
     <div>
       {displayModal && <AnswerModal setDisplayModal={setDisplayModal}
       questionId={question.question_id} getAnswers={getAnswers} question={question.question_body}/>}
-      <div>Q: {question.question_body}</div>
-      <div>Helpful? {!helpfulQuestions.includes(question.question_id)
-        ? <button onClick={updateQuestionHelpfulness}>
-        Yes({question.question_helpfulness})</button>
-        : <span>Yes({question.question_helpfulness})</span>}
-        <button onClick={reportQuestion}>Report Question</button>
-        </div>
+      <QuestionButtonContainer>
+        <div><strong>Q: </strong>{question.question_body}</div>
+        <QuestionAndReportBtns>
+            <div>Helpful? {!helpfulQuestions.includes(question.question_id)
+              ? <button onClick={updateQuestionHelpfulness}>
+              Yes({question.question_helpfulness})</button>
+              : <span>Yes({question.question_helpfulness})</span>}
+            </div>
+            <button onClick={reportQuestion}>Report Question</button>
+        </QuestionAndReportBtns>
+      </QuestionButtonContainer>
       <button onClick={() => setDisplayModal(true)}>Add an Answer</button>
       <ul>
           {answers.length ? showAnswers.map((answer, i) => (
-            <li key={i}>
+            <AnswerElement key={i}>
               <Answer answer={answer} getAnswers={getAnswers}
-              helpfulAnswers={helpfulAnswers} setHelpfulAnswers={setHelpfulAnswers}/>
-            </li>
+              helpfulAnswers={helpfulAnswers} setHelpfulAnswers={setHelpfulAnswers}
+              setReportedAnswer={setReportedAnswer}/>
+            </AnswerElement>
           )) : <li>No answers yet</li>}
         </ul>
         {showAnswers.length < answers.length && !loadedAnswers && (

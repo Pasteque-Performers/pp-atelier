@@ -3,7 +3,7 @@ import axios from 'axios';
 import ImageModal from './ImageModal.jsx';
 
 const Answer = ({
-  answer, getAnswers, helpfulAnswers, setHelpfulAnswers,
+  answer, getAnswers, helpfulAnswers, setHelpfulAnswers, setReportedAnswer,
 }) => {
   const date = new Date(answer.date);
   const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).format(date);
@@ -25,7 +25,7 @@ const Answer = ({
     const answerId = answer.answer_id;
     axios.put(`/classes/qa/answers/${answerId}/report`, null)
       .then(() => {
-        getAnswers(1);
+        setReportedAnswer(answerId);
       })
       .catch((error) => {
         console.log('Error reporting answer', error);
@@ -43,7 +43,7 @@ const Answer = ({
   return (
     <div>
       {showFullImg && <ImageModal image={image} setShowFullImg={setShowFullImg}/> }
-      <div>A: {answer.body}</div>
+      <div><strong>A: </strong>{answer.body}</div>
       { answer.photos.length ? answer.photos.map((photo, i) => <img
       onClick={() => {
         console.log(photo.url);

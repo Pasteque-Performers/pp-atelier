@@ -13,13 +13,40 @@ const ModalOverlay = styled.div`
   z-index: 9999;
   display: flex;
   justify-content: center;
-  align-item: center;
+  align-items: center;
+  padding: 40px;
 `;
 
 const QuestionForm = styled.form`
   background-color: white;
+  max-height: 1200px;
   padding: 20px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const CloseBtn = styled.input`
+  width: 70px;
+  height: 30px;
+`;
+
+const SubmitBtn = styled.input`
+  width: 130px;
+  height: 30px;
+`;
+
+const QuestionBody = styled.input`
+  width: 500px;
+  height: 350px;
+  display: block;
+`;
+
+const UserInfo = styled.input`
+  width: 300px;
+  height: 30px;
+  display: block;
 `;
 
 const QuestionModal = ({ getQuestions, productId, setDisplayModal }) => {
@@ -43,23 +70,26 @@ const QuestionModal = ({ getQuestions, productId, setDisplayModal }) => {
   };
 
   return (
-    <ModalOverlay>
-      <button onClick={() => setDisplayModal(false)}>Close</button>
-      <QuestionForm onSubmit={() => {
+    <ModalOverlay onClick={() => setDisplayModal(false)}>
+      <QuestionForm onClick={(e) => e.stopPropagation()} onSubmit={() => {
         postQuestion();
         setDisplayModal(false);
       }}>
+        <CloseBtn type='submit' onClick={(e) => {
+          e.preventDefault();
+          setDisplayModal(false);
+        }} value='Close'/>
         <h1>Ask your question about the product</h1>
         <label>Your Question:
-          <input type='text' onChange={(e) => setBody(e.target.value)}/>
+          <QuestionBody type='text' onChange={(e) => setBody(e.target.value)}/>
         </label>
         <label>Your Username:
-          <input type='text' onChange={(e) => setName(e.target.value)}/>
+          <UserInfo type='text' onChange={(e) => setName(e.target.value)}/>
         </label>
         <label>Your Email Address:
-          <input type='text' onChange={(e) => setEmail(e.target.value)}/>
+          <UserInfo type='text' onChange={(e) => setEmail(e.target.value)}/>
         </label>
-        <input type="submit" value="Submit Question"></input>
+        <SubmitBtn type="submit" value="Submit Question"/>
       </QuestionForm>
     </ModalOverlay>
   );

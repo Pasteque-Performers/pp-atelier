@@ -1,9 +1,33 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import Question from './Question.jsx';
 import QuestionModal from './QuestionModal.jsx';
 
-const QaBody = ({ productId }) => {
+const SearchBar = styled.input`
+  width: 400px;
+  height: 30px;
+  margin-bottom: 15px;
+`;
+
+const BodyContainer = styled.div`
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const BodyButton = styled.button`
+  width: 200px;
+  height: 30px;
+  margin-top: 20px;
+`;
+
+const QuestionElement = styled.li`
+  margin-top: 15px;
+  margin-bottom: 25px;
+`;
+
+const QaBody = ({ productId, ScrollableList }) => {
   const [questions, setQuestions] = useState([]);
   const [showQuestions, setShowQuestions] = useState([]);
   const [searching, setSearching] = useState(false);
@@ -11,6 +35,16 @@ const QaBody = ({ productId }) => {
   const [displayModal, setDisplayModal] = useState(false);
   // Find a way to store this state in the cookie for user sessions if needed
   const [helpfulQuestions, setHelpfulQuestions] = useState([]);
+
+  const setReportedQuestion = (questionId) => {
+    const updatedQuestions = questions.filter((question) => question.question_id !== questionId);
+    setQuestions(updatedQuestions);
+    if (loadedQuestions === false) {
+      setShowQuestions(updatedQuestions.slice(0, 2));
+    } else {
+      setShowQuestions(updatedQuestions);
+    }
+  };
 
   const getQuestions = (page) => {
     let pageCount = page;
@@ -81,26 +115,28 @@ const QaBody = ({ productId }) => {
   }, [displayModal]);
 
   return (
-    <div>
+    <BodyContainer>
       {displayModal && <QuestionModal getQuestions={getQuestions}
       productId={productId} setDisplayModal={setDisplayModal}/>}
-      <h3>Search for a Question</h3>
-      <input type="text" placeholder="Type in your question" onChange={(e) => searchQuestions(e.target.value)}/>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <h3>Search</h3>
+      <SearchBar type="text" placeholder="Search for a question" onChange={(e) => searchQuestions(e.target.value)}/>
+      <BodyButton onClick={() => setDisplayModal(true)}>Ask a Question</BodyButton>
+      {loadedQuestions && (<BodyButton
+      onClick={collapseQuestionsList}>Collapse Questions</BodyButton>)}
+      <ScrollableList style={{ listStyle: 'none', padding: 0 }}>
         {questions.length ? showQuestions.map((question, i) => (
-          <li key={i}>
+          <QuestionElement key={i}>
             <Question question={question} getQuestions={getQuestions}
-            setHelpfulQuestions={setHelpfulQuestions} helpfulQuestions={helpfulQuestions}/>
-          </li>
+            setHelpfulQuestions={setHelpfulQuestions} helpfulQuestions={helpfulQuestions}
+            setReportedQuestion={setReportedQuestion}/>
+          </QuestionElement>
         )) : <li>Loading Questions...</li>}
-      </ul>
+      </ScrollableList>
       {showQuestions.length < questions.length && searching === false && loadedQuestions === false
       && (
-      <button onClick={loadMoreQuestions}>Load More Questions</button>
+      <BodyButton onClick={loadMoreQuestions}>Load More Questions</BodyButton>
       )}
-      {loadedQuestions && (<button onClick={collapseQuestionsList}>Collapse Questions</button>)}
-      <button onClick={() => setDisplayModal(true)}>Ask a Question</button>
-    </div>
+    </BodyContainer>
   );
 };
 
