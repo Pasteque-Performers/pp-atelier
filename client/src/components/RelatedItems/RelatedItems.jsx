@@ -10,8 +10,8 @@ const RelatedItems = () => {
   const [currentList, setCurrentList] = useState([]);
   const [showNext, toggleShowNext] = useState(true);
   const [showPrevious, toggleShowPrevious] = useState(false);
-  const defaultHandler = (e) => {
-    setDefault(e);
+  const defaultHandler = (event) => {
+    setDefault(event);
   };
   const nextHandler = () => {
     const first = list.indexOf(currentList[0]);

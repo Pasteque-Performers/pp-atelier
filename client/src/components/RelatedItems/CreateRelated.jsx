@@ -1,17 +1,34 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import Compare from './Compare.jsx';
+import Images from './Images.jsx';
 
 const CreateRelated = ({
   id, handler, defaultProduct, list,
 }) => {
   const [product, setProduct] = useState([]);
-  const [popUp, setPopUp] = useState(false);
-  const modalRef = useRef(null);
+  const [showTable, toggleShowTable] = useState(false);
+  const tableRef = useRef(null);
   const [image, setImage] = useState('');
+  const [showImages, toggleShowImages] = useState(false);
+  const [hoveredOnDefaultImage, setHoveredOnDefaultImage] = useState(false);
+  const [hoveredOnImages, setHoveredOnImages] = useState(false);
+  const [images, setImages] = useState([]);
 
   const togglePopUp = () => {
-    setPopUp(!popUp);
+    toggleShowTable(!showTable);
+  };
+
+  const handleOutsideClick = () => {
+    if (tableRef.current && !tableRef.current.contains(event.target)) {
+      togglePopUp();
+    }
+  };
+
+  const handleOpen = () => {
+    const event = new CustomEvent('modalOpen', { detail: { id: id } });
+    document.dispatchEvent(event);
+    togglePopUp();
   };
 
   useEffect(() => {
@@ -34,34 +51,25 @@ const CreateRelated = ({
         page: 'styles',
       },
     })
-      .then((res) => { setImage(res.data.results[0].photos[0].thumbnail_url); });
+      .then((res) => {
+        setImages(res.data.results);
+        setImage(res.data.results[0].photos[0].thumbnail_url);
+      });
   }, [...list]);
 
-  const handleOutsideClick = () => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      togglePopUp();
-    }
-  };
-
   useEffect(() => {
-    if (popUp) {
+    if (showTable) {
       document.addEventListener('click', handleOutsideClick);
     }
     return () => {
       document.removeEventListener('click', handleOutsideClick);
     };
-  }, [popUp]);
-
-  const handleOpen = () => {
-    const event = new CustomEvent('modalOpen', { detail: { id: id } });
-    document.dispatchEvent(event);
-    togglePopUp();
-  };
+  }, [showTable]);
 
   useEffect(() => {
-    const closeOtherModals = () => {
+    const closeOtherModals = (event) => {
       if (event.detail.id !== id) {
-        setPopUp(false);
+        toggleShowTable(false);
       }
     };
     document.addEventListener('modalOpen', closeOtherModals);
@@ -70,6 +78,12 @@ const CreateRelated = ({
       document.removeEventListener('modalOpen', closeOtherModals);
     };
   }, [id]);
+
+  useEffect(() => {
+    if (!hoveredOnDefaultImage && !hoveredOnImages) {
+      toggleShowImages(false);
+    }
+  });
 
   return (
     <div className="relatedItem" onClick={() => {
@@ -81,14 +95,15 @@ const CreateRelated = ({
         handleOpen();
       }}>compare</button>
       </div>
-      {popUp && (
-      <div className="compare" ref={modalRef}>
+      {showTable && (
+      <div className="compare" ref={tableRef}>
       <Compare features1={product.features}
       features2={defaultProduct.features} name1={product.name} name2={defaultProduct.name} />
       </div>)}
-    <div>
-    <img className="image" src={image || 'image cannot be displayed'}/>
-    </div>
+    <img className="image" src={image || 'image cannot be displayed'} onMouseEnter={() => { toggleShowImages(true); setHoveredOnDefaultImage(true); }} onMouseLeave={() => {
+      setHoveredOnDefaultImage(false);
+    }}/>
+      {showImages && <Images setHoveredOnImages={setHoveredOnImages} images={images}/>}
     <div className="trait category">Category: {product.category}</div>
     <div className="trait name">Product Name: {product.name}</div>
     <div className="trait price">Price: {product.default_price}</div>
