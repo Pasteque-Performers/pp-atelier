@@ -5,7 +5,7 @@ module.exports = {
   getProduct: (req, res) => {
     const { productId } = req.params;
 
-    const options = {
+    const productOptions = {
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productId}`,
       method: 'get',
       headers: {
@@ -14,9 +14,25 @@ module.exports = {
       },
     };
 
-    return axios(options)
-      .then((data) => {
-        res.status(200).json(data.data);
+    const stylesOptions = {
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productId}/styles`,
+      method: 'get',
+      headers: {
+        'User-Agent': 'request',
+        Authorization: process.env.TOKEN,
+      },
+    };
+
+    Promise.all([
+      axios(productOptions),
+      axios(stylesOptions),
+    ])
+      .then(([productData, stylesData]) => {
+        const combinedData = {
+          ...productData.data,
+          styles: stylesData.data.results,
+        };
+        res.status(200).json(combinedData);
       })
       .catch((err) => {
         console.error(err);
