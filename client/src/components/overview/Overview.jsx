@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Information from './Information.jsx';
 import StaticStarRating from './StaticStarRating.jsx';
+import StyleSelector from './StyleSelector.jsx';
 
 const Overview = () => {
   const [product, setProduct] = useState(null);
@@ -22,6 +23,7 @@ const Overview = () => {
       <h1>Overview</h1>
       <StaticStarRating />
       <Information product={product} />
+      {product && <StyleSelector styles={product.styles} />}
     </div>
   );
 };
