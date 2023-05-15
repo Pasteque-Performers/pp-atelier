@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Compare from './Compare.jsx';
 import Images from './Images.jsx';
+import StaticStarRating from '../overview/StaticStarRating.jsx';
 
 const CreateRelated = ({
   id, handler, defaultProduct, list,
@@ -54,6 +57,10 @@ const CreateRelated = ({
     })
       .then((res) => { setProduct(res.data); });
   }, [...list]);
+
+  useEffect(() => {
+
+  });
 
   useEffect(() => {
     axios({
@@ -119,10 +126,10 @@ const CreateRelated = ({
       handler(id);
     }}>
       <div className="compareButton">
-      <button onClick={(e) => {
+      <FontAwesomeIcon icon={faStar} style={{ color: 'EC6F7F' }} onClick={(e) => {
         e.stopPropagation();
         handleOpen();
-      }}>compare</button>
+      }}/>
       </div>
       {showTable && (
       <div className="compare" ref={tableRef}>
@@ -138,7 +145,7 @@ const CreateRelated = ({
     <div className="trait category">Category: {product.category}</div>
     <div className="trait name">Product Name: {product.name}</div>
     <div className="trait price">Price: {product.default_price}</div>
-    <div className="trait rating">Rating: to be implemented</div>
+    <div className="trait rating">Rating: {<StaticStarRating rating={4}/>}</div>
     </div>
   );
 };
