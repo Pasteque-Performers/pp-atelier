@@ -14,6 +14,9 @@ const CreateRelated = ({
   const [hoveredOnDefaultImage, setHoveredOnDefaultImage] = useState(false);
   const [hoveredOnImages, setHoveredOnImages] = useState(false);
   const [images, setImages] = useState([]);
+  const [currentImages, setCurrentImages] = useState([]);
+  const [showNext, toggleShowNext] = useState(false);
+  const [showPrevious, toggleShowPrevious] = useState(false);
 
   const togglePopUp = () => {
     toggleShowTable(!showTable);
@@ -29,6 +32,16 @@ const CreateRelated = ({
     const event = new CustomEvent('modalOpen', { detail: { id: id } });
     document.dispatchEvent(event);
     togglePopUp();
+  };
+
+  const nextHandler = () => {
+    const first = images.indexOf(currentImages[0]);
+    setCurrentImages(images.slice(first + 1, first + 5));
+  };
+
+  const previousHandler = () => {
+    const first = images.indexOf(currentImages[0]);
+    setCurrentImages(images.slice(first - 1, first + 3));
   };
 
   useEffect(() => {
@@ -53,6 +66,7 @@ const CreateRelated = ({
     })
       .then((res) => {
         setImages(res.data.results);
+        setCurrentImages(res.data.results.slice(0, 4));
         setImage(res.data.results[0].photos[0].thumbnail_url);
       });
   }, [...list]);
@@ -85,6 +99,21 @@ const CreateRelated = ({
     }
   });
 
+  useEffect(() => {
+    if (images.length > currentImages.length) {
+      toggleShowNext(true);
+    }
+    if (images.indexOf(currentImages[0]) > 0) {
+      toggleShowPrevious(true);
+    }
+    if (images.indexOf(currentImages[0]) === 0) {
+      toggleShowPrevious(false);
+    }
+    if (images.indexOf(currentImages[currentImages.length - 1]) === images.length - 1) {
+      toggleShowNext(false);
+    }
+  }, [currentImages]);
+
   return (
     <div className="relatedItem" onClick={() => {
       handler(id);
@@ -103,7 +132,9 @@ const CreateRelated = ({
     <img className="image" src={image || 'image cannot be displayed'} onMouseEnter={() => { toggleShowImages(true); setHoveredOnDefaultImage(true); }} onMouseLeave={() => {
       setHoveredOnDefaultImage(false);
     }}/>
-      {showImages && <Images setHoveredOnImages={setHoveredOnImages} images={images}/>}
+      {showImages && <Images setHoveredOnImages={setHoveredOnImages} images={currentImages}
+       showNext={showNext} nextHandler={nextHandler} showPrevious={showPrevious}
+       previousHandler={previousHandler}/>}
     <div className="trait category">Category: {product.category}</div>
     <div className="trait name">Product Name: {product.name}</div>
     <div className="trait price">Price: {product.default_price}</div>

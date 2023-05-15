@@ -29,7 +29,7 @@ font-family: 'Manrope', sans-serif;
   z-index: 1;
 }
 
-.relatedItem .image, .outfit .image {
+.image {
   width: 100%;
   height: 175px;
   position: relative;
@@ -48,9 +48,18 @@ font-family: 'Manrope', sans-serif;
   display: flex;
 }
 
-.images {
-  position: fixed;
+.images{
+  position: absolute;
   z-index: 6;
+  display: flex;
+  background-color: grey;
+  top: 35%;
+}
+
+.carouselImage{
+  width: 150px;
+  height: 175px;
+  margin: 5px;
 }
 
 
