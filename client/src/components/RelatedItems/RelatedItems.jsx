@@ -10,8 +10,8 @@ const RelatedItems = () => {
   const [currentList, setCurrentList] = useState([]);
   const [showNext, toggleShowNext] = useState(true);
   const [showPrevious, toggleShowPrevious] = useState(false);
-  const defaultHandler = (e) => {
-    setDefault(e);
+  const defaultHandler = (event) => {
+    setDefault(event);
   };
   const nextHandler = () => {
     const first = list.indexOf(currentList[0]);
@@ -46,23 +46,24 @@ const RelatedItems = () => {
         id: defaultProductID,
       },
     }, [defaultProductID])
-      .then((res) => { setList(res.data); setCurrentList([...res.data.slice(0, 4)]);
-        if (res.data.length <= 4) { toggleShowNext(false); } else {toggleShowNext(true); } });
+      .then((res) => {
+        setList(res.data); setCurrentList([...res.data.slice(0, 4)]);
+        if (res.data.length <= 4) { toggleShowNext(false); } else { toggleShowNext(true); }
+      });
   }, [defaultProductID]);
   return (
-    <>
+    <div>
     <div>
       <h2>related products</h2>
-      {showPrevious && <button onClick={ previousHandler }>previous</button>}
   <ProductList list={currentList} defaultProduct={defaultProduct}
-  defaultHandler={defaultHandler}/>
-      {showNext && <button onClick={ nextHandler }>next</button>}
+  defaultHandler={defaultHandler} nextHandler={nextHandler} showNext={showNext}
+   previousHandler={previousHandler} showPrevious={showPrevious}/>
     </div>
     <div>
     <h2>your outfit</h2>
     <Outfit defaultProduct={defaultProduct} />
     </div>
-    </>
+    </div>
   );
 };
 
