@@ -3,6 +3,7 @@ const router = require('express').Router();
 const controller = require('./controllers/index.js');
 
 router.get('/products/:productId', controller.overview.getProduct);
+router.get('/products/:productId/styles', controller.overview.getStyles);
 
 router.get('/products', controller.products.get);
 router.get('/productsquery', controller.productsQuery.get);
