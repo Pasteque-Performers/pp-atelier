@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import StaticStarRating from '../overview/StaticStarRating.jsx';
 
 const CreateOutfit = ({ product, handler }) => {
   const [image, setImage] = useState('');
@@ -26,7 +27,7 @@ const CreateOutfit = ({ product, handler }) => {
     <div className="trait">Category: {product.category}</div>
     <div className="trait">Product Name: {product.name}</div>
     <div className="trait">Price: {product.default_price}</div>
-    <div className="trait">Rating: to be implemented</div>
+    <div className="trait">Rating:{<StaticStarRating rating={4}/>}</div>
     </div>
   );
 };
