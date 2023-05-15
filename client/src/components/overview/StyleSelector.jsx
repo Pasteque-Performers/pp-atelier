@@ -1,30 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const StyleSelector = ({ productId }) => {
+const StyleSelector = ({ productId, onStyleSelect }) => {
   const [styles, setStyles] = useState([]);
-  const [selectedStyle, setSelectedStyle] = useState(null);
+  const [selectedStyle, setSelectedStyle] = useState('');
 
   useEffect(() => {
-    if (productId) {
-      axios.get(`http://localhost:3000/classes/products/${productId}`)
-        .then((response) => {
-          setStyles(response.data.styles);
-          setSelectedStyle(response.data.styles[0]);
-        })
-        .catch((error) => {
-          console.error('Error fetching style data: ', error.response || error);
-        });
-    }
-  }, [productId]);
-
-  if (!selectedStyle) {
-    return null;
-  }
+    axios({
+      params: { id: productId, page: 'styles' },
+      method: 'get',
+      url: 'http://localhost:3000/classes/productsquery/',
+    })
+      .then((response) => {
+        setStyles(response.data.results);
+        setSelectedStyle(response.data.results[0]);
+        onStyleSelect(response.data.results[0].style_id); // Call onStyleSelect here
+      })
+      .catch((error) => {
+        console.error('Error fetching style data: ', error.response || error);
+      });
+  }, [onStyleSelect]); // Add onStyleSelect to the dependencies array
 
   return (
     <div>
-      <h2>{selectedStyle.name}</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {styles.map((style) => (
           <div key={style.style_id} style={{
@@ -33,7 +31,10 @@ const StyleSelector = ({ productId }) => {
             <img
               src={style.photos[0].thumbnail_url}
               alt={style.name}
-              onClick={() => setSelectedStyle(style)}
+              onClick={() => {
+                setSelectedStyle(style);
+                onStyleSelect(style.style_id);
+              }}
               style={{ width: '60px', height: '60px', borderRadius: '50%' }}
             />
             {style.style_id === selectedStyle.style_id
