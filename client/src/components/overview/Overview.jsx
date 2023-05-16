@@ -8,20 +8,19 @@ import AddToCart from './AddToCart.jsx';
 
 const Overview = () => {
   const [product, setProduct] = useState(null);
-  const [selectedStyleId, setSelectedStyleId] = useState(null);
+  const [selectedStyle, setSelectedStyle] = useState(null);
 
   useEffect(() => {
     // Replace 40344 with the actual product ID you want to fetch
     axios.get('classes/products')
       .then((response) => {
         setProduct(response.data[0]);
-        // Set the selected style ID to the ID of the first style in the response
-        setSelectedStyleId(response.data[0]?.styles?.[0]?.style_id ?? null);
       })
       .catch((error) => {
         console.error('Error fetching data: ', error.response || error);
       });
   }, []);
+  console.log('selectedStyle in overview', selectedStyle);
 
   return (
     <div>
@@ -29,8 +28,9 @@ const Overview = () => {
       {/* <StaticStarRating /> */}
       <Information product={product} />
       {/* <OverallStarRating /> */}
-      {product && <StyleSelector styles={product.styles} productId={product.id} onStyleSelect={setSelectedStyleId} />}
-      {selectedStyleId && <AddToCart selectedStyleId={selectedStyleId} />}
+      {product && <StyleSelector styles={product.styles}
+      productId={product.id} onStyleSelect={setSelectedStyle} />}
+      {selectedStyle && <AddToCart selectedStyle={selectedStyle} />}
     </div>
   );
 };

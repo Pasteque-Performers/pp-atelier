@@ -14,12 +14,12 @@ const StyleSelector = ({ productId, onStyleSelect }) => {
       .then((response) => {
         setStyles(response.data.results);
         setSelectedStyle(response.data.results[0]);
-        onStyleSelect(response.data.results[0].style_id); // Call onStyleSelect here
+        onStyleSelect(response.data.results[0]);
       })
       .catch((error) => {
         console.error('Error fetching style data: ', error.response || error);
       });
-  }, [onStyleSelect]); // Add onStyleSelect to the dependencies array
+  }, [onStyleSelect]);
 
   return (
     <div>
@@ -33,7 +33,7 @@ const StyleSelector = ({ productId, onStyleSelect }) => {
               alt={style.name}
               onClick={() => {
                 setSelectedStyle(style);
-                onStyleSelect(style.style_id);
+                onStyleSelect(style);
               }}
               style={{ width: '60px', height: '60px', borderRadius: '50%' }}
             />
