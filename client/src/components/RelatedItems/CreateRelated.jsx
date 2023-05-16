@@ -20,6 +20,7 @@ const CreateRelated = ({
   const [currentImages, setCurrentImages] = useState([]);
   const [showNext, toggleShowNext] = useState(false);
   const [showPrevious, toggleShowPrevious] = useState(false);
+  const [starHovered, setStarHovered] = useState(false);
 
   const togglePopUp = () => {
     toggleShowTable(!showTable);
@@ -126,10 +127,13 @@ const CreateRelated = ({
       handler(id);
     }}>
       <div className="compareButton">
-      <FontAwesomeIcon icon={faStar} style={{ color: 'EC6F7F' }} onClick={(e) => {
+      <FontAwesomeIcon icon={faStar} style={{
+        color: starHovered ? 'Ea2213' : 'EC6F7F',
+      }} onClick={(e) => {
         e.stopPropagation();
         handleOpen();
-      }}/>
+      }} onMouseEnter={() => { setStarHovered(true); }}
+      onMouseLeave={() => { setStarHovered(false); }}/>
       </div>
       {showTable && (
       <div className="compare" ref={tableRef}>

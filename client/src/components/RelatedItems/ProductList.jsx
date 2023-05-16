@@ -15,7 +15,7 @@ const ProductList = ({
           color: previousHovered ? 'Ea2213' : 'EC6F7F',
           fontSize: '4em',
         }} onClick={ previousHandler } onMouseEnter={() => { setPreviousHovered(true); }}
-        onMouseLeave={() => { setPreviousHovered(false); }}/>}
+        onMouseLeave={() => { setPreviousHovered(false); }} />}
         </div>
     {list.map((product, index) => <CreateRelated
     key={index} id={product} handler={defaultHandler}
@@ -25,7 +25,7 @@ const ProductList = ({
       color: nextHovered ? 'Ea2213' : 'EC6F7F',
       fontSize: '4em',
     }} onClick={ nextHandler } onMouseEnter={() => { setNextHovered(true); }}
-    onMouseLeave={() => { setNextHovered(false); }}/>}
+    onMouseLeave={() => { setNextHovered(false); }} />}
     </div>
     </div>
   );
