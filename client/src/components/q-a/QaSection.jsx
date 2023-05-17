@@ -1,12 +1,29 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import QaBody from './QaBody.jsx';
 
+const theme = {
+  fontFamily: "'Manrope', serif",
+  fontWeight: {
+    light: 200,
+    regular: 300,
+    bold: 700,
+    extraBold: 800,
+  },
+};
+
+const QaHeader = styled.h1`
+  font-family: ${(props) => props.theme.fontFamily};
+  font-weight: ${(props) => props.theme.fontWeight.extraBold};
+  font-size: 35px;
+`;
+
 const StyledSection = styled.section`
+  background-color: #EBEBEB;
   border: 2px solid black;
   border-radius: 25px;
   padding: 10px;
-  margin: 20px 0px 20px 10px;
+  margin: 15px 0px 10px 10px;
   display: flex;
   flex-direction: column;
   max-height: 700px;
@@ -35,13 +52,15 @@ const ScrollableList = styled.ul`
 `;
 
 const QaSection = () => {
-  const [productId, setProductId] = useState(40344);
+  const [productId, setProductId] = useState(40347);
 
   return (
-    <StyledSection>
-        <h1>Questions and Answers</h1>
+    <ThemeProvider theme={theme}>
+      <StyledSection>
+        <QaHeader>Questions and Answers</QaHeader>
         <QaBody productId = {productId} ScrollableList={ScrollableList}/>
-    </StyledSection>
+      </StyledSection>
+    </ThemeProvider>
   );
 };
 

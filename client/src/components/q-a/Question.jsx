@@ -8,11 +8,21 @@ const AnswerElement = styled.li`
   margin-top: 10px;
 `;
 
+const BoldTitle = styled.strong`
+  font-size: 20px;
+`;
+
 const QuestionButtonContainer = styled.div`
   max-width: 1100px;
   height: auto;
   display: flex;
   justify-content: space-between;
+`;
+
+const QuestionButton = styled.button`
+  background-color: #100E04;
+  color: white;
+  border-radius: 25px;
 `;
 
 const QuestionAndReportBtns = styled.div`
@@ -31,34 +41,34 @@ const Question = ({
   const [helpfulAnswers, setHelpfulAnswers] = useState([]);
   const [displayModal, setDisplayModal] = useState(false);
 
-  const getAnswers = (page) => {
-    let pageCount = page;
-    const count = 900;
-    let answersList = [];
+  // const getAnswers = (page) => {
+  //   let pageCount = page;
+  //   const count = 900;
+  //   let answersList = [];
 
-    const recursiveRequest = () => {
-      axios.get(`/classes/qa/questions/${question.question_id}/answers/`, {
-        params: {
-          page: pageCount,
-          count,
-        },
-      })
-        .then((results) => {
-          answersList = [...answersList, ...results.data];
-          if (results.data.length > 0) {
-            pageCount += 1;
-            recursiveRequest();
-          } else {
-            setAnswers(answersList);
-            setShowAnswers(answersList.slice(0, 4));
-          }
-        })
-        .catch((error) => {
-          console.log(`Error getting answers from question ${question.question_body}`, error);
-        });
-    };
-    recursiveRequest();
-  };
+  //   const recursiveRequest = () => {
+  //     axios.get(`/classes/qa/questions/${question.question_id}/answers/`, {
+  //       params: {
+  //         page: pageCount,
+  //         count,
+  //       },
+  //     })
+  //       .then((results) => {
+  //         answersList = [...answersList, ...results.data];
+  //         if (results.data.length > 0) {
+  //           pageCount += 1;
+  //           recursiveRequest();
+  //         } else {
+  //           setAnswers(answersList);
+  //           setShowAnswers(answersList.slice(0, 4));
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(`Error getting answers from question ${question.question_body}`, error);
+  //       });
+  //   };
+  //   recursiveRequest();
+  // };
 
   const loadMoreAnswers = () => {
     setLoadedAnswers(true);
@@ -102,7 +112,12 @@ const Question = ({
   };
 
   useEffect(() => {
-    getAnswers(1);
+    setAnswers(question.answersList);
+    if (loadedAnswers) {
+      setShowAnswers(question.answersList);
+    } else {
+      setShowAnswers(question.answersList.slice(0, 4));
+    }
   }, [question.question_id]);
 
   useEffect(() => {
@@ -118,31 +133,34 @@ const Question = ({
       {displayModal && <AnswerModal setDisplayModal={setDisplayModal}
       questionId={question.question_id} getAnswers={getAnswers} question={question.question_body}/>}
       <QuestionButtonContainer>
-        <div><strong>Q: </strong>{question.question_body}</div>
+        <div><BoldTitle>Q: </BoldTitle>{question.question_body}</div>
         <QuestionAndReportBtns>
             <div>Helpful? {!helpfulQuestions.includes(question.question_id)
-              ? <button onClick={updateQuestionHelpfulness}>
-              Yes({question.question_helpfulness})</button>
+              ? <QuestionButton onClick={updateQuestionHelpfulness}>
+              Yes({question.question_helpfulness})</QuestionButton>
               : <span>Yes({question.question_helpfulness})</span>}
             </div>
-            <button onClick={reportQuestion}>Report Question</button>
+            <QuestionButton onClick={reportQuestion}>Report Question</QuestionButton>
         </QuestionAndReportBtns>
       </QuestionButtonContainer>
-      <button onClick={() => setDisplayModal(true)}>Add an Answer</button>
+      <QuestionButton onClick={() => setDisplayModal(true)}>Add an Answer</QuestionButton>
       <ul>
-          {answers.length ? showAnswers.map((answer, i) => (
+          {question.answersList.length ? showAnswers.map((answer, i) => (
             <AnswerElement key={i}>
-              <Answer answer={answer} getAnswers={getAnswers}
-              helpfulAnswers={helpfulAnswers} setHelpfulAnswers={setHelpfulAnswers}
-              setReportedAnswer={setReportedAnswer}/>
+              <Answer answer={answer}
+              helpfulAnswers={helpfulAnswers}
+              setHelpfulAnswers={setHelpfulAnswers}
+              setReportedAnswer={setReportedAnswer}
+              BoldTitle={BoldTitle}
+              QuestionButton={QuestionButton}/>
             </AnswerElement>
           )) : <li>No answers yet</li>}
         </ul>
         {showAnswers.length < answers.length && !loadedAnswers && (
-        <button onClick={loadMoreAnswers}>Load More Answers</button>
+        <QuestionButton onClick={loadMoreAnswers}>Load More Answers</QuestionButton>
         )}
         {loadedAnswers && (
-          <button onClick={collaposeAnswersList}>Collapse Answers List</button>
+          <QuestionButton onClick={collaposeAnswersList}>Collapse Answers List</QuestionButton>
         )}
     </div>
   );

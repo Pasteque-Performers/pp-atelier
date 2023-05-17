@@ -3,7 +3,8 @@ import axios from 'axios';
 import ImageModal from './ImageModal.jsx';
 
 const Answer = ({
-  answer, getAnswers, helpfulAnswers, setHelpfulAnswers, setReportedAnswer,
+  answer, getAnswers, helpfulAnswers, setHelpfulAnswers,
+  setReportedAnswer, BoldTitle, QuestionButton,
 }) => {
   const date = new Date(answer.date);
   const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).format(date);
@@ -43,10 +44,9 @@ const Answer = ({
   return (
     <div>
       {showFullImg && <ImageModal image={image} setShowFullImg={setShowFullImg}/> }
-      <div><strong>A: </strong>{answer.body}</div>
+      <div><BoldTitle>A: </BoldTitle>{answer.body}</div>
       { answer.photos.length ? answer.photos.map((photo, i) => <img
       onClick={() => {
-        console.log(photo.url);
         setShowFullImg(!showFullImg);
         setImage(photo.url);
       }}
@@ -56,10 +56,10 @@ const Answer = ({
       style={{ width: '200px', height: '150px' }}/>) : null }
       <div>By: {answer.answerer_name === 'Seller' ? <strong>{answer.answerer_name}</strong> : answer.answerer_name}, {formattedDate}</div>
       <div>Helpful? {!helpfulAnswers.includes(answer.answer_id)
-        ? <button onClick={setAnswerHelpfulness}>Yes({answer.helpfulness})</button>
+        ? <QuestionButton onClick={setAnswerHelpfulness}>Yes({answer.helpfulness})</QuestionButton>
         : <span>Yes({answer.helpfulness})</span>}
       </div>
-      <button onClick={reportAnswer}>Report</button>
+      <QuestionButton onClick={reportAnswer}>Report</QuestionButton>
     </div>
   );
 };

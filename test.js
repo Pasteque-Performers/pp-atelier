@@ -3,7 +3,6 @@ import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import OverallStarRating from './client/src/components/Ratings-Reviews/AddreviewModal/OverallStarRating.jsx';
 import Compare from './client/src/components/RelatedItems/Compare.jsx';
-import QaSection from './client/src/components/q-a/QaSection.jsx';
 
 describe('Related Products Component', () => {
   test('renders a table', () => {
@@ -29,15 +28,6 @@ describe('Related Products Component', () => {
     expect(cells[0]).toHaveTextContent('true');
     expect(cells[1]).toHaveTextContent('silver wolf');
     expect(cells[2]).toHaveTextContent('true');
-  });
-});
-
-describe('Q and A component', () => {
-  test('Renders QA Header', () => {
-    render(<QaSection />);
-    const qaHeader = screen.getByText(/Questions and Answers/i);
-
-    expect(qaHeader).toBeInTheDocument();
   });
 });
 

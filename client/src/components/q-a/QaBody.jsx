@@ -5,9 +5,22 @@ import Question from './Question.jsx';
 import QuestionModal from './QuestionModal.jsx';
 
 const SearchBar = styled.input`
+  font-family: ${(props) => props.theme.fontFamily};
+  font-weight: ${(props) => props.theme.fontWeight.light};
   width: 400px;
   height: 30px;
+  padding: 0 0 0 10px;
   margin-bottom: 15px;
+  border-radius: 25px;
+  font-size: 15px;
+`;
+
+const SearchTitle = styled.h3`
+font-family: ${(props) => props.theme.fontFamily};
+font-weight: ${(props) => props.theme.fontWeight.bold};
+font-size: 25px;
+margin-bottom: 10px;
+padding: 0 0 0 10px;
 `;
 
 const BodyContainer = styled.div`
@@ -17,12 +30,17 @@ const BodyContainer = styled.div`
 `;
 
 const BodyButton = styled.button`
+  background-color: #100E04;
+  color: white;
   width: 200px;
   height: 30px;
   margin-top: 20px;
+  border-radius: 25px;
 `;
 
 const QuestionElement = styled.li`
+  font-family: ${(props) => props.theme.fontFamily};
+  font-weight: ${(props) => props.theme.fontWeight.regular};
   margin-top: 15px;
   margin-bottom: 25px;
 `;
@@ -46,37 +64,42 @@ const QaBody = ({ productId, ScrollableList }) => {
     }
   };
 
-  const getQuestions = (page) => {
-    let pageCount = page;
-    const count = 100;
-    let questionsList = [];
-
-    const recursiveRequest = () => {
-      axios.get('/classes/qa/questions', {
-        params: {
-          product_id: productId,
-          page: pageCount,
-          count,
-        },
-      })
-        .then((results) => {
-          questionsList = [...questionsList, ...results.data];
-          if (results.data.length > 0) {
-            pageCount += 1;
-            recursiveRequest();
-          } else if (loadedQuestions) {
-            setQuestions(questionsList);
-            setShowQuestions(questionsList);
-          } else {
-            setQuestions(questionsList);
-            setShowQuestions(questionsList.slice(0, 2));
-          }
+  const getQuestions = () => {
+    axios.get('/classes/qa/questions', {
+      params: {
+        product_id: productId,
+        page: 1,
+        count: 120,
+      },
+    })
+      .then((results) => {
+        const answerPromises = results.data.map((question) => axios.get(`/classes/qa/questions/${question.question_id}/answers`, {
+          params: {
+            page: 1,
+            count: 10,
+          },
         })
-        .catch((error) => {
-          console.log('Error getting questions from product', error);
-        });
-    };
-    recursiveRequest();
+          .then((response) => {
+            const updatedQuestion = {
+              ...question,
+              answersList: response.data,
+            };
+            return updatedQuestion;
+          })
+          .catch((error) => console.log(`Error getting answers for question: ${question.question_id}`, error)));
+        Promise.all(answerPromises)
+          .then((updatedQuestions) => {
+            setQuestions(updatedQuestions);
+            if (loadedQuestions) {
+              setShowQuestions(updatedQuestions);
+            } else {
+              setShowQuestions(updatedQuestions.slice(0, 2));
+            }
+          });
+      })
+      .catch((error) => {
+        console.log('Error getting questions from product', error);
+      });
   };
 
   const loadMoreQuestions = () => {
@@ -103,7 +126,7 @@ const QaBody = ({ productId, ScrollableList }) => {
   };
 
   useEffect(() => {
-    getQuestions(1);
+    getQuestions();
   }, [productId]);
 
   useEffect(() => {
@@ -118,7 +141,7 @@ const QaBody = ({ productId, ScrollableList }) => {
     <BodyContainer>
       {displayModal && <QuestionModal getQuestions={getQuestions}
       productId={productId} setDisplayModal={setDisplayModal}/>}
-      <h3>Search</h3>
+      <SearchTitle>Search</SearchTitle>
       <SearchBar type="text" placeholder="Search for a question" onChange={(e) => searchQuestions(e.target.value)}/>
       <BodyButton onClick={() => setDisplayModal(true)}>Ask a Question</BodyButton>
       {loadedQuestions && (<BodyButton

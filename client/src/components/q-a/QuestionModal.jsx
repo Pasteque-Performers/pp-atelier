@@ -30,23 +30,38 @@ const QuestionForm = styled.form`
 const CloseBtn = styled.input`
   width: 70px;
   height: 30px;
+  background-color: #100E04;
+  color: white;
+  border-radius: 25px;
 `;
 
 const SubmitBtn = styled.input`
   width: 130px;
   height: 30px;
+  background-color: #100E04;
+  color: white;
+  border-radius: 25px;
 `;
 
-const QuestionBody = styled.input`
+const QuestionBody = styled.textarea`
   width: 500px;
   height: 350px;
   display: block;
+  border-radius: 25px;
+  vertical-align: top;
+  padding: 10px;
+  font-size: 15px;
+  font-family: inherit;
 `;
 
 const UserInfo = styled.input`
   width: 300px;
   height: 30px;
   display: block;
+  border-radius: 25px;
+  font-size: 15px;
+  padding: 0 0 0 10px;
+  font-family: inherit;
 `;
 
 const QuestionModal = ({ getQuestions, productId, setDisplayModal }) => {
@@ -81,13 +96,13 @@ const QuestionModal = ({ getQuestions, productId, setDisplayModal }) => {
         }} value='Close'/>
         <h1>Ask your question about the product</h1>
         <label>Your Question:
-          <QuestionBody type='text' onChange={(e) => setBody(e.target.value)}/>
+          <QuestionBody onChange={(e) => setBody(e.target.value)} required maxLength={1000}/>
         </label>
         <label>Your Username:
-          <UserInfo type='text' onChange={(e) => setName(e.target.value)}/>
+          <UserInfo type='text' onChange={(e) => setName(e.target.value)} required maxLength={60}/>
         </label>
         <label>Your Email Address:
-          <UserInfo type='text' onChange={(e) => setEmail(e.target.value)}/>
+          <UserInfo type='text' onChange={(e) => setEmail(e.target.value)} required maxLength={60}/>
         </label>
         <SubmitBtn type="submit" value="Submit Question"/>
       </QuestionForm>
