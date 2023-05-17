@@ -9,7 +9,7 @@ const ProductList = ({
   const [nextHovered, setNextHovered] = useState(false);
   const [previousHovered, setPreviousHovered] = useState(false);
   return (
-    <div className="relatedItems">
+    <div className="relatedItems" data-testid="relatedItems">
         <div className="toggleCurrent">
         {showPrevious && <FontAwesomeIcon icon={faCaretLeft} style={{
           color: previousHovered ? 'Ea2213' : 'EC6F7F',
