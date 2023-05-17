@@ -19,33 +19,27 @@ const RadioInput = styled.input`
   margin-right: 0.5rem;
 `;
 
-const DoYouRecommend = () => {
-  const [recommend, setRecommend] = useState(null);
-
-  const handleRecommendChange = (event) => {
-    setRecommend(event.target.value === 'yes');
-  };
-
-  return (
+const DoYouRecommend = ({ formData, handleChange }) => (
     <Container>
        <RadioOption>
          <RadioInput
            type='radio'
-           value='yes'
-           checked={recommend === true}
-           onChange={handleRecommendChange}/>
+           value={'true'}
+           checked={formData.recommend === true}
+           onChange={handleChange}
+           name='recommend'/>
          Yes
        </RadioOption>
        <RadioOption>
          <RadioInput
            type='radio'
-           value='no'
-           checked={recommend === false}
-           onChange={handleRecommendChange}/>
+           value={'false'}
+           checked={formData.recommend === false}
+           onChange={handleChange}
+           name='recommend'/>
          No
        </RadioOption>
     </Container>
-  );
-};
+);
 
 export default DoYouRecommend;

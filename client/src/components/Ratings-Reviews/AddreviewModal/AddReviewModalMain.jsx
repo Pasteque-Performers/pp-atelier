@@ -48,35 +48,89 @@ const ComponentTitle = styled.h3`
   color: #333;
 `;
 
-const AddReviewModalMain = () => (
-  <ModalOverlay>
+const Button = styled.button`
+  display: inline-block;
+  padding: 0.5em 1.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: 500;
+  color: #111;
+  background-color: #f0c14b;
+  border: 1px solid #a88734;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #ff9900;
+    color: #111;
+  }`;
+
+const AddReviewModalMain = ({ metaData }) => {
+  const [formData, setFormData] = useState({
+    body: '',
+    name: '',
+    rating: 0,
+    summary: '',
+    photos: [],
+    email: '',
+    recommend: null,
+  });
+
+  const [characteristics, setCharacteristics] = useState({});
+
+  const handleFormDataChange = (event) => {
+    const { value, name } = event.target;
+    let parsedValue = value;
+    if (name === 'recommend') {
+      parsedValue = (value === 'true');
+    }
+    setFormData((prevData) => ({ ...prevData, [name]: parsedValue }));
+  };
+
+  const handleSubmitClick = () => {
+    axios.post('/classes/reviews', { ...formData, characteristics })
+      .then((response) => {
+        console.log('successfully posted review data', response.data);
+      })
+      .catch((err) => {
+        console.error('Error postong review data', err);
+      });
+  };
+
+  return (
+    <ModalOverlay>
     <ModalContainer>
        <Title>Write your Review Here</Title>
        <ComponentTitle>Overall rating (mandatory)</ComponentTitle>
-       <OverallStarRating/>
+       <OverallStarRating formData={formData} handleChange={handleFormDataChange}/>
 
        <ComponentTitle>Do you recommend this product? (mandatory)</ComponentTitle>
-       <DoYouRecommend/>
+       <DoYouRecommend formData={formData} handleChange={handleFormDataChange}/>
 
        <ComponentTitle>Characteristics (mandatory)</ComponentTitle>
-       <ProductCharacteristics/>
+       <ProductCharacteristics characteristics={characteristics}
+       setCharacteristics={setCharacteristics}
+       characteristicsData={metaData.characteristics}/>
 
        <ComponentTitle>Review summary</ComponentTitle>
-       <ReviewSummary/>
+       <ReviewSummary formData={formData} handleChange={handleFormDataChange}/>
 
        <ComponentTitle>Review body (mandatory)</ComponentTitle>
-       <ReviewBody/>
+       <ReviewBody formData={formData} handleChange={handleFormDataChange}/>
 
        <ComponentTitle>Upload your photos</ComponentTitle>
-       <UploadPhotos/>
+       <UploadPhotos formData={formData} handleChange={handleFormDataChange}/>
 
        <ComponentTitle>What is your nickname (mandatory)</ComponentTitle>
-       <DisplayName/>
+       <DisplayName formData={formData} handleChange={handleFormDataChange}/>
 
        <ComponentTitle>Your email (mandatory)</ComponentTitle>
-       <ReviewEmail/>
+       <ReviewEmail formData={formData} handleChange={handleFormDataChange}/>
+       <Button onClick={handleSubmitClick}>Submit review</Button>
     </ModalContainer>
   </ModalOverlay>
-);
+  );
+};
 
 export default AddReviewModalMain;

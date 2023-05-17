@@ -21,24 +21,16 @@ font-size: 0.8rem;
 color: #888;
 `;
 
-const DisplayName = () => {
-  const [displayName, setDisplayName] = useState('');
-
-  const handleDisplayNameChange = (event) => {
-    const { value } = event.target;
-    setDisplayName(value);
-  };
-
-  return (
+const DisplayName = ({ formData, handleChange }) => (
     <Container>
       <Input
         placeholder='Example: jackson11'
-        value={displayName}
-        onChange={handleDisplayNameChange}
-        maxLength={60}/>
+        value={formData.name}
+        onChange={handleChange}
+        maxLength={60}
+        name='name'/>
     <PrivacyText>For privacy reasons, do not use your full name or email address</PrivacyText>
   </Container>
-  );
-};
+);
 
 export default DisplayName;

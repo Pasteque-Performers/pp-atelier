@@ -9,7 +9,8 @@ router.get('/products', controller.products.get);
 router.get('/productsquery', controller.productsQuery.get);
 
 router.get('/reviews', controller.reviews.get);
-router.get('/reviews/meta', controller.reviews.getMeta);
+router.get('/reviews/meta/', controller.reviews.getMeta);
+router.post('/reviews', controller.reviews.post);
 
 router.get('/qa/questions/', controller.questions.getAllQuestions);
 router.get('/qa/questions/:question_id/answers', controller.questions.getAnswers);

@@ -48,39 +48,7 @@ const SelectedCharacteristic = styled.div`
 
 const RadioButton = styled.input.attrs({ type: 'radio' })``;
 
-const ProductCharacteristics = () => {
-  const [characteristics, setCharacteristics] = useState({
-    size: null,
-    width: null,
-    comfort: null,
-    quality: null,
-    length: null,
-    fit: null,
-  });
-
-  const exampleData = {
-    Fit: {
-      id: 135219,
-      value: '3.3014705882352941',
-    },
-    Length: {
-      id: 135220,
-      value: '3.3251072961373391',
-    },
-    Comfort: {
-      id: 135221,
-      value: '3.3782559456398641',
-    },
-    Quality: {
-      id: 135222,
-      value: '3.3322222222222222',
-    },
-  };
-
-  const handleRadioChange = (event) => {
-    const { name, value } = event.target;
-    setCharacteristics((prevVals) => ({ ...prevVals, [name]: parseInt(value, 10) }));
-  };
+const ProductCharacteristics = ({ characteristics, setCharacteristics, characteristicsData }) => {
   const meanings = {
     Size: {
       1: 'A size too small',
@@ -126,13 +94,20 @@ const ProductCharacteristics = () => {
     },
   };
 
+  const handleRadioChange = (event) => {
+    const { name, value } = event.target;
+    setCharacteristics((prev) => ({ ...prev, [characteristicsData[name].id]: Number(value) }));
+  };
+
   const renderCharacteristic = (characteristic, label) => {
-    if (exampleData[label]) {
+    if (characteristicsData[label]) {
       return (
         <CharacteristicSection key={label}>
           <CharacteristicLabel>{label}</CharacteristicLabel>
           <SelectedCharacteristic>
-            {characteristics[label] ? `Selected: ${characteristics[label]} - ${characteristic[characteristics[label]]}` : 'None Selected'}
+            {characteristics[characteristicsData[label].id]
+              ? `Selected: ${characteristics[characteristicsData[label].id]} - ${characteristic[characteristics[characteristicsData[label].id]]}`
+              : 'None Selected'}
           </SelectedCharacteristic>
           {Object.entries(characteristic).map(([value, meaning]) => (
             <React.Fragment key={value}>
@@ -141,6 +116,7 @@ const ProductCharacteristics = () => {
                   name={label}
                   value={value}
                   onChange={handleRadioChange}
+                  checked={characteristics[characteristicsData[label].id] === Number(value)}
                 />
               </RadioButtonContainer>
               <MeaningContainer>{meaning}</MeaningContainer>

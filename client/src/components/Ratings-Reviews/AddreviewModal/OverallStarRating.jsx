@@ -9,10 +9,14 @@ const StarIcon = styled.i`
   margin-right: 5px;
 `;
 
-const OverallStarRating = () => {
-  const [rating, setRating] = useState(0);
+const OverallStarRating = ({ formData, handleChange }) => {
   const handleClick = (value) => {
-    setRating(value);
+    handleChange({
+      target: {
+        name: 'rating',
+        value,
+      },
+    });
   };
 
   return (
@@ -20,19 +24,19 @@ const OverallStarRating = () => {
     {[1, 2, 3, 4, 5].map((index) => (
       <StarIcon
         key={index}
-        filled={index <= rating}
-        className={`material-symbols-outlined ${index <= rating ? 'filled' : ''}`}
+        filled={index <= formData.rating }
+        className={`material-symbols-outlined ${index <= formData.rating ? 'filled' : ''}`}
         onClick={() => handleClick(index)}
         data-testid="star-icon">
       star
       </StarIcon>
     ))}
       <span>
-        {rating === 1 && 'Poor'}
-        {rating === 2 && 'Fair'}
-        {rating === 3 && 'Average'}
-        {rating === 4 && 'Good'}
-        {rating === 5 && 'Great'}
+        {formData.rating === 1 && 'Poor'}
+        {formData.rating === 2 && 'Fair'}
+        {formData.rating === 3 && 'Average'}
+        {formData.rating === 4 && 'Good'}
+        {formData.rating === 5 && 'Great'}
       </span>
     </div>
   );
