@@ -33,42 +33,14 @@ const QuestionAndReportBtns = styled.div`
 `;
 
 const Question = ({
-  question, getQuestions, helpfulQuestions, setHelpfulQuestions, setReportedQuestion,
+  question, getQuestions, questions, setQuestions,
+  setShowQuestions, setReportedQuestion, key, loadedQuestions,
 }) => {
   const [answers, setAnswers] = useState([]);
   const [showAnswers, setShowAnswers] = useState([]);
   const [loadedAnswers, setLoadedAnswers] = useState(false);
   const [helpfulAnswers, setHelpfulAnswers] = useState([]);
   const [displayModal, setDisplayModal] = useState(false);
-
-  // const getAnswers = (page) => {
-  //   let pageCount = page;
-  //   const count = 900;
-  //   let answersList = [];
-
-  //   const recursiveRequest = () => {
-  //     axios.get(`/classes/qa/questions/${question.question_id}/answers/`, {
-  //       params: {
-  //         page: pageCount,
-  //         count,
-  //       },
-  //     })
-  //       .then((results) => {
-  //         answersList = [...answersList, ...results.data];
-  //         if (results.data.length > 0) {
-  //           pageCount += 1;
-  //           recursiveRequest();
-  //         } else {
-  //           setAnswers(answersList);
-  //           setShowAnswers(answersList.slice(0, 4));
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.log(`Error getting answers from question ${question.question_body}`, error);
-  //       });
-  //   };
-  //   recursiveRequest();
-  // };
 
   const loadMoreAnswers = () => {
     setLoadedAnswers(true);
@@ -84,8 +56,20 @@ const Question = ({
     const questionId = question.question_id;
     axios.put(`/classes/qa/questions/${questionId}/helpful`, null)
       .then(() => {
-        setHelpfulQuestions([...helpfulQuestions, questionId]);
-        getQuestions(1);
+        localStorage[questionId] = questionId;
+        const updatedQuestion = {
+          ...question,
+          question_helpfulness: question.question_helpfulness + 1,
+        };
+        const updatedQuestions = [...questions, updatedQuestion];
+        const sortedArray = updatedQuestions.sort((a, b) => b.question_helpfulness
+        - a.question_helpfulness);
+        setQuestions(sortedArray);
+        if (loadedQuestions) {
+          setShowQuestions(sortedArray);
+        } else {
+          setShowQuestions(sortedArray.slice(0, 2));
+        }
       })
       .catch((error) => console.log('Error updating question helpfulness:', error));
   };
@@ -111,6 +95,25 @@ const Question = ({
     }
   };
 
+  const getAnswers = () => {
+    const questionId = question.question_id;
+    axios.get(`classes/qa/questions/${questionId}/answers`, {
+      params: {
+        page: 1,
+        count: 10,
+      },
+    })
+      .then((results) => {
+        setAnswers(results.data);
+        if (loadedAnswers) {
+          setShowAnswers(results.data);
+        } else {
+          setShowAnswers(results.data.slice(0, 2));
+        }
+      })
+      .catch((error) => console.log('Error getting answers after updating answer helpfulness', error));
+  };
+
   useEffect(() => {
     setAnswers(question.answersList);
     if (loadedAnswers) {
@@ -131,11 +134,12 @@ const Question = ({
   return (
     <div>
       {displayModal && <AnswerModal setDisplayModal={setDisplayModal}
-      questionId={question.question_id} getAnswers={getAnswers} question={question.question_body}/>}
+      questionId={question.question_id} getQuestions={getQuestions}
+       question={question.question_body}/>}
       <QuestionButtonContainer>
         <div><BoldTitle>Q: </BoldTitle>{question.question_body}</div>
         <QuestionAndReportBtns>
-            <div>Helpful? {!helpfulQuestions.includes(question.question_id)
+            <div>Helpful? {!localStorage[question.question_id]
               ? <QuestionButton onClick={updateQuestionHelpfulness}>
               Yes({question.question_helpfulness})</QuestionButton>
               : <span>Yes({question.question_helpfulness})</span>}
@@ -148,6 +152,7 @@ const Question = ({
           {question.answersList.length ? showAnswers.map((answer, i) => (
             <AnswerElement key={i}>
               <Answer answer={answer}
+              getAnswers={getAnswers}
               helpfulAnswers={helpfulAnswers}
               setHelpfulAnswers={setHelpfulAnswers}
               setReportedAnswer={setReportedAnswer}

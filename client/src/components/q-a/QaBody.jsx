@@ -16,8 +16,8 @@ const SearchBar = styled.input`
 `;
 
 const SearchTitle = styled.h3`
-font-family: ${(props) => props.theme.fontFamily};
-font-weight: ${(props) => props.theme.fontWeight.bold};
+ font-family: ${(props) => props.theme.fontFamily};
+ font-weight: ${(props) => props.theme.fontWeight.bold};
 font-size: 25px;
 margin-bottom: 10px;
 padding: 0 0 0 10px;
@@ -39,8 +39,8 @@ const BodyButton = styled.button`
 `;
 
 const QuestionElement = styled.li`
-  font-family: ${(props) => props.theme.fontFamily};
-  font-weight: ${(props) => props.theme.fontWeight.regular};
+ font-family: ${(props) => props.theme.fontFamily};
+ font-weight: ${(props) => props.theme.fontWeight.regular};
   margin-top: 15px;
   margin-bottom: 25px;
 `;
@@ -93,6 +93,7 @@ const QaBody = ({ productId, ScrollableList }) => {
             if (loadedQuestions) {
               setShowQuestions(updatedQuestions);
             } else {
+              console.log(updatedQuestions.slice(0, 2));
               setShowQuestions(updatedQuestions.slice(0, 2));
             }
           });
@@ -149,8 +150,13 @@ const QaBody = ({ productId, ScrollableList }) => {
       <ScrollableList style={{ listStyle: 'none', padding: 0 }}>
         {questions.length ? showQuestions.map((question, i) => (
           <QuestionElement key={i}>
-            <Question question={question} getQuestions={getQuestions}
-            setHelpfulQuestions={setHelpfulQuestions} helpfulQuestions={helpfulQuestions}
+            <Question
+            question={question}
+            getQuestions={getQuestions}
+            questions={questions}
+            setQuestions={setQuestions}
+            loadedQuestions={loadedQuestions}
+            setShowQuestions={setShowQuestions}
             setReportedQuestion={setReportedQuestion}/>
           </QuestionElement>
         )) : <li>Loading Questions...</li>}

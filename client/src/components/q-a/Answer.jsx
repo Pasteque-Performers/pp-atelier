@@ -15,9 +15,9 @@ const Answer = ({
     const answerId = answer.answer_id;
     axios.put(`/classes/qa/answers/${answerId}/helpful`, null)
       .then(() => {
-        setHelpfulAnswers([...helpfulAnswers, answerId]);
+        localStorage[answerId] = answerId;
         console.log('Sucessfully updated answer helpfulness');
-        getAnswers(1);
+        getAnswers();
       })
       .catch((error) => console.log('Error updating answer helpfulness', error));
   };
@@ -55,7 +55,7 @@ const Answer = ({
       alt="Answer Img"
       style={{ width: '200px', height: '150px' }}/>) : null }
       <div>By: {answer.answerer_name === 'Seller' ? <strong>{answer.answerer_name}</strong> : answer.answerer_name}, {formattedDate}</div>
-      <div>Helpful? {!helpfulAnswers.includes(answer.answer_id)
+      <div>Helpful? {!localStorage[answer.answer_id]
         ? <QuestionButton onClick={setAnswerHelpfulness}>Yes({answer.helpfulness})</QuestionButton>
         : <span>Yes({answer.helpfulness})</span>}
       </div>
