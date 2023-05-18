@@ -13,13 +13,55 @@ const ModalOverlay = styled.div`
   z-index: 9999;
   display: flex;
   justify-content: center;
-  align-item: center;
+  align-items: center;
+  padding: 40px;
 `;
 
 const QuestionForm = styled.form`
   background-color: white;
+  max-height: 1200px;
   padding: 20px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const CloseBtn = styled.input`
+  width: 70px;
+  height: 30px;
+  background-color: #100E04;
+  color: white;
+  border-radius: 25px;
+`;
+
+const SubmitBtn = styled.input`
+  width: 130px;
+  height: 30px;
+  background-color: #100E04;
+  color: white;
+  border-radius: 25px;
+`;
+
+const QuestionBody = styled.textarea`
+  width: 500px;
+  height: 350px;
+  display: block;
+  border-radius: 25px;
+  vertical-align: top;
+  padding: 10px;
+  font-size: 15px;
+  font-family: inherit;
+`;
+
+const UserInfo = styled.input`
+  width: 300px;
+  height: 30px;
+  display: block;
+  border-radius: 25px;
+  font-size: 15px;
+  padding: 0 0 0 10px;
+  font-family: inherit;
 `;
 
 const QuestionModal = ({ getQuestions, productId, setDisplayModal }) => {
@@ -43,23 +85,26 @@ const QuestionModal = ({ getQuestions, productId, setDisplayModal }) => {
   };
 
   return (
-    <ModalOverlay>
-      <button onClick={() => setDisplayModal(false)}>Close</button>
-      <QuestionForm onSubmit={() => {
+    <ModalOverlay onClick={() => setDisplayModal(false)}>
+      <QuestionForm onClick={(e) => e.stopPropagation()} onSubmit={() => {
         postQuestion();
         setDisplayModal(false);
       }}>
+        <CloseBtn type='submit' onClick={(e) => {
+          e.preventDefault();
+          setDisplayModal(false);
+        }} value='Close'/>
         <h1>Ask your question about the product</h1>
         <label>Your Question:
-          <input type='text' onChange={(e) => setBody(e.target.value)}/>
+          <QuestionBody onChange={(e) => setBody(e.target.value)} required maxLength={1000}/>
         </label>
         <label>Your Username:
-          <input type='text' onChange={(e) => setName(e.target.value)}/>
+          <UserInfo type='text' onChange={(e) => setName(e.target.value)} required maxLength={60}/>
         </label>
         <label>Your Email Address:
-          <input type='text' onChange={(e) => setEmail(e.target.value)}/>
+          <UserInfo type='text' onChange={(e) => setEmail(e.target.value)} required maxLength={60}/>
         </label>
-        <input type="submit" value="Submit Question"></input>
+        <SubmitBtn type="submit" value="Submit Question"/>
       </QuestionForm>
     </ModalOverlay>
   );
