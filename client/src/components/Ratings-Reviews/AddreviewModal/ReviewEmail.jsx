@@ -11,24 +11,16 @@ border-radius: 4px;
 resize: none;
 `;
 
-const ReviewEmail = () => {
-  const [email, setEmail] = useState('');
-
-  const handleSummaryChange = (event) => {
-    const { value } = event.target;
-    setEmail(value);
-  };
-
-  return (
+const ReviewEmail = ({ formData, handleChange }) => (
     <div>
         <EmailInput
         type='email'
         placeholder='Example: jackson11@gmail.com'
-        value={email}
-        onChange={handleSummaryChange}
-        maxLength={60}/>
+        value={formData.email}
+        onChange={handleChange}
+        maxLength={60}
+        name='email'/>
     </div>
-  );
-}
+);
 
 export default ReviewEmail;
