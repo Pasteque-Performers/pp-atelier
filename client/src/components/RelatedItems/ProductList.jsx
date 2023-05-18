@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import CreateRelated from './CreateRelated.jsx';
@@ -19,7 +19,7 @@ const ProductList = ({
         }} onClick={ previousHandler } onMouseEnter={() => { setPreviousHovered(true); }}
         onMouseLeave={() => { setPreviousHovered(false); }} />}
         </div>
-        <div className={`slider-container ${animationClass}`}>
+        <div className={`slider-container ${animationClass}`} data-testid='slider-container'>
     {list.map((product, index) => <CreateRelated
     key={index} id={product} handler={ (event) => { defaultHandler(event); }}
     defaultProduct={defaultProduct} list={list} imageList={imageList[index + currentPosition]}

@@ -72,7 +72,7 @@ const Overview = () => {
           </div>
           <div className="details-container">
             <Information product={product} />
-            <OverallStarRating />
+            {/* <OverallStarRating /> */}
             {selectedStyle && <AddToCart selectedStyle={selectedStyle} />}
           </div>
         </>

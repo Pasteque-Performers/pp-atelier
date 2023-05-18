@@ -26,6 +26,33 @@ describe('Related Products Component', () => {
 
     expect(table).toHaveProperty('tagName', 'TABLE');
   });
+
+  test('ProductList should have 4 items', () => {
+    const productIDs = [40349, 40345, 40348, 40346];
+    const exampleImage = [
+      {
+        photos: [
+          {
+            thumbnail_url: 'https://images.unsplash.com/photo-1477420143023-6a0e0b04b69a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80',
+            url: 'https://images.unsplash.com/photo-1477420143023-6a0e0b04b69a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80'
+          },
+        ],
+      },
+    ]
+    const exampleImageList = [exampleImage, exampleImage, exampleImage, exampleImage];
+    const exampleProducts = [{
+      id: 40349,
+      name: 'Pumped Up Kicks',
+      category: 'Kicks',
+      default_price: '89.00',
+    }];
+    const exampleProductsList = [exampleProducts, exampleProducts, exampleProducts,
+      exampleProducts];
+    const { getByTestId } = render(<ProductList list={productIDs} imageList={exampleImageList}
+      currentPosition={0} products={exampleProductsList}/>);
+    const relatedItems = getByTestId('slider-container');
+    expect(relatedItems.children.length).toBe(4);
+  });
 });
 
 describe('Q and A component', () => {
