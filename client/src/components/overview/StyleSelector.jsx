@@ -58,7 +58,6 @@ const StyleSelector = ({ productId, onStyleSelect }) => {
       </div>
     </div>
   );
-
 };
 
 export default StyleSelector;
