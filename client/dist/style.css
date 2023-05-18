@@ -77,3 +77,13 @@ body {
 .add{
   background-color: grey;
 }
+
+.slideEnter{
+  transform: translateX(-30%);
+  transition: transform 1s ease-in-out;
+}
+
+.slideExit{
+  transform: translateX(30%);
+  transition: transform 1s ease-in-out;
+}
