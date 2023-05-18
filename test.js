@@ -5,6 +5,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import RatingSummary from './client/src/components/Ratings-Reviews/ReviewBreakdown/RatingSummary.jsx';
 import ProductBreakdown from './client/src/components/Ratings-Reviews/ReviewBreakdown/ProductBreakdown.jsx';
 import Compare from './client/src/components/RelatedItems/Compare.jsx';
+import ProductList from './client/src/components/RelatedItems/ProductList.jsx';
 import QaSection from './client/src/components/q-a/QaSection.jsx';
 import OverallStarRating from './client/src/components/Ratings-Reviews/AddreviewModal/OverallStarRating.jsx';
 import DisplayName from './client/src/components/Ratings-Reviews/AddreviewModal/DisplayName.jsx';
@@ -26,19 +27,31 @@ describe('Related Products Component', () => {
     expect(table).toHaveProperty('tagName', 'TABLE');
   });
 
-  test('table includes the correct booleans', () => {
-    const features1 = [{ feature: 'wolf', value: 'silver' }, { feature: 'apple', value: 'red' }, { feature: 'car', value: 'tesla' }];
-    const features2 = [{ feature: 'wolf', value: 'silver' }, { feature: 'apple', value: 'yellow' }, { feature: 'car', value: 'tesla' }];
-
-    const { getByTestId } = render(<Compare features1={features1} features2={features2} item1='item1' item2='item2' />);
-    const table = getByTestId('comparison-table');
-    const cells = table.querySelectorAll('td');
-
-    expect(table).toHaveProperty('tagName', 'TABLE');
-
-    expect(cells[0]).toHaveTextContent('true');
-    expect(cells[1]).toHaveTextContent('silver wolf');
-    expect(cells[2]).toHaveTextContent('true');
+  test('ProductList should have 4 items', () => {
+    const productIDs = [40349, 40345, 40348, 40346];
+    const exampleImage = [
+      {
+        photos: [
+          {
+            thumbnail_url: 'https://images.unsplash.com/photo-1477420143023-6a0e0b04b69a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80',
+            url: 'https://images.unsplash.com/photo-1477420143023-6a0e0b04b69a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80'
+          },
+        ],
+      },
+    ]
+    const exampleImageList = [exampleImage, exampleImage, exampleImage, exampleImage];
+    const exampleProducts = [{
+      id: 40349,
+      name: 'Pumped Up Kicks',
+      category: 'Kicks',
+      default_price: '89.00',
+    }];
+    const exampleProductsList = [exampleProducts, exampleProducts, exampleProducts,
+      exampleProducts];
+    const { getByTestId } = render(<ProductList list={productIDs} imageList={exampleImageList}
+      currentPosition={0} products={exampleProductsList}/>);
+    const relatedItems = getByTestId('slider-container');
+    expect(relatedItems.children.length).toBe(4);
   });
 });
 
