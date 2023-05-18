@@ -1,9 +1,51 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import Question from './Question.jsx';
 import QuestionModal from './QuestionModal.jsx';
 
-const QaBody = ({ productId }) => {
+const SearchBar = styled.input`
+  font-family: ${(props) => props.theme.fontFamily};
+  font-weight: ${(props) => props.theme.fontWeight.light};
+  width: 400px;
+  height: 30px;
+  padding: 0 0 0 10px;
+  margin-bottom: 15px;
+  border-radius: 25px;
+  font-size: 15px;
+`;
+
+const SearchTitle = styled.h3`
+ font-family: ${(props) => props.theme.fontFamily};
+ font-weight: ${(props) => props.theme.fontWeight.bold};
+font-size: 25px;
+margin-bottom: 10px;
+padding: 0 0 0 10px;
+`;
+
+const BodyContainer = styled.div`
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const BodyButton = styled.button`
+  background-color: #100E04;
+  color: white;
+  width: 200px;
+  height: 30px;
+  margin-top: 20px;
+  border-radius: 25px;
+`;
+
+const QuestionElement = styled.li`
+ font-family: ${(props) => props.theme.fontFamily};
+ font-weight: ${(props) => props.theme.fontWeight.regular};
+  margin-top: 15px;
+  margin-bottom: 25px;
+`;
+
+const QaBody = ({ productId, ScrollableList }) => {
   const [questions, setQuestions] = useState([]);
   const [showQuestions, setShowQuestions] = useState([]);
   const [searching, setSearching] = useState(false);
@@ -12,37 +54,53 @@ const QaBody = ({ productId }) => {
   // Find a way to store this state in the cookie for user sessions if needed
   const [helpfulQuestions, setHelpfulQuestions] = useState([]);
 
-  const getQuestions = (page) => {
-    let pageCount = page;
-    const count = 100;
-    let questionsList = [];
+  const setReportedQuestion = (questionId) => {
+    const updatedQuestions = questions.filter((question) => question.question_id !== questionId);
+    setQuestions(updatedQuestions);
+    if (loadedQuestions === false) {
+      setShowQuestions(updatedQuestions.slice(0, 2));
+    } else {
+      setShowQuestions(updatedQuestions);
+    }
+  };
 
-    const recursiveRequest = () => {
-      axios.get('/classes/qa/questions', {
-        params: {
-          product_id: productId,
-          page: pageCount,
-          count,
-        },
-      })
-        .then((results) => {
-          questionsList = [...questionsList, ...results.data];
-          if (results.data.length > 0) {
-            pageCount += 1;
-            recursiveRequest();
-          } else if (loadedQuestions) {
-            setQuestions(questionsList);
-            setShowQuestions(questionsList);
-          } else {
-            setQuestions(questionsList);
-            setShowQuestions(questionsList.slice(0, 2));
-          }
+  const getQuestions = () => {
+    axios.get('/classes/qa/questions', {
+      params: {
+        product_id: productId,
+        page: 1,
+        count: 120,
+      },
+    })
+      .then((results) => {
+        const answerPromises = results.data.map((question) => axios.get(`/classes/qa/questions/${question.question_id}/answers`, {
+          params: {
+            page: 1,
+            count: 10,
+          },
         })
-        .catch((error) => {
-          console.log('Error getting questions from product', error);
-        });
-    };
-    recursiveRequest();
+          .then((response) => {
+            const updatedQuestion = {
+              ...question,
+              answersList: response.data,
+            };
+            return updatedQuestion;
+          })
+          .catch((error) => console.log(`Error getting answers for question: ${question.question_id}`, error)));
+        Promise.all(answerPromises)
+          .then((updatedQuestions) => {
+            setQuestions(updatedQuestions);
+            if (loadedQuestions) {
+              setShowQuestions(updatedQuestions);
+            } else {
+              console.log(updatedQuestions.slice(0, 2));
+              setShowQuestions(updatedQuestions.slice(0, 2));
+            }
+          });
+      })
+      .catch((error) => {
+        console.log('Error getting questions from product', error);
+      });
   };
 
   const loadMoreQuestions = () => {
@@ -69,7 +127,7 @@ const QaBody = ({ productId }) => {
   };
 
   useEffect(() => {
-    getQuestions(1);
+    getQuestions();
   }, [productId]);
 
   useEffect(() => {
@@ -81,26 +139,33 @@ const QaBody = ({ productId }) => {
   }, [displayModal]);
 
   return (
-    <div>
+    <BodyContainer>
       {displayModal && <QuestionModal getQuestions={getQuestions}
       productId={productId} setDisplayModal={setDisplayModal}/>}
-      <h3>Search for a Question</h3>
-      <input type="text" placeholder="Type in your question" onChange={(e) => searchQuestions(e.target.value)}/>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <SearchTitle>Search</SearchTitle>
+      <SearchBar type="text" placeholder="Search for a question" onChange={(e) => searchQuestions(e.target.value)}/>
+      <BodyButton onClick={() => setDisplayModal(true)}>Ask a Question</BodyButton>
+      {loadedQuestions && (<BodyButton
+      onClick={collapseQuestionsList}>Collapse Questions</BodyButton>)}
+      <ScrollableList style={{ listStyle: 'none', padding: 0 }}>
         {questions.length ? showQuestions.map((question, i) => (
-          <li key={i}>
-            <Question question={question} getQuestions={getQuestions}
-            setHelpfulQuestions={setHelpfulQuestions} helpfulQuestions={helpfulQuestions}/>
-          </li>
+          <QuestionElement key={i}>
+            <Question
+            question={question}
+            getQuestions={getQuestions}
+            questions={questions}
+            setQuestions={setQuestions}
+            loadedQuestions={loadedQuestions}
+            setShowQuestions={setShowQuestions}
+            setReportedQuestion={setReportedQuestion}/>
+          </QuestionElement>
         )) : <li>Loading Questions...</li>}
-      </ul>
+      </ScrollableList>
       {showQuestions.length < questions.length && searching === false && loadedQuestions === false
       && (
-      <button onClick={loadMoreQuestions}>Load More Questions</button>
+      <BodyButton onClick={loadMoreQuestions}>Load More Questions</BodyButton>
       )}
-      {loadedQuestions && (<button onClick={collapseQuestionsList}>Collapse Questions</button>)}
-      <button onClick={() => setDisplayModal(true)}>Ask a Question</button>
-    </div>
+    </BodyContainer>
   );
 };
 

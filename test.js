@@ -31,6 +31,7 @@ describe('Related Products Component', () => {
     expect(table).toHaveProperty('tagName', 'TABLE');
   });
 
+<<<<<<< HEAD
   test('ProductList should have 4 items', () => {
     const productIDs = [40349, 40345, 40348, 40346];
     const exampleImage = [
@@ -56,6 +57,21 @@ describe('Related Products Component', () => {
       currentPosition={0} products={exampleProductsList}/>);
     const relatedItems = getByTestId('slider-container');
     expect(relatedItems.children.length).toBe(4);
+=======
+  test('table includes the correct booleans', () => {
+    const features1 = [{ feature: 'wolf', value: 'silver' }, { feature: 'apple', value: 'red' }, { feature: 'car', value: 'tesla' }];
+    const features2 = [{ feature: 'wolf', value: 'silver' }, { feature: 'apple', value: 'yellow' }, { feature: 'car', value: 'tesla' }];
+
+    const { getByTestId } = render(<Compare features1={features1} features2={features2} item1='item1' item2='item2' />);
+    const table = getByTestId('comparison-table');
+    const cells = table.querySelectorAll('td');
+
+    expect(table).toHaveProperty('tagName', 'TABLE');
+
+    expect(cells[0]).toHaveTextContent('true');
+    expect(cells[1]).toHaveTextContent('silver wolf');
+    expect(cells[2]).toHaveTextContent('true');
+>>>>>>> main
   });
 
   test('CreateImage renders an image', () => {
