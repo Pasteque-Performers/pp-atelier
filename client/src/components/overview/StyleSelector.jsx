@@ -26,7 +26,7 @@ const StyleSelector = ({ productId, onStyleSelect }) => {
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {styles.map((style) => (
           <div key={style.style_id} style={{
-            position: 'relative', width: '25%', boxSizing: 'border-box', padding: '5px',
+            position: 'relative', width: '25%', boxSizing: 'border-box', padding: '5px 2px',
           }}>
             <img
               src={style.photos[0].thumbnail_url}
@@ -42,8 +42,8 @@ const StyleSelector = ({ productId, onStyleSelect }) => {
               position: 'absolute',
               top: '0',
               left: '0',
-              width: '60px',
-              height: '60px',
+              width: '65px',
+              height: '65px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -58,6 +58,7 @@ const StyleSelector = ({ productId, onStyleSelect }) => {
       </div>
     </div>
   );
+
 };
 
 export default StyleSelector;
