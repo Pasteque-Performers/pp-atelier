@@ -67,12 +67,13 @@ const Overview = () => {
       {product && (
         <>
           <div className="image-gallery-container">
-            <StyleSelector styles={product.styles} productId={product.id} onStyleSelect={setSelectedStyle} />
+            <StyleSelector styles={product.styles} productId={product.id}
+            onStyleSelect={setSelectedStyle} />
             {selectedStyle && <ImageGallery selectedStyle={selectedStyle} />}
           </div>
           <div className="details-container">
             <Information product={product} />
-            <OverallStarRating />
+            {/* <OverallStarRating /> */}
             {selectedStyle && <AddToCart selectedStyle={selectedStyle} />}
           </div>
         </>
