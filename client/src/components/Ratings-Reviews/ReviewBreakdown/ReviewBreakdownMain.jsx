@@ -5,7 +5,7 @@ import RatingSummary from './RatingSummary.jsx';
 import ProductBreakdown from './ProductBreakdown.jsx';
 
 const ReviewBreakdownMain = () => (
-    <div>This is the review Breakdown
+    <div>
     <RatingSummary/>
     <ProductBreakdown/>
     </div>

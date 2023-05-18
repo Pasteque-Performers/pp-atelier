@@ -10,23 +10,40 @@ const RelatedItems = () => {
   const [currentList, setCurrentList] = useState([]);
   const [showNext, toggleShowNext] = useState(true);
   const [showPrevious, toggleShowPrevious] = useState(false);
-  const defaultHandler = (e) => {
-    setDefault(e);
+  const [animationClass, setAnimationClass] = useState('');
+  const [imageList, setImageList] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [currentPosition, setCurrentPosition] = useState(0);
+
+  const defaultHandler = (event) => {
+    setDefault(event);
+    setCurrentPosition(0);
   };
+
   const nextHandler = () => {
     const first = list.indexOf(currentList[0]);
-    setCurrentList(list.slice(first + 1, first + 5));
     if (currentList[currentList.length - 1] === list[list.length - 2]) {
       toggleShowNext(false);
     }
     toggleShowPrevious(true);
+    setAnimationClass('slideEnter');
+    setTimeout(() => {
+      setAnimationClass('');
+      setCurrentPosition(first + 1);
+      setCurrentList(list.slice(first + 1, first + 5));
+    }, 501);
   };
   const previousHandler = () => {
     const first = list.indexOf(currentList[0]);
-    setCurrentList(list.slice(first - 1, first + 3));
     if (currentList[0] === list[1]) {
       toggleShowPrevious(false);
     }
+    setAnimationClass('slideExit');
+    setTimeout(() => {
+      setCurrentPosition(first - 1);
+      setAnimationClass('');
+      setCurrentList(list.slice(first - 1, first + 3));
+    }, 500);
     toggleShowNext(true);
   };
   useEffect(() => {
@@ -36,8 +53,12 @@ const RelatedItems = () => {
       params: {
         id: defaultProductID,
       },
-    })
-      .then((res) => { setDefaultProduct(res.data); });
+    }).then((res) => {
+      setDefaultProduct(res.data);
+    });
+  }, [defaultProductID]);
+
+  useEffect(() => {
     axios({
       url: '/classes/productsquery',
       method: 'get',
@@ -45,24 +66,63 @@ const RelatedItems = () => {
         page: 'related',
         id: defaultProductID,
       },
-    }, [defaultProductID])
-      .then((res) => { setList(res.data); setCurrentList([...res.data.slice(0, 4)]);
-        if (res.data.length <= 4) { toggleShowNext(false); } else {toggleShowNext(true); } });
+    }).then((res) => {
+      setList(res.data);
+      setCurrentList([...res.data.slice(0, 4)]);
+      if (res.data.length <= 4) {
+        toggleShowNext(false);
+      } else {
+        toggleShowNext(true);
+      }
+    });
   }, [defaultProductID]);
+
+  useEffect(() => {
+    Promise.all(
+      list.map((item) => axios({
+        url: '/classes/productsquery',
+        method: 'get',
+        params: {
+          id: item,
+        },
+      })
+        .then((res) => (res.data))),
+    ).then((res) => {
+      setProducts(res);
+    });
+  }, [list]);
+
+  useEffect(() => {
+    Promise.all(
+      list.map((item) => axios({
+        url: '/classes/productsquery',
+        method: 'get',
+        params: {
+          id: item,
+          page: 'styles',
+        },
+      })
+        .then((res) => res.data.results)),
+    ).then((results) => {
+      setImageList(results);
+    });
+  }, [list]);
+
   return (
-    <>
+    <div>
     <div>
       <h2>related products</h2>
-      {showPrevious && <button onClick={ previousHandler }>previous</button>}
-  <ProductList list={currentList} defaultProduct={defaultProduct}
-  defaultHandler={defaultHandler}/>
-      {showNext && <button onClick={ nextHandler }>next</button>}
+  <ProductList list={currentList} products={products} defaultProduct={defaultProduct}
+  defaultHandler={(event) => { defaultHandler(event); }} nextHandler={nextHandler}
+  showNext={showNext}
+   previousHandler={previousHandler} showPrevious={showPrevious} animationClass={animationClass}
+   imageList={imageList} currentPosition={currentPosition}/>
     </div>
     <div>
     <h2>your outfit</h2>
     <Outfit defaultProduct={defaultProduct} />
     </div>
-    </>
+    </div>
   );
 };
 
