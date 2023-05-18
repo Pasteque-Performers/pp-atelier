@@ -44,27 +44,43 @@ const FileInputLabel = styled.label`
   }
 `;
 
-const UploadPhotos = () => {
-  const [selectedPhotos, setSelectedPhotos] = useState([]);
+const UploadPhotos = ({ formData, handleChange }) => {
   const handlePhotoInputChange = (event) => {
     const { files } = event.target;
     const selected = Array.from(files).slice(0, 5);
-    setSelectedPhotos(selected);
+
+    Promise.all(selected.map((file) => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => (resolve(reader.result));
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    })))
+      .then((dataUrls) => {
+        handleChange({
+          target: {
+            name: 'photos',
+            value: dataUrls,
+          },
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
     <div>
-    <ImagePreviewContainer>
-      {selectedPhotos.map((photo, index) => (
-        <ImagePreview key={index}>
-          <Image src={URL.createObjectURL(photo)} alt={photo.name} />
-          <ImageName>{photo.name}</ImageName>
-        </ImagePreview>
-      ))}
-    </ImagePreviewContainer>
-    <FileInputLabel htmlFor="photo-upload">Upload Photos</FileInputLabel>
-    <FileInput id="photo-upload" type='file' multiple onChange={handlePhotoInputChange} />
-  </div>
+      <ImagePreviewContainer>
+        {formData.photos.map((photo, index) => (
+          <ImagePreview key={index}>
+            <Image src={photo} />
+            <ImageName>{`Image ${index + 1}`}</ImageName>
+          </ImagePreview>
+        ))}
+      </ImagePreviewContainer>
+      <FileInputLabel htmlFor="photo-upload">Upload Photos</FileInputLabel>
+      <FileInput id="photo-upload" type='file' multiple onChange={handlePhotoInputChange} />
+    </div>
   );
 };
 

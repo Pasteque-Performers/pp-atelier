@@ -15,22 +15,14 @@ const SummaryTextarea = styled.textarea`
   resize: none;
 `;
 
-const ReviewSummary = () => {
-  const [summary, setSummary] = useState('');
-
-  const handleSummaryChange = (event) => {
-    const { value } = event.target;
-    setSummary(value);
-  };
-
-  return (
+const ReviewSummary = ({ formData, handleChange }) => (
     <SummaryContainer>
       <SummaryTextarea placeholder='Example: Best purchase ever!'
-      value={summary}
-      onChange={handleSummaryChange}
-      maxLength={60}/>
+      value={formData.summary}
+      onChange={handleChange}
+      maxLength={60}
+      name='summary'/>
     </SummaryContainer>
-  );
-};
+);
 
 export default ReviewSummary;

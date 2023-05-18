@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const ReviewContainer = styled.div`
@@ -28,24 +28,21 @@ const CharacterCount = styled.div`
   color: ${(props) => (props.count >= 0 ? '#333' : '#f00')};
 `;
 
-const ReviewBody = () => {
-  const [reviewBody, setReviewBody] = useState();
+const ReviewBody = ({ formData, handleChange }) => {
   const [count, setCount] = useState(50);
 
-  const handleChange = (event) => {
-    const { value } = event.target;
-    setReviewBody(value);
-    setCount(50 - value.length);
-  };
+  useEffect(() => {
+    setCount(50 - formData.body.length);
+  }, [formData.body]);
 
   return (
   <ReviewContainer>
       <ReviewTextArea
         placeholder='Why did you like the product or not?'
-        value={reviewBody}
+        value={formData.body}
         onChange={handleChange}
         maxLength={1000}
-        />
+        name='body'/>
         <CharacterCount count={count}>
           {count >= 0 ? `Minimum required characters left: ${count}` : 'Minimum reached'}
         </CharacterCount>

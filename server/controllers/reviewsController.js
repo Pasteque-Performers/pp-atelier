@@ -21,7 +21,7 @@ module.exports = {
     return axios(options)
       .then((response) => {
         console.log('Successfully got review data', response.data);
-        res.status(200).send(response.data);
+        res.status(200).json(response.data);
       })
       .catch((err) => {
         console.error('Error Getting review data', err);
@@ -29,15 +29,16 @@ module.exports = {
       });
   },
   getMeta: (req, res) => {
+    const { productId } = req.query;
     const options = {
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta',
+      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta/',
       method: 'get',
       headers: {
         'User-Agent': 'request',
         Authorization: process.env.TOKEN,
       },
       params: {
-        product_id: 40344,
+        product_id: productId,
       },
     };
 
@@ -47,7 +48,50 @@ module.exports = {
         res.status(200).send(response.data);
       })
       .catch((err) => {
-        console.error('Error getting meta data fro reviews', err);
+        console.error('Error getting meta data from reviews', err);
+        res.status(500).send();
+      });
+  },
+
+  post: (req, res) => {
+    console.log('this is req.body >>>>>>>>>>>>>>>>', req.body);
+    const {
+      body,
+      name,
+      rating,
+      summary,
+      photos,
+      email,
+      recommend,
+      characteristics,
+    } = req.body;
+    const productId = 40347;
+    const options = {
+      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
+      method: 'post',
+      headers: {
+        'User-Agent': 'request',
+        Authorization: process.env.TOKEN,
+      },
+      data: {
+        product_id: productId,
+        rating,
+        summary,
+        name,
+        body,
+        email,
+        photos,
+        recommend,
+        characteristics,
+      },
+    };
+    axios.post(options)
+      .then((response) => {
+        console.log('Successfully posted review data', response.data)
+        res.status(201).send(response.data);
+      })
+      .catch((err) => {
+        console.error('Error posting review data', err);
         res.status(500).send();
       });
   },
