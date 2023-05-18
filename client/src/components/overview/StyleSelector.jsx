@@ -9,7 +9,7 @@ const StyleSelector = ({ productId, onStyleSelect }) => {
     axios({
       params: { id: productId, page: 'styles' },
       method: 'get',
-      url: 'http://localhost:3000/classes/productsquery/',
+      url: '/classes/productsquery/',
     })
       .then((response) => {
         setStyles(response.data.results);

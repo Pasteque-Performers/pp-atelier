@@ -1,41 +1,88 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div``;
+const ImageContainer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+`;
+const ThumbnailContainer = styled.div`
+  display: flex;
+  overflowX: 'scroll';
+`;
+const ThumbnailImage = styled.img`
+  width: ${(props) => (props.isExpanded ? '50px' : '70px')};
+  height: ${(props) => (props.isExpanded ? '50px' : '70px')};
+  margin: 5px;
+`;
+const MainImage = styled.img`
+  width: ${(props) => (props.isExpanded ? '1000px' : '500px')};
+  height: ${(props) => (props.isExpanded ? '1000px' : '500px')};
+`;
 
 const ImageGallery = ({ selectedStyle }) => {
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  // Set the first image as the selected image when a new style is selected
-  React.useEffect(() => {
-    if (selectedStyle && selectedStyle.photos && selectedStyle.photos.length > 0) {
-      setSelectedImage(selectedStyle.photos[0].url);
-    }
+  useEffect(() => {
+    setSelectedImageIndex(0);
   }, [selectedStyle]);
 
-  const handleThumbnailClick = (url) => {
-    setSelectedImage(url);
+  const handlePrevClick = () => {
+    setSelectedImageIndex((oldIndex) => {
+      if (oldIndex === 0) return selectedStyle.photos.length - 1;
+      return oldIndex - 1;
+    });
+  };
+
+  const handleNextClick = () => {
+    setSelectedImageIndex((oldIndex) => {
+      if (oldIndex === selectedStyle.photos.length - 1) return 0;
+      return oldIndex + 1;
+    });
+  };
+
+  const handleExpand = () => {
+    setIsExpanded(true);
+  };
+
+  const handleMinimize = () => {
+    setIsExpanded(false);
   };
 
   return (
-    <div>
+    <Container>
       {selectedStyle && selectedStyle.photos && (
         <div>
-          <div>
-            <img src={selectedImage} alt="Selected" style={{ width: '500px', height: '500px' }} />
-          </div>
+          <ImageContainer>
+            <button onClick={handlePrevClick}>Prev</button>
+            <MainImage
+              src={selectedStyle.photos[selectedImageIndex].url}
+              alt="Selected"
+              isExpanded={isExpanded}
+            />
+            <button onClick={handleNextClick}>Next</button>
+          </ImageContainer>
 
-          <div style={{ display: 'flex', overflowX: 'scroll' }}>
-            {selectedStyle.photos.slice(0, 7).map((photo, index) => (
-              <img
+          <button onClick={isExpanded ? handleMinimize : handleExpand}>
+            {isExpanded ? 'Minimize' : 'Expand'}
+          </button>
+
+          <ThumbnailContainer>
+            {selectedStyle.photos.map((photo, index) => (
+              <ThumbnailImage
                 key={index}
                 src={photo.thumbnail_url}
                 alt="Thumbnail"
-                style={{ width: '70px', height: '70px', margin: '5px' }}
-                onClick={() => handleThumbnailClick(photo.url)}
+                isExpanded={isExpanded}
+                onClick={() => setSelectedImageIndex(index)}
               />
             ))}
-          </div>
+          </ThumbnailContainer>
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 

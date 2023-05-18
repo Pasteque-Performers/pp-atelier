@@ -1,4 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+
+// Here are the styled-components:
+
+const CartContainer = styled.div``;
+
+const Message = styled.div`
+  color: red;
+`;
+
+const SelectSize = styled.select`
+  width: 200px;
+  padding: 5px;
+  margin: 5px;
+`;
+
+const SelectQuantity = styled.select`
+  width: 60px;
+  padding: 5px;
+  margin: 5px;
+`;
+
+const AddToCartButton = styled.button`
+  padding: 10px;
+  margin: 5px;
+`;
+
+// And here's your AddToCart component:
 
 const AddToCart = ({ selectedStyle }) => {
   const [sizes, setSizes] = useState([]);
@@ -53,19 +81,19 @@ const AddToCart = ({ selectedStyle }) => {
   };
 
   return (
-    <div>
-      {sizeMessage && <div>{sizeMessage}</div>}
-      <select ref={sizeDropdownRef} value={selectedSize} onChange={handleSizeChange} open={isSizeDropdownOpen}>
+    <CartContainer>
+      {sizeMessage && <Message>{sizeMessage}</Message>}
+      <SelectSize ref={sizeDropdownRef} value={selectedSize} onChange={handleSizeChange} open={isSizeDropdownOpen}>
         <option value="">Select Size</option>
         {sizes.length > 0 ? sizes.map((size) => <option key={size} value={size}>{size}</option>) : <option value="OUT OF STOCK">OUT OF STOCK</option>}
-      </select>
+      </SelectSize>
 
-      <select value={selectedQuantity} onChange={handleQuantityChange} disabled={selectedSize === '' || selectedSize === 'OUT OF STOCK'}>
+      <SelectQuantity value={selectedQuantity} onChange={handleQuantityChange} disabled={selectedSize === '' || selectedSize === 'OUT OF STOCK'}>
         {quantityOptions.map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)}
-      </select>
+      </SelectQuantity>
 
-      {sizes.length > 0 && <button onClick={handleAddToCart} disabled={!selectedSize || !selectedQuantity || selectedSize === 'OUT OF STOCK' || selectedQuantity === '-'}>Add to Cart</button>}
-    </div>
+      {sizes.length > 0 && <AddToCartButton onClick={handleAddToCart} disabled={!selectedSize || !selectedQuantity || selectedSize === 'OUT OF STOCK' || selectedQuantity === '-'}>Add to Cart</AddToCartButton>}
+    </CartContainer>
   );
 };
 
