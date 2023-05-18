@@ -62,12 +62,22 @@ body {
   display: flex;
   background-color: grey;
   top: 35%;
+  height: 200px;
 }
 
-.carouselImage{
-  width: 150px;
-  height: 175px;
-  margin: 5px;
+.carousel{
+  overflow: hidden;
+}
+
+.inner{
+  white-space: nowrap;
+  transition: transform 0.3s;
+  width: 600px;
+}
+
+.carouselItem{
+  display: inline-flex;
+  height: 200px;
 }
 
 .rating{

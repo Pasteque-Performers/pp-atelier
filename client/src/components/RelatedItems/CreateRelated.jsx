@@ -18,12 +18,12 @@ const CreateRelated = ({
   const [images, setImages] = useState([]);
   const [hoveredOnDefaultImage, setHoveredOnDefaultImage] = useState(false);
   const [hoveredOnImages, setHoveredOnImages] = useState(false);
-  const [currentImages, setCurrentImages] = useState([]);
   const [showNext, toggleShowNext] = useState(false);
   const [showPrevious, toggleShowPrevious] = useState(false);
   const [starHovered, setStarHovered] = useState(false);
   const [loading, setLoading] = useState(true);
   const [productLoading, setProductLoading] = useState(true);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     if (product) {
@@ -56,13 +56,11 @@ const CreateRelated = ({
   };
 
   const nextHandler = () => {
-    const first = imageList.indexOf(currentImages[0]);
-    setCurrentImages(imageList.slice(first + 1, first + 5));
+    setActive(active + 1);
   };
 
   const previousHandler = () => {
-    const first = imageList.indexOf(currentImages[0]);
-    setCurrentImages(imageList.slice(first - 1, first + 3));
+    setActive(active - 1);
   };
 
   useEffect(() => {
@@ -74,7 +72,6 @@ const CreateRelated = ({
   useEffect(() => {
     if (imageList !== undefined) {
       setImage(imageList[0].photos[0].thumbnail_url);
-      setCurrentImages(imageList.slice(0, 4));
       setImages(imageList);
     }
   }, [id, imageList, loading, defaultProduct]);
@@ -104,25 +101,25 @@ const CreateRelated = ({
   useEffect(() => {
     if (!hoveredOnDefaultImage && !hoveredOnImages) {
       toggleShowImages(false);
+      setActive(0);
     }
   }, [hoveredOnDefaultImage, hoveredOnImages]);
 
   useEffect(() => {
-    if (imageList !== undefined) {
-      if (images.length > currentImages.length) {
-        toggleShowNext(true);
-      }
-      if (images.indexOf(currentImages[0]) > 0) {
-        toggleShowPrevious(true);
-      }
-      if (images.indexOf(currentImages[0]) === 0) {
-        toggleShowPrevious(false);
-      }
-      if (images.indexOf(currentImages[currentImages.length - 1]) === imageList.length - 1) {
-        toggleShowNext(false);
-      }
+    if (images.length < 4) {
+      toggleShowNext(false);
     }
-  }, [currentImages, images]);
+    if (active < images.length - 5) {
+      toggleShowNext(true);
+    } else {
+      toggleShowNext(false);
+    }
+    if (active > 0) {
+      toggleShowPrevious(true);
+    } else {
+      toggleShowPrevious(false);
+    }
+  }, [images, active]);
 
   return (
     <div className="relatedItem" onClick={() => { handler(id); }}>
@@ -143,9 +140,9 @@ const CreateRelated = ({
     <img className="image" src={image} onMouseEnter={() => { toggleShowImages(true); setHoveredOnDefaultImage(true); }} onMouseLeave={() => {
       setHoveredOnDefaultImage(false);
     }}/>
-      {showImages && <Images setHoveredOnImages={setHoveredOnImages} images={currentImages}
+      {showImages && <Images setHoveredOnImages={setHoveredOnImages} images={images}
        showNext={showNext} nextHandler={nextHandler} showPrevious={showPrevious}
-       previousHandler={previousHandler}/>}
+       previousHandler={previousHandler} active={active}/>}
     <div className="trait category">Category: {category}</div>
     <div className="trait name">Product Name: {name}</div>
     <div className="trait price">Price: {price}</div>

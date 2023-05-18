@@ -1,11 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent } from '@testing-library/react';
+import {
+  render, screen, fireEvent,
+} from '@testing-library/react';
 import RatingSummary from './client/src/components/Ratings-Reviews/ReviewBreakdown/RatingSummary.jsx';
 import ProductBreakdown from './client/src/components/Ratings-Reviews/ReviewBreakdown/ProductBreakdown.jsx';
 import Compare from './client/src/components/RelatedItems/Compare.jsx';
 import ProductList from './client/src/components/RelatedItems/ProductList.jsx';
+import RelatedItems from './client/src/components/RelatedItems/RelatedItems.jsx';
+import CreateImage from './client/src/components/RelatedItems/CreateImage.jsx';
 import QaSection from './client/src/components/q-a/QaSection.jsx';
 import OverallStarRating from './client/src/components/Ratings-Reviews/AddreviewModal/OverallStarRating.jsx';
 import DisplayName from './client/src/components/Ratings-Reviews/AddreviewModal/DisplayName.jsx';
@@ -38,7 +42,7 @@ describe('Related Products Component', () => {
           },
         ],
       },
-    ]
+    ];
     const exampleImageList = [exampleImage, exampleImage, exampleImage, exampleImage];
     const exampleProducts = [{
       id: 40349,
@@ -52,6 +56,15 @@ describe('Related Products Component', () => {
       currentPosition={0} products={exampleProductsList}/>);
     const relatedItems = getByTestId('slider-container');
     expect(relatedItems.children.length).toBe(4);
+  });
+
+  test('CreateImage renders an image', () => {
+    const exampleUrl = 'https://images.unsplash.com/photo-1477420143023-6a0e0b04b69a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80';
+    const { getByRole } = render(<CreateImage image={exampleUrl}/>);
+
+    const getImage = getByRole('img');
+    expect(getImage).toBeInTheDocument();
+    expect(getImage).toHaveAttribute('src', exampleUrl);
   });
 });
 

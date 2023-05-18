@@ -4,7 +4,7 @@ import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import CreateImage from './CreateImage.jsx';
 
 const Images = ({
-  setHoveredOnImages, images, showNext, nextHandler, showPrevious, previousHandler,
+  setHoveredOnImages, images, showNext, nextHandler, showPrevious, previousHandler, active,
 }) => {
   const [nextHovered, setNextHovered] = useState(false);
   const [previousHovered, setPreviousHovered] = useState(false);
@@ -19,8 +19,12 @@ const Images = ({
       }} onMouseEnter={() => { setPreviousHovered(true); }}
       onMouseLeave={() => { setPreviousHovered(false); }}/>}
     </div>
+    <div className='carousel'>
+      <div className='inner' style={{ transform: `translateX(-${active * 25}%)` }}>
     {images.map((image, index) => <CreateImage key={index}
-    image={image.photos[0].thumbnail_url}/>)}
+    image={image.photos[0].thumbnail_url} width={'25%'}/>)}
+      </div>
+    </div>
       <div className="toggleCurrent">
       {showNext && <FontAwesomeIcon icon={faCaretRight} style={{
         color: nextHovered ? 'Ea2213' : 'EC6F7F',

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const CreateImage = ({ image }) => (
-  <img className="carouselImage" src={image}/>
+const CreateImage = ({ image, width }) => (
+    <img className="carouselItem" src={image} style={{ width: width }} />
 );
 
 export default CreateImage;
