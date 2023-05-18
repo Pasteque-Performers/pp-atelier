@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const StarIcon = styled.i`
-  font-size: 24px;
-  color: ${(props) => (props.filled ? '#ffd700' : 'lightgray')};
-  cursor: pointer;
-  font-variation-settings: ${(props) => (props.filled ? "'FILL' 1" : "'FILL' 0")};
-  margin-right: 5px;
+font-size: 24px;
+color: ${({ filled }) => (filled ? '#ffd700' : 'lightgray')};
+cursor: pointer;
+font-variation-settings: ${({ filled }) => (filled ? "'FILL' 1" : "'FILL' 0")};
+margin-right: 5px;
 `;
 
 const OverallStarRating = ({ formData, handleChange }) => {
@@ -23,13 +23,13 @@ const OverallStarRating = ({ formData, handleChange }) => {
     <div>
     {[1, 2, 3, 4, 5].map((index) => (
       <StarIcon
-        key={index}
-        filled={index <= formData.rating }
-        className={`material-symbols-outlined ${index <= formData.rating ? 'filled' : ''}`}
-        onClick={() => handleClick(index)}
-        data-testid="star-icon">
-      star
-      </StarIcon>
+      key={index}
+      filled={index <= formData.rating}
+      className={`material-symbols-outlined ${index <= formData.rating ? 'filled' : ''}`}
+      onClick={() => handleClick(index)}
+      data-testid="star-icon">
+    star
+    </StarIcon>
     ))}
       <span>
         {formData.rating === 1 && 'Poor'}
