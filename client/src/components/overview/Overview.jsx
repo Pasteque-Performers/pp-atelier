@@ -30,11 +30,7 @@ const Overview = () => {
           </div>
           <div className="details-container">
             <Information product={product} />
-<<<<<<< HEAD
-            {/* <OverallStarRating /> */}
-=======
             <StyleSelector styles={product.styles} productId={product.id} onStyleSelect={setSelectedStyle} />
->>>>>>> styling-cleanup
             {selectedStyle && <AddToCart selectedStyle={selectedStyle} />}
           </div>
         </>
