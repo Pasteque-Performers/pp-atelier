@@ -7,14 +7,13 @@ import AddToCart from './AddToCart.jsx';
 import ImageGallery from './ImageGallery.jsx';
 
 const OverviewContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
 
-  @media (max-width: 1000px) {
-    flex-direction: column;
-    align-items: center;
-  }
+  font-family: 'Manrope', sans-serif;
+  display: flex;
+  justify-content: space-around;
+  padding: 10 10px;
+  max-width: 1400px;
+
 `;
 
 const Title = styled.h1`
@@ -29,19 +28,19 @@ const ImageGalleryContainer = styled.div`
 const DetailsContainer = styled.div`
 `;
 
-const Overview = () => {
+const Overview = ({ productId }) => {
   const [product, setProduct] = useState(null);
   const [selectedStyle, setSelectedStyle] = useState(null);
 
   useEffect(() => {
-    axios.get('classes/products')
+    axios.get(`classes/products/${productId}`)
       .then((response) => {
-        setProduct(response.data[0]);
+        setProduct(response.data);
       })
       .catch((error) => {
         console.error('Error fetching data: ', error.response || error);
       });
-  }, []);
+  }, [productId]);
 
   return (
     <OverviewContainer>

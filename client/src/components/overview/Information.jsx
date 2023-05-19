@@ -1,18 +1,26 @@
 import React from 'react';
-import styled from 'styled-components';
+import { createGlobalStyle, styled } from 'styled-components';
 import StaticStarRating from './StaticStarRating.jsx';
 
+const GlobalStyle = createGlobalStyle`
+  html {
+    scroll-behavior: smooth;
+  }
+`;
+
 const ProductCardContainer = styled.div`
+  display: block;
+  justify-content: space-around;
   padding: 16px;
   color: #333;
 `;
 
 const ProductName = styled.h3`
-  text-shadow: 1px 1px #eb3b5a;
+  font-weight: 900;
 `;
 
 const ProductSlogan = styled.p`
-
+  font-style: italic;
 `;
 
 const ProductDescription = styled.p`
@@ -21,11 +29,21 @@ const ProductDescription = styled.p`
 `;
 
 const ProductCategory = styled.p`
-
+  color: #c2c2c2;
 `;
 
 const ProductPrice = styled.p`
+  font-weight: bold;
+`;
 
+const StyledScrollLink = styled.a`
+  color: #20bf55;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  &:hover {
+    color: #eb3b5a;
+  }
 `;
 
 const ProductCard = ({ product }) => {
@@ -42,14 +60,18 @@ const ProductCard = ({ product }) => {
   } = product;
 
   return (
+    <>
+    <GlobalStyle />
     <ProductCardContainer>
       <ProductName>{name}</ProductName>
       <ProductSlogan>{slogan}</ProductSlogan>
       <StaticStarRating product={product} />
+      <StyledScrollLink href="#reviews">see all reviews</StyledScrollLink>
       <ProductDescription>{description}</ProductDescription>
       <ProductCategory>{category}</ProductCategory>
       <ProductPrice>${(default_price && !isNaN(parseFloat(default_price))) ? parseFloat(default_price).toFixed(2) : 'N/A'}</ProductPrice>
     </ProductCardContainer>
+    </>
   );
 };
 

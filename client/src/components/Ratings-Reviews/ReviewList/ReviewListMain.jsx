@@ -19,14 +19,22 @@ const ButtonContainer = styled.div`
 const ReviewButton = styled.button`
   padding: 10px 20px;
   border: none;
-  background-color: #20bf55; /* Green color */
+  background-color: #20bf55;
   color: white;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease; /* Make the hover transition smooth */
+  transition: all 0.3s ease;
   &:hover {
-    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+    background-color: #eb3b5a;
   }
+`;
+const Title = styled.h2`
+    margin-top: 0;
+    color: #333;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Manrope', sans-serif;
+    text-align: center;
 `;
 
 const ReviewListMain = ({ reviews, metaData, productId }) => {
@@ -49,6 +57,7 @@ const ReviewListMain = ({ reviews, metaData, productId }) => {
 
   return (
     <ReviewListContainer>
+      <Title>Customer Reviews</Title>
       {displayedReviews.map((review) => <ReviewListTile review={review} key={review.review_id} />)}
       <ButtonContainer>
         {reviews.length > displayedReviews.length

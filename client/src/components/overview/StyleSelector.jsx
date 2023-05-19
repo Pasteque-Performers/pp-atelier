@@ -6,6 +6,7 @@ const StyleContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 400px;
+  justify-content: center;
 `;
 
 const StyleItem = styled.div`
@@ -52,12 +53,12 @@ const StyleSelector = ({ productId, onStyleSelect }) => {
       .catch((error) => {
         console.error('Error fetching style data: ', error.response || error);
       });
-  }, [onStyleSelect]);
+  }, [productId, onStyleSelect]);
 
   return (
     <StyleContainer>
-      {styles.map((style) => (
-        <StyleItem key={style.style_id}>
+      {styles.map((style, index) => (
+        <StyleItem key={index}>
           <Thumbnail
             src={style.photos[0].thumbnail_url}
             alt={style.name}
