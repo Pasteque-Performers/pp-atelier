@@ -5,6 +5,7 @@ const EmailInput = styled.input`
 width: 60%;
 height: 15px;
 padding: 6px;
+font-family: 'Manrope', sans-serif;
 font-size: 12px;
 border: 1px solid #ccc;
 border-radius: 4px;

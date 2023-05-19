@@ -3,6 +3,9 @@ require('dotenv').config();
 
 module.exports = {
   get: (req, res) => {
+    const {
+      productId, page, count, sort,
+    } = req.query;
     const options = {
       url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
       method: 'get',
@@ -11,10 +14,10 @@ module.exports = {
         Authorization: process.env.TOKEN,
       },
       params: {
-        product_id: 40344,
-        page: 1,
-        count: 5,
-        sort: 'newest',
+        product_id: productId,
+        page,
+        count,
+        sort,
       },
     };
 
@@ -64,13 +67,12 @@ module.exports = {
       email,
       recommend,
       characteristics,
+      productId,
     } = req.body;
-    const productId = 40347;
     const options = {
       url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
       method: 'post',
       headers: {
-        'User-Agent': 'request',
         Authorization: process.env.TOKEN,
       },
       data: {
@@ -85,9 +87,9 @@ module.exports = {
         characteristics,
       },
     };
-    axios.post(options)
+    axios(options)
       .then((response) => {
-        console.log('Successfully posted review data', response.data)
+        console.log('Successfully posted review data', response.data);
         res.status(201).send(response.data);
       })
       .catch((err) => {
