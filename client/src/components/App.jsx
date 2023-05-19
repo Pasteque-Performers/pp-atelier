@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Overview from './overview/Overview.jsx';
 import QaSection from './q-a/QaSection.jsx';
@@ -7,13 +7,27 @@ import RatingsAndReviewsMain from './Ratings-Reviews/RatingsAndReviewsMain.jsx';
 
 const App = () => {
   const [productId, setProductId] = useState(40344);
+  const [metaData, setMetaData] = useState({});
+
+  useEffect(() => {
+    axios.get('classes/reviews/meta', { params: { productId } })
+      .then((response) => {
+        console.log('successfully got meta data', response.data);
+        setMetaData(response.data);
+        console.log('this is metaData >>>>>>>>>>>>>>>>>>>> ', metaData);
+      })
+      .catch((err) => {
+        console.error('Error getting meta data', err);
+      });
+  }, [productId]);
 
   return (
-      <div>
-      <Overview/>
-      <RelatedItems/>
-      <QaSection/>
-      <RatingsAndReviewsMain productId={productId}/>
+    <div>
+      <Overview productId={productId} metaData={metaData}/>
+      <RelatedItems productId={productId} setProductId={setProductId}
+        metaData={metaData} setMetaData={setMetaData}/>
+      <QaSection productId={productId}/>
+      <RatingsAndReviewsMain productId={productId} metaData={metaData}/>
     </div>
   );
 };

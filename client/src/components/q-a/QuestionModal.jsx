@@ -21,7 +21,7 @@ const QuestionForm = styled.form`
   background-color: white;
   max-height: 1200px;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 25px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -30,17 +30,29 @@ const QuestionForm = styled.form`
 const CloseBtn = styled.input`
   width: 70px;
   height: 30px;
-  background-color: #100E04;
+  border: none;
+  background-color: #20bf55;
   color: white;
   border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
 `;
 
 const SubmitBtn = styled.input`
   width: 130px;
   height: 30px;
-  background-color: #100E04;
+  border: none;
+  background-color: #20bf55;
   color: white;
   border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
 `;
 
 const QuestionBody = styled.textarea`
@@ -77,7 +89,7 @@ const QuestionModal = ({ getQuestions, productId, setDisplayModal }) => {
       product_id: productId,
     })
       .then(() => {
-        getQuestions(1);
+        getQuestions();
       })
       .catch((error) => {
         console.log('Error attempting to post new question', error);
@@ -95,13 +107,13 @@ const QuestionModal = ({ getQuestions, productId, setDisplayModal }) => {
           setDisplayModal(false);
         }} value='Close'/>
         <h1>Ask your question about the product</h1>
-        <label>Your Question:
+        <label>Your Question*:
           <QuestionBody onChange={(e) => setBody(e.target.value)} required maxLength={1000}/>
         </label>
-        <label>Your Username:
+        <label>Your Username*:
           <UserInfo type='text' onChange={(e) => setName(e.target.value)} required maxLength={60}/>
         </label>
-        <label>Your Email Address:
+        <label>Your Email Address*:
           <UserInfo type='text' onChange={(e) => setEmail(e.target.value)} required maxLength={60}/>
         </label>
         <SubmitBtn type="submit" value="Submit Question"/>

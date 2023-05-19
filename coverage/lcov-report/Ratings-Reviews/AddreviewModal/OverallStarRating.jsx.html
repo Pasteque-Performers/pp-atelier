@@ -23,9 +23,15 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">77.77% </span>
                 <span class="quiet">Statements</span>
                 <span class='fraction'>7/9</span>
+=======
+                <span class="strong">80% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>8/10</span>
+>>>>>>> main
             </div>
         
             
@@ -44,9 +50,15 @@
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">77.77% </span>
                 <span class="quiet">Lines</span>
                 <span class='fraction'>7/9</span>
+=======
+                <span class="strong">80% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>8/10</span>
+>>>>>>> main
             </div>
         
             
@@ -61,7 +73,11 @@
             </div>
         </template>
     </div>
+<<<<<<< HEAD
     <div class='status-line medium'></div>
+=======
+    <div class='status-line high'></div>
+>>>>>>> main
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -104,6 +120,7 @@
 <a name='L39'></a><a href='#L39'>39</a>
 <a name='L40'></a><a href='#L40'>40</a>
 <a name='L41'></a><a href='#L41'>41</a>
+<<<<<<< HEAD
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
@@ -133,6 +150,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
+=======
+<a name='L42'></a><a href='#L42'>42</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+>>>>>>> main
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,6 +197,7 @@
 import styled from 'styled-components';
 &nbsp;
 const StarIcon = styled.i`
+<<<<<<< HEAD
 font-size: 24px;
 color: ${({ filled }) =&gt; (filled ? <span class="branch-0 cbranch-no" title="branch not covered" >'#ffd700' </span>: 'lightgray')};
 cursor: pointer;
@@ -172,12 +213,26 @@ const OverallStarRating = ({ formData, handleChange }) =&gt; {
         value,
       },
     });
+=======
+  font-size: 24px;
+  color: ${(props) =&gt; (props.filled ? <span class="branch-0 cbranch-no" title="branch not covered" >'#ffd700' </span>: 'lightgray')};
+  cursor: pointer;
+  font-variation-settings: ${(props) =&gt; (props.filled ? <span class="branch-0 cbranch-no" title="branch not covered" >"'FILL' 1" </span>: "'FILL' 0")};
+  margin-right: 5px;
+`;
+&nbsp;
+const OverallStarRating = () =&gt; {
+  const [rating, setRating] = useState(0);
+  const handleClick = <span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; {
+<span class="cstat-no" title="statement not covered" >    setRating(value);</span>
+>>>>>>> main
   };
 &nbsp;
   return (
     &lt;div&gt;
     {[1, 2, 3, 4, 5].map((index) =&gt; (
       &lt;StarIcon
+<<<<<<< HEAD
       key={index}
       filled={index &lt;= formData.rating}
       className={`material-symbols-outlined ${index &lt;= formData.rating ? <span class="branch-0 cbranch-no" title="branch not covered" >'filled' </span>: ''}`}
@@ -192,6 +247,22 @@ const OverallStarRating = ({ formData, handleChange }) =&gt; {
         {formData.rating === 3 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >'Average'}</span>
         {formData.rating === 4 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >'Good'}</span>
         {formData.rating === 5 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >'Great'}</span>
+=======
+        key={index}
+        filled={index &lt;= rating}
+        className={`material-symbols-outlined ${index &lt;= rating ? <span class="branch-0 cbranch-no" title="branch not covered" >'filled' </span>: ''}`}
+        onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >handleClick(index)}</span>
+        data-testid="star-icon"&gt;
+      star
+      &lt;/StarIcon&gt;
+    ))}
+      &lt;span&gt;
+        {rating === 1 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >'Poor'}</span>
+        {rating === 2 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >'Fair'}</span>
+        {rating === 3 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >'Average'}</span>
+        {rating === 4 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >'Good'}</span>
+        {rating === 5 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >'Great'}</span>
+>>>>>>> main
       &lt;/span&gt;
     &lt;/div&gt;
   );
@@ -205,7 +276,11 @@ export default OverallStarRating;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+<<<<<<< HEAD
                 at 2023-05-17T22:30:08.939Z
+=======
+                at 2023-05-18T04:24:45.530Z
+>>>>>>> main
             </div>
         <script src="../../prettify.js"></script>
         <script>

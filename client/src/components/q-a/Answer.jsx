@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import ImageModal from './ImageModal.jsx';
 
+const ImgPreview = styled.img`
+  width: 200px;
+  height: 150px;
+  border-radius: 25px;
+  margin: 0 5px 0 5px;
+`;
+
 const Answer = ({
-  answer, getAnswers, helpfulAnswers, setHelpfulAnswers,
+  answer, getAnswers, HelpfulButton,
   setReportedAnswer, BoldTitle, QuestionButton,
 }) => {
   const date = new Date(answer.date);
@@ -16,7 +24,6 @@ const Answer = ({
     axios.put(`/classes/qa/answers/${answerId}/helpful`, null)
       .then(() => {
         localStorage[answerId] = answerId;
-        console.log('Sucessfully updated answer helpfulness');
         getAnswers();
       })
       .catch((error) => console.log('Error updating answer helpfulness', error));
@@ -45,21 +52,20 @@ const Answer = ({
     <div>
       {showFullImg && <ImageModal image={image} setShowFullImg={setShowFullImg}/> }
       <div><BoldTitle>A: </BoldTitle>{answer.body}</div>
-      { answer.photos.length ? answer.photos.map((photo, i) => <img
+      { answer.photos.length ? answer.photos.map((photo, i) => <ImgPreview
       onClick={() => {
         setShowFullImg(!showFullImg);
         setImage(photo.url);
       }}
       src={photo.url}
       key={i}
-      alt="Answer Img"
-      style={{ width: '200px', height: '150px' }}/>) : null }
+      alt="Answer Img" />) : null }
       <div>By: {answer.answerer_name === 'Seller' ? <strong>{answer.answerer_name}</strong> : answer.answerer_name}, {formattedDate}</div>
       <div>Helpful? {!localStorage[answer.answer_id]
-        ? <QuestionButton onClick={setAnswerHelpfulness}>Yes({answer.helpfulness})</QuestionButton>
+        ? <HelpfulButton onClick={setAnswerHelpfulness}>Yes({answer.helpfulness})</HelpfulButton>
         : <span>Yes({answer.helpfulness})</span>}
       </div>
-      <QuestionButton onClick={reportAnswer}>Report</QuestionButton>
+      <QuestionButton onClick={reportAnswer}>Report Answer</QuestionButton>
     </div>
   );
 };

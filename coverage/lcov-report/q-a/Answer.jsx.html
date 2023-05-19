@@ -23,9 +23,15 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">3.84% </span>
                 <span class="quiet">Statements</span>
                 <span class='fraction'>1/26</span>
+=======
+                <span class="strong">4% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>1/25</span>
+>>>>>>> main
             </div>
         
             
@@ -44,9 +50,15 @@
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">3.84% </span>
                 <span class="quiet">Lines</span>
                 <span class='fraction'>1/26</span>
+=======
+                <span class="strong">4% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>1/25</span>
+>>>>>>> main
             </div>
         
             
@@ -137,6 +149,10 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<<<<<<< HEAD
+=======
+<span class="cline-any cline-neutral">&nbsp;</span>
+>>>>>>> main
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -180,7 +196,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<<<<<<< HEAD
 <span class="cline-any cline-no">&nbsp;</span>
+=======
+>>>>>>> main
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -203,6 +222,10 @@ import ImageModal from './ImageModal.jsx';
 &nbsp;
 const Answer = <span class="fstat-no" title="function not covered" >({</span>
   answer, getAnswers, helpfulAnswers, setHelpfulAnswers,
+<<<<<<< HEAD
+=======
+  setReportedAnswer, BoldTitle, QuestionButton,
+>>>>>>> main
 }) =&gt; {
   const date = <span class="cstat-no" title="statement not covered" >new Date(answer.date);</span>
   const formattedDate = <span class="cstat-no" title="statement not covered" >new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).format(date);</span>
@@ -224,7 +247,11 @@ const Answer = <span class="fstat-no" title="function not covered" >({</span>
     const answerId = <span class="cstat-no" title="statement not covered" >answer.answer_id;</span>
 <span class="cstat-no" title="statement not covered" >    axios.put(`/classes/qa/answers/${answerId}/report`, null)</span>
       .then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<<<<<<< HEAD
 <span class="cstat-no" title="statement not covered" >        getAnswers(1);</span>
+=======
+<span class="cstat-no" title="statement not covered" >        setReportedAnswer(answerId);</span>
+>>>>>>> main
       })
       .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >        console.log('Error reporting answer', error);</span>
@@ -242,10 +269,16 @@ const Answer = <span class="fstat-no" title="function not covered" >({</span>
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;div&gt;
       {showFullImg &amp;&amp; &lt;ImageModal image={image} setShowFullImg={setShowFullImg}/&gt; }
+<<<<<<< HEAD
       &lt;div&gt;A: {answer.body}&lt;/div&gt;
       { answer.photos.length ? answer.photos.map(<span class="fstat-no" title="function not covered" >(p</span>hoto, i) =&gt; <span class="cstat-no" title="statement not covered" >&lt;img</span>
       onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >        console.log(photo.url);</span>
+=======
+      &lt;div&gt;&lt;BoldTitle&gt;A: &lt;/BoldTitle&gt;{answer.body}&lt;/div&gt;
+      { answer.photos.length ? answer.photos.map(<span class="fstat-no" title="function not covered" >(p</span>hoto, i) =&gt; <span class="cstat-no" title="statement not covered" >&lt;img</span>
+      onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+>>>>>>> main
 <span class="cstat-no" title="statement not covered" >        setShowFullImg(!showFullImg);</span>
 <span class="cstat-no" title="statement not covered" >        setImage(photo.url);</span>
       }}
@@ -255,10 +288,17 @@ const Answer = <span class="fstat-no" title="function not covered" >({</span>
       style={{ width: '200px', height: '150px' }}/&gt;) : null }
       &lt;div&gt;By: {answer.answerer_name === 'Seller' ? &lt;strong&gt;{answer.answerer_name}&lt;/strong&gt; : answer.answerer_name}, {formattedDate}&lt;/div&gt;
       &lt;div&gt;Helpful? {!helpfulAnswers.includes(answer.answer_id)
+<<<<<<< HEAD
         ? &lt;button onClick={setAnswerHelpfulness}&gt;Yes({answer.helpfulness})&lt;/button&gt;
         : &lt;span&gt;Yes({answer.helpfulness})&lt;/span&gt;}
       &lt;/div&gt;
       &lt;button onClick={reportAnswer}&gt;Report&lt;/button&gt;
+=======
+        ? &lt;QuestionButton onClick={setAnswerHelpfulness}&gt;Yes({answer.helpfulness})&lt;/QuestionButton&gt;
+        : &lt;span&gt;Yes({answer.helpfulness})&lt;/span&gt;}
+      &lt;/div&gt;
+      &lt;QuestionButton onClick={reportAnswer}&gt;Report&lt;/QuestionButton&gt;
+>>>>>>> main
     &lt;/div&gt;
   );
 };
@@ -271,7 +311,11 @@ export default Answer;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+<<<<<<< HEAD
                 at 2023-05-17T22:30:08.939Z
+=======
+                at 2023-05-18T04:24:45.530Z
+>>>>>>> main
             </div>
         <script src="../prettify.js"></script>
         <script>
