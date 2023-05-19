@@ -53,6 +53,7 @@ const Overview = () => {
           </ImageGalleryContainer>
           <DetailsContainer>
             <Information product={product} />
+            <StyleSelector styles={product.styles} productId={product.id} onStyleSelect={setSelectedStyle} />
             {selectedStyle && <AddToCart selectedStyle={selectedStyle} />}
           </DetailsContainer>
         </>
