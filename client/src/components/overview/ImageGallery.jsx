@@ -5,6 +5,7 @@ import { faArrowLeft, faArrowRight, faExpand, faCompress } from '@fortawesome/fr
 
 const Container = styled.div`
   width: 600px;
+  padding: 5px 5px;
 `;
 
 const ImageContainer = styled.div`
@@ -24,12 +25,14 @@ const ThumbnailContainer = styled.div`
 const ThumbnailImage = styled.img`
   width: ${(props) => (props.isExpanded ? '50px' : '70px')};
   height: ${(props) => (props.isExpanded ? '50px' : '70px')};
+  border-radius: 2px;
 `;
 
 const MainImage = styled.img`
   width: ${(props) => (props.isExpanded ? '1000px' : '500px')};
   height: ${(props) => (props.isExpanded ? '1000px' : '500px')};
   max-width: 100%;
+  border-radius: 2px;
 `;
 
 const Button = styled.button`
