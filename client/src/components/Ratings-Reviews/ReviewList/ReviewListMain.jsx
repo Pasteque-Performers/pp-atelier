@@ -4,7 +4,30 @@ import ReviewListTile from './ReviewListTile.jsx';
 import AddReviewModalMain from '../AddReviewModal/AddReviewModalMain.jsx';
 import styled from 'styled-components';
 
+const ReviewListContainer = styled.div`
+  max-height: 500px;
+  overflowY: 'auto';
+  padding: 20px;
+`;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+`;
+
+const ReviewButton = styled.button`
+  padding: 10px 20px;
+  border: none;
+  background-color: #20bf55; /* Green color */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
+`;
 
 const ReviewListMain = ({ reviews, setReviews, metaData, productId }) => {
   const [displayedReviews, setDisplayedReviews] = useState([]);
@@ -25,14 +48,16 @@ const ReviewListMain = ({ reviews, setReviews, metaData, productId }) => {
   }, [reviews]);
 
   return (
-    <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
+    <ReviewListContainer>
       {displayedReviews.map((review) => <ReviewListTile review={review} key={review.review_id} />)}
-      {reviews.length > displayedReviews.length
-        && <button onClick={loadMoreReviews}>More Reviews</button>}
-        <button onClick={handleButtonClick}>Add a review</button>
+      <ButtonContainer>
+        {reviews.length > displayedReviews.length
+          && <ReviewButton onClick={loadMoreReviews}>More Reviews</ReviewButton>}
+        <ReviewButton onClick={handleButtonClick}>Add a review</ReviewButton>
+      </ButtonContainer>
       {showModal && <AddReviewModalMain metaData={metaData} productId={productId}
       setShowModal={setShowModal}/>}
-    </div>
+    </ReviewListContainer>
   );
 };
 

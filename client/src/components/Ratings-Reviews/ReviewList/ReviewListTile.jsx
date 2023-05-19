@@ -49,8 +49,8 @@ const MoreButton = styled.button`
 `;
 
 const ReviewImage = styled.img`
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 65px;
   object-fit: cover;
   margin-top: 10px;
   border-radius: 5px;
@@ -75,7 +75,7 @@ const ReviewListTile = ({ review }) => {
         <Title>{review.summary}</Title>
         <div>
           <ReviewerName>{review.reviewer_name}</ReviewerName>
-          <Date>{review.date}</Date>
+          <Date><Date>{review.date.replace(/T.*/, '')}</Date></Date>
         </div>
       </ReviewHeader>
       <ReviewText>
