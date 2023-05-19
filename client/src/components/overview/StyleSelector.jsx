@@ -6,6 +6,7 @@ const StyleContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 400px;
+  justify-content: center;
 `;
 
 const StyleItem = styled.div`

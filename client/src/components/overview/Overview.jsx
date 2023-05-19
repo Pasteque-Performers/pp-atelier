@@ -7,6 +7,7 @@ import AddToCart from './AddToCart.jsx';
 import ImageGallery from './ImageGallery.jsx';
 
 const OverviewContainer = styled.div`
+  font-family: 'Manrope', sans-serif;
   display: flex;
   justify-content: space-between;
   padding: 0 20px;
