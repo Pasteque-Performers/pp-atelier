@@ -19,6 +19,12 @@ import ReviewSummary from './client/src/components/Ratings-Reviews/AddreviewModa
 import ReviewEmail from './client/src/components/Ratings-Reviews/AddreviewModal/ReviewEmail.jsx';
 import AddReviewModalMain from './client/src/components/Ratings-Reviews/AddreviewModal/AddReviewModalMain.jsx';
 import ProductCharacteristics from './client/src/components/Ratings-Reviews/AddreviewModal/ProductCharacteristics.jsx';
+import AddToCart from './client/src/components/overview/AddToCart.jsx';
+import ImageGallery from './client/src/components/overview/ImageGallery.jsx';
+import Information from './client/src/components/overview/Information.jsx';
+import Overview from './client/src/components/overview/Overview.jsx';
+import StaticStarRating from './client/src/components/overview/StaticStarRating.jsx';
+import StyleSelector from './client/src/components/overview/StyleSelector.jsx';
 
 describe('Related Products Component', () => {
   test('renders a table', () => {
