@@ -40,7 +40,7 @@ const Overview = ({ productId }) => {
       .catch((error) => {
         console.error('Error fetching data: ', error.response || error);
       });
-  }, []);
+  }, [productId]);
 
   return (
     <OverviewContainer>
