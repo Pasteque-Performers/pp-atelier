@@ -14,7 +14,6 @@ const App = () => {
       .then((response) => {
         console.log('successfully got meta data', response.data);
         setMetaData(response.data);
-        console.log('this is metaData >>>>>>>>>>>>>>>>>>>> ', metaData);
       })
       .catch((err) => {
         console.error('Error getting meta data', err);

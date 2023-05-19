@@ -11,6 +11,7 @@ width: 60%;
 height: 15px;
 padding: 6px;
 font-size: 12px;
+font-family: 'Manrope', sans-serif;
 border: 1px solid #ccc;
 border-radius: 4px;
 resize: none;
@@ -18,6 +19,7 @@ resize: none;
 
 const PrivacyText = styled.p`
 font-size: 0.8rem;
+font-family: 'Manrope', sans-serif;
 color: #888;
 `;
 

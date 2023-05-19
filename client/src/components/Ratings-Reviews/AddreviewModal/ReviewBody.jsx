@@ -8,6 +8,7 @@ const ReviewContainer = styled.div`
 const ReviewLabel = styled.label`
   display: block;
   font-size: 16px;
+  font-family: 'Manrope', sans-serif;
   font-weight: bold;
   margin-bottom: 10px;
 `;
@@ -17,6 +18,7 @@ const ReviewTextArea = styled.textarea`
   height: 170px;
   padding: 10px;
   font-size: 12px;
+  font-family: 'Manrope', sans-serif;
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: none;

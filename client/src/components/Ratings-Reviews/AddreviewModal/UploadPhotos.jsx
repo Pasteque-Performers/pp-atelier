@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import ImageUploadModal from './ImageUploadModal.jsx';
 
 const ImagePreviewContainer = styled.div`
   display: flex;
@@ -28,10 +29,6 @@ const ImageName = styled.div`
   text-overflow: ellipsis;
 `;
 
-const FileInput = styled.input`
-  display: none;
-`;
-
 const FileInputLabel = styled.label`
   display: inline-block;
   padding: 0.5rem 1rem;
@@ -45,27 +42,20 @@ const FileInputLabel = styled.label`
 `;
 
 const UploadPhotos = ({ formData, handleChange }) => {
-  const handlePhotoInputChange = (event) => {
-    const { files } = event.target;
-    const selected = Array.from(files).slice(0, 5);
+  const [showModal, setShowModal] = useState(false);
 
-    Promise.all(selected.map((file) => new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => (resolve(reader.result));
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    })))
-      .then((dataUrls) => {
-        handleChange({
-          target: {
-            name: 'photos',
-            value: dataUrls,
-          },
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleHideModal = (photos) => {
+    setShowModal(false);
+    handleChange({
+      target: {
+        name: 'photos',
+        value: photos,
+      },
+    });
   };
 
   return (
@@ -78,8 +68,8 @@ const UploadPhotos = ({ formData, handleChange }) => {
           </ImagePreview>
         ))}
       </ImagePreviewContainer>
-      <FileInputLabel htmlFor="photo-upload">Upload Photos</FileInputLabel>
-      <FileInput id="photo-upload" type='file' multiple onChange={handlePhotoInputChange} />
+      <FileInputLabel onClick={handleShowModal}>Upload Photos</FileInputLabel>
+      {showModal && <ImageUploadModal onHideModal={handleHideModal} />}
     </div>
   );
 };

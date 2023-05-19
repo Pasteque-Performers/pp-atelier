@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for RelatedItems/ComparisonTable.jsx</title>
+    <title>Code coverage report for Ratings-Reviews/AddreviewModal/ReviewSummary.jsx</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../prettify.css" />
-    <link rel="stylesheet" href="../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../sort-arrow-sprite.png);
+            background-image: url(../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,38 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">RelatedItems</a> ComparisonTable.jsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">Ratings-Reviews/AddreviewModal</a> ReviewSummary.jsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-<<<<<<< HEAD
-                <span class='fraction'>4/4</span>
-=======
                 <span class='fraction'>0/0</span>
->>>>>>> main
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -87,36 +83,33 @@
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
-<<<<<<< HEAD
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-=======
-<a name='L21'></a><a href='#L21'>21</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">4x</span>
->>>>>>> main
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<<<<<<< HEAD
-<span class="cline-any cline-yes">8x</span>
-=======
-<span class="cline-any cline-yes">16x</span>
->>>>>>> main
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -126,41 +119,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
-<<<<<<< HEAD
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react';
+import styled from 'styled-components';
 &nbsp;
-const ComparisonTable = ({
-  hasFeature1, hasFeature2, combinedFeatures, name1, name2,
-}) =&gt; (
-=======
+const SummaryContainer = styled.div`
+  margin: 10px 0;
+`;
 &nbsp;
-const ComparisonTable = ({ hasFeature1, hasFeature2, combinedFeatures, name1, name2 }) =&gt; (
->>>>>>> main
-  &lt;table data-testid="comparison-table"&gt;
-    &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;{name1}&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;{name2}&lt;/th&gt;
-    &lt;/tr&gt;
-    {combinedFeatures.map((feature, index) =&gt; (&lt;tr key={index}&gt;
-<<<<<<< HEAD
-      &lt;td&gt;{hasFeature1[index] &amp;&amp; &lt;FontAwesomeIcon icon={faCheck} style={{ color: '#23ae19' }} /&gt;}&lt;/td&gt;
-      &lt;td&gt;{feature}&lt;/td&gt;
-      &lt;td&gt;{hasFeature2[index] &amp;&amp; &lt;FontAwesomeIcon icon={faCheck} style={{ color: '#23ae19' }} /&gt;}&lt;/td&gt;
-=======
-      &lt;td&gt;{hasFeature1[index].toString()}&lt;/td&gt;
-      &lt;td&gt;{feature}&lt;/td&gt;
-      &lt;td&gt;{hasFeature2[index].toString()}&lt;/td&gt;
->>>>>>> main
-    &lt;/tr&gt;))}
-    &lt;/tbody&gt;
-  &lt;/table&gt;
+const SummaryTextarea = styled.textarea`
+  width: 80%;
+  height: 60px;
+  padding: 10px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+`;
+&nbsp;
+const ReviewSummary = ({ formData, handleChange }) =&gt; (
+    &lt;SummaryContainer&gt;
+      &lt;SummaryTextarea placeholder='Example: Best purchase ever!'
+      value={formData.summary}
+      onChange={handleChange}
+      maxLength={60}
+      name='summary'/&gt;
+    &lt;/SummaryContainer&gt;
 );
 &nbsp;
-export default ComparisonTable;
+export default ReviewSummary;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -168,20 +154,16 @@ export default ComparisonTable;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-<<<<<<< HEAD
                 at 2023-05-17T22:30:08.939Z
-=======
-                at 2023-05-18T04:24:45.530Z
->>>>>>> main
             </div>
-        <script src="../prettify.js"></script>
+        <script src="../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../sorter.js"></script>
-        <script src="../block-navigation.js"></script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
     </body>
 </html>
     
