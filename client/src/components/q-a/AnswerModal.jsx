@@ -36,9 +36,15 @@ const AnswerForm = styled.form`
 const CloseBtn = styled.input`
   width: 70px;
   height: 30px;
-  background-color: #100E04;
+  background-color: #20bf55;
   color: white;
   border-radius: 25px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
 `;
 
 const ImgBox = styled.label`
@@ -48,11 +54,17 @@ const ImgBox = styled.label`
 `;
 
 const SubmitBtn = styled.input`
-  background-color: #100E04;
+  background-color: #20bf55;
   color: white;
   border-radius: 25px;
+  border: none;
   padding: 10px 15px 10px 15px;
   margin-left: auto;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
 `;
 
 const UserInfo = styled.input`

@@ -30,17 +30,29 @@ const QuestionForm = styled.form`
 const CloseBtn = styled.input`
   width: 70px;
   height: 30px;
-  background-color: #100E04;
+  border: none;
+  background-color: #20bf55;
   color: white;
   border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
 `;
 
 const SubmitBtn = styled.input`
   width: 130px;
   height: 30px;
-  background-color: #100E04;
+  border: none;
+  background-color: #20bf55;
   color: white;
   border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
 `;
 
 const QuestionBody = styled.textarea`

@@ -30,12 +30,18 @@ const BodyContainer = styled.div`
 `;
 
 const BodyButton = styled.button`
-  background-color: #100E04;
+  background-color: #20bf55;
+  border: none;
+  cursor: pointer;
   color: white;
   width: 200px;
   height: 30px;
   margin-top: 20px;
   border-radius: 25px;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
 `;
 
 const QuestionElement = styled.li`

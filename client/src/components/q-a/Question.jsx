@@ -20,12 +20,17 @@ const QuestionButtonContainer = styled.div`
 `;
 
 const QuestionButton = styled.button`
-  background-color: #100E04;
+  background-color: #20bf55;
   margin-top: 5px;
+  border: none;
   color: white;
   padding: 5px 10px 5px 10px;
   border-radius: 25px;
   cursor: pointer;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
 `;
 
 const QuestionAndReportBtns = styled.div`
