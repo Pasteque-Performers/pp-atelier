@@ -8,6 +8,7 @@ const RelatedItemsMain = styled.div`
   position: relative;
   width: fit-content;
   height: 90vw;
+  max-height: 950px;
   max-width: 1200px;
   margin-bottom: 5%;
   margin-top: 5%;
@@ -23,7 +24,6 @@ const RelatedItems = () => {
   const [imageList, setImageList] = useState([]);
   const [products, setProducts] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(0);
-
 
   const defaultHandler = (event) => {
     setDefault(event);
