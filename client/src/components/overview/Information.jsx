@@ -1,9 +1,35 @@
 import React from 'react';
+import styled from 'styled-components';
 import StaticStarRating from './StaticStarRating.jsx';
+
+const ProductCardContainer = styled.div`
+  padding: 16px;
+  color: #333;
+`;
+
+const ProductName = styled.h3`
+
+`;
+
+const ProductSlogan = styled.p`
+
+`;
+
+const ProductDescription = styled.p`
+
+`;
+
+const ProductCategory = styled.p`
+
+`;
+
+const ProductPrice = styled.p`
+
+`;
 
 const ProductCard = ({ product }) => {
   if (!product) {
-    return <div>Loading...</div>;
+    return <ProductCardContainer>Loading...</ProductCardContainer>;
   }
 
   const {
@@ -15,14 +41,14 @@ const ProductCard = ({ product }) => {
   } = product;
 
   return (
-    <div className="product-card">
-      <h3 className="product-name">{name}</h3>
-      <p className="product-slogan">{slogan}</p>
+    <ProductCardContainer>
+      <ProductName>{name}</ProductName>
+      <ProductSlogan>{slogan}</ProductSlogan>
       <StaticStarRating product={product} />
-      <p className="product-description">{description}</p>
-      <p className="product-category">{category}</p>
-      <p className="product-price">${(default_price && !isNaN(parseFloat(default_price))) ? parseFloat(default_price).toFixed(2) : 'N/A'}</p>
-    </div>
+      <ProductDescription>{description}</ProductDescription>
+      <ProductCategory>{category}</ProductCategory>
+      <ProductPrice>${(default_price && !isNaN(parseFloat(default_price))) ? parseFloat(default_price).toFixed(2) : 'N/A'}</ProductPrice>
+    </ProductCardContainer>
   );
 };
 
