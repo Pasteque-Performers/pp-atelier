@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const CartContainer = styled.div``;
 
@@ -20,8 +21,22 @@ const SelectQuantity = styled.select`
 `;
 
 const AddToCartButton = styled.button`
-  padding: 10px;
-  margin: 5px;
+  background-color: #20bf55;
+  border: none;
+  cursor: pointer;
+  color: white;
+  width: 200px;
+  height: 30px;
+  margin-top: 20px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
+  &:disabled {
+    background-color: #ccc; /* Change color to gray when disabled */
+    cursor: not-allowed; /* Change cursor when disabled */
+  }
 `;
 
 const AddToCart = ({ selectedStyle }) => {
