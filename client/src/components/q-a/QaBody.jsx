@@ -57,6 +57,8 @@ const QaBody = ({ productId, ScrollableList }) => {
   const [searching, setSearching] = useState(false);
   const [loadedQuestions, setLoadedQuestions] = useState(false);
   const [displayModal, setDisplayModal] = useState(false);
+  const [queue, setQueue] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const setReportedQuestion = (questionId) => {
     const updatedQuestions = questions.filter((question) => question.question_id !== questionId);

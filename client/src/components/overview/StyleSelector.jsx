@@ -56,8 +56,8 @@ const StyleSelector = ({ productId, onStyleSelect }) => {
 
   return (
     <StyleContainer>
-      {styles.map((style) => (
-        <StyleItem key={style.style_id}>
+      {styles.map((style, index) => (
+        <StyleItem key={index}>
           <Thumbnail
             src={style.photos[0].thumbnail_url}
             alt={style.name}

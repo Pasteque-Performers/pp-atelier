@@ -8,16 +8,33 @@ import RatingsAndReviewsMain from './Ratings-Reviews/RatingsAndReviewsMain.jsx';
 const App = () => {
   const [productId, setProductId] = useState(40344);
   const [metaData, setMetaData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [queue, setQueue] = useState([]);
 
   useEffect(() => {
-    axios.get('classes/reviews/meta', { params: { productId } })
-      .then((response) => {
-        console.log('successfully got meta data', response.data);
-        setMetaData(response.data);
-      })
-      .catch((err) => {
-        console.error('Error getting meta data', err);
-      });
+    setQueue([productId]);
+    console.log(queue);
+  }, [productId]);
+
+  useEffect(() => {
+    const first = queue[0];
+    if (!loading && queue.length > 0) {
+      setLoading(true);
+      axios.get('classes/reviews/meta', { params: { first } })
+        .then((response) => {
+          console.log('successfully got meta data', response.data);
+          setMetaData(response.data);
+          setQueue(queue.slice(1));
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error('Error getting meta data', err);
+        });
+    }
+  }, [queue, loading]);
+
+  useEffect(() => {
+    console.log(productId);
   }, [productId]);
 
   return (

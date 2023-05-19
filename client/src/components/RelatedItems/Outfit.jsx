@@ -28,7 +28,7 @@ height: 100%;
 border-radius: 5px;
 `;
 
-const Outfit = ({ defaultProduct, animationClass }) => {
+const Outfit = ({ defaultProduct, defaultHandler, animationClass }) => {
   const [list, setList] = useState([]);
   const [currentList, setCurrentList] = useState([]);
   const [showNext, toggleShowNext] = useState(false);
@@ -101,7 +101,8 @@ const Outfit = ({ defaultProduct, animationClass }) => {
       onMouseLeave={() => { setAddHovered(false); }} />
         </AddContainer>
       {currentList.map((product, index) => <CreateOutfit
-    key={index} product={product} handler={deleteHandler} />)}
+    key={index} product={product} handler={deleteHandler}
+    defaultHandler={defaultHandler}/>)}
       </div>
     {showNext ? <div className='empty'><FontAwesomeIcon className='autowidth' icon={faCaretRight} style={{
       color: nextHovered ? 'Ea2213' : 'EC6F7F',

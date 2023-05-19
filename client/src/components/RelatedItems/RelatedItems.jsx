@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import ProductList from './ProductList.jsx';
 import Outfit from './Outfit.jsx';
 
+const Body = styled.div`
+  font-family: 'Manrope', sans-serif;
+`;
+
 const RelatedItemsMain = styled.div`
   position: relative;
   width: fit-content;
@@ -119,6 +123,7 @@ const RelatedItems = ({ productId, setProductId }) => {
   }, [list]);
 
   return (
+    <Body>
         <RelatedItemsMain>
     <div>
       <h2>Related Products</h2>
@@ -130,9 +135,10 @@ const RelatedItems = ({ productId, setProductId }) => {
     </div>
     <div >
     <h2>Your Outfit</h2>
-    <Outfit defaultProduct={defaultProduct} />
+    <Outfit defaultProduct={defaultProduct} defaultHandler={(event) => { defaultHandler(event); }}/>
     </div>
     </RelatedItemsMain>
+    </Body>
   );
 };
 

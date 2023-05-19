@@ -54,6 +54,9 @@ body {
   height: 50%;
   min-width: 40px;
 }
+.compareStar{
+  z-index: -1;
+}
 
 .compare {
   position: absolute;
@@ -62,6 +65,11 @@ body {
   z-index: 5;
   background-color: white;
   overflow: scroll;
+}
 
-  animation:fadein .5s;
+@media (max-width: 600px) {
+  .compare {
+    top: 50px;
+    left: 50px;
+  }
 }
