@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import ProductList from './ProductList.jsx';
 import Outfit from './Outfit.jsx';
 
+const RelatedItemsMain = styled.div`
+  position: relative;
+  width: fit-content;
+  height: 90vw;
+  max-width: 1200px;
+  margin-bottom: 5%;
+  margin-top: 5%;
+`;
 const RelatedItems = () => {
   const [defaultProductID, setDefault] = useState(40344);
   const [defaultProduct, setDefaultProduct] = useState([]);
@@ -14,6 +23,7 @@ const RelatedItems = () => {
   const [imageList, setImageList] = useState([]);
   const [products, setProducts] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(0);
+
 
   const defaultHandler = (event) => {
     setDefault(event);
@@ -109,9 +119,9 @@ const RelatedItems = () => {
   }, [list]);
 
   return (
-    <div className='relatedItemsMain'>
+    <RelatedItemsMain>
     <div>
-      <h2>related products</h2>
+      <h2>Related Products</h2>
   <ProductList list={currentList} products={products} defaultProduct={defaultProduct}
   defaultHandler={(event) => { defaultHandler(event); }} nextHandler={nextHandler}
   showNext={showNext}
@@ -119,10 +129,10 @@ const RelatedItems = () => {
    imageList={imageList} currentPosition={currentPosition}/>
     </div>
     <div >
-    <h2>your outfit</h2>
+    <h2>Your Outfit</h2>
     <Outfit defaultProduct={defaultProduct} />
     </div>
-    </div>
+    </RelatedItemsMain>
   );
 };
 

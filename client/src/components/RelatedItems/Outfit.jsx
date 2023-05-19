@@ -1,7 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight, faPlus } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 import CreateOutfit from './CreateOutfit.jsx';
+
+const Outfits = styled.div`
+display: inline-flex;
+flex-direction: row;
+width: 1100px;
+height: 300px;
+background-color: #EBEBEB;
+padding: 3%;
+border: solid black;
+border-radius: 25px;
+`;
+
+const AddContainer = styled.div`
+position: relative;
+display: inline-flex;
+flex-direction: column;
+align-items: start;
+overflow-wrap: break-word;
+width: 20%;
+margin-right: 2%;
+margin-left: 2%;
+height: 100%;
+border-radius: 5px;
+`;
 
 const Outfit = ({ defaultProduct, animationClass }) => {
   const [list, setList] = useState([]);
@@ -57,19 +82,20 @@ const Outfit = ({ defaultProduct, animationClass }) => {
   }, [list]);
 
   return (
-    <div className="outfits">
+    <Outfits>
       {showPrevious ? <div className='empty'><FontAwesomeIcon className='autowidth' icon={faCaretLeft} style={{
         color: previousHovered ? 'Ea2213' : 'EC6F7F',
       }} onClick={previousHandler} onMouseEnter={() => { setPreviousHovered(true); }}
       onMouseLeave={() => { setPreviousHovered(false); }}/></div> : <div className="empty"/>}
       <div className={`slider-container ${animationClass}`}>
-        <div className='addContainer'>
+        <AddContainer>
       <FontAwesomeIcon icon={faPlus} className='add' style={{
         color: addHovered ? 'Ea2213' : 'EC6F7F',
         fontSize: '50%',
+
       }} onClick={addHandler} onMouseEnter={() => { setAddHovered(true); }}
       onMouseLeave={() => { setAddHovered(false); }} />
-        </div>
+        </AddContainer>
       {currentList.map((product, index) => <CreateOutfit
     key={index} product={product} handler={deleteHandler} />)}
       </div>
@@ -77,7 +103,7 @@ const Outfit = ({ defaultProduct, animationClass }) => {
       color: nextHovered ? 'Ea2213' : 'EC6F7F',
     }} onClick={nextHandler} onMouseEnter={() => { setNextHovered(true); }}
     onMouseLeave={() => { setNextHovered(false); }}/></div> : <div className="empty"/>}
-    </div>
+    </Outfits>
   );
 };
 

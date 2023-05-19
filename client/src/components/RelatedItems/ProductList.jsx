@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight, faRectangleVertical } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 import CreateRelated from './CreateRelated.jsx';
+
+const RelatedItems = styled.div`
+display: inline-flex;
+flex-direction: row;
+width: 1100px;
+height: 300px;
+background-color: #EBEBEB;
+padding: 3%;
+border: solid black;
+border-radius: 25px;
+`;
 
 const ProductList = ({
   list, defaultProduct, defaultHandler, nextHandler, showNext, previousHandler, showPrevious,
@@ -11,7 +23,7 @@ const ProductList = ({
   const [previousHovered, setPreviousHovered] = useState(false);
 
   return (
-    <div className="relatedItems" data-testid="relatedItems">
+    <RelatedItems data-testid="relatedItems">
         {showPrevious ? <div className='empty'><FontAwesomeIcon className='autowidth' icon={faCaretLeft} style={{
           color: previousHovered ? 'Ea2213' : 'EC6F7F',
         }} onClick={ previousHandler } onMouseEnter={() => { setPreviousHovered(true); }}
@@ -26,7 +38,7 @@ const ProductList = ({
       color: nextHovered ? 'Ea2213' : 'EC6F7F',
     }} onClick={ nextHandler } onMouseEnter={() => { setNextHovered(true); }}
     onMouseLeave={() => { setNextHovered(false); }} /></div> : <div className="empty"/>}
-    </div>
+    </RelatedItems>
   );
 };
 

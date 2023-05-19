@@ -1,10 +1,55 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 import Compare from './Compare.jsx';
 import Images from './Images.jsx';
 import StaticStarRating from '../overview/StaticStarRating.jsx';
 
+const RelatedItem = styled.div`
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: start;
+  overflow-wrap: break-word;
+  border: solid;
+  width: 20%;
+  margin-right: 2%;
+  margin-left: 2%;
+  height: 100%;
+  border-radius: 5px;
+  `;
+
+const Category = styled.div`
+    display: flex;
+    width: 100%;
+    font-size: 1em;
+  `;
+
+const Name = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 1em;
+`;
+
+const Price = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 1em;
+`;
+
+const Rating = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 1em;
+  width: 200px;
+`;
+
+const CategoryTitle = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 15px;
+`;
 const CreateRelated = ({
   id, handler, defaultProduct, imageList, product, list,
 }) => {
@@ -24,6 +69,7 @@ const CreateRelated = ({
   const [loading, setLoading] = useState(true);
   const [productLoading, setProductLoading] = useState(true);
   const [active, setActive] = useState(0);
+
 
   useEffect(() => {
     if (product) {
@@ -122,7 +168,7 @@ const CreateRelated = ({
   }, [images, active]);
 
   return (
-    <div className="relatedItem" onClick={() => { handler(id); }}>
+    <RelatedItem onClick={() => { handler(id); }}>
       <div className="compareButton">
       <FontAwesomeIcon icon={faStar} style={{
         color: starHovered ? 'Ea2213' : 'EC6F7F',
@@ -145,12 +191,12 @@ const CreateRelated = ({
       {showImages && <Images setHoveredOnImages={setHoveredOnImages} images={images}
        showNext={showNext} nextHandler={nextHandler} showPrevious={showPrevious}
        previousHandler={previousHandler} active={active}/>}
-    <div className='categoryTitle'>Category</div>
-    <div className="trait category">{category}</div>
-    <div className="trait name">{name}</div>
-    <div className="trait price">${price}</div>
-    <div className="trait rating">{<StaticStarRating rating={4}/>}</div>
-    </div>
+    <CategoryTitle>Category</CategoryTitle>
+    <Category>{category}</Category>
+    <Name>{name}</Name>
+    <Price>${price}</Price>
+    <Rating>{<StaticStarRating rating={4}/>}</Rating>
+    </RelatedItem>
   );
 };
 
