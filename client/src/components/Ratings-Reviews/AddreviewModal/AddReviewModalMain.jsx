@@ -39,34 +39,36 @@ const Title = styled.h2`
     color: #333;
     font-size: 24px;
     font-weight: 500;
+    font-family: 'Manrope', sans-serif;
     text-align: center;
 `;
 
 const ComponentTitle = styled.h3`
   margin-top: 1.5rem;
   font-size: 1.2rem;
+  font-family: 'Manrope', sans-serif;
   color: #333;
 `;
 
-const Button = styled.button`
-  display: inline-block;
-  padding: 0.5em 1.5em;
-  margin: 0.5em;
-  font-size: 1em;
-  font-weight: 500;
-  color: #111;
-  background-color: #f0c14b;
-  border: 1px solid #a88734;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+`;
 
+const Button = styled.button`
+padding: 10px 20px;
+  border: none;
+  background-color: #20bf55; /* Green color */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
   &:hover {
-    background-color: #ff9900;
-    color: #111;
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
   }`;
 
-const AddReviewModalMain = ({ metaData }) => {
+const AddReviewModalMain = ({ metaData, productId, setShowModal }) => {
   const [formData, setFormData] = useState({
     body: '',
     name: '',
@@ -89,13 +91,18 @@ const AddReviewModalMain = ({ metaData }) => {
   };
 
   const handleSubmitClick = () => {
-    axios.post('/classes/reviews', { ...formData, characteristics })
+    axios.post('/classes/reviews', { ...formData, characteristics, productId })
       .then((response) => {
         console.log('successfully posted review data', response.data);
+        setShowModal(false);
       })
       .catch((err) => {
         console.error('Error postong review data', err);
       });
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
   };
 
   return (
@@ -127,7 +134,10 @@ const AddReviewModalMain = ({ metaData }) => {
 
        <ComponentTitle>Your email (mandatory)</ComponentTitle>
        <ReviewEmail formData={formData} handleChange={handleFormDataChange}/>
-       <Button onClick={handleSubmitClick}>Submit review</Button>
+       <ButtonContainer>
+         <Button onClick={handleSubmitClick}>Submit review</Button>
+         <Button onClick={handleClose}>Close</Button>
+       </ButtonContainer>
     </ModalContainer>
   </ModalOverlay>
   );

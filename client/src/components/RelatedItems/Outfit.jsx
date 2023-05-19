@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretLeft, faCaretRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import CreateOutfit from './CreateOutfit.jsx';
 
 const Outfit = ({ defaultProduct }) => {
@@ -6,6 +8,9 @@ const Outfit = ({ defaultProduct }) => {
   const [currentList, setCurrentList] = useState([]);
   const [showNext, toggleShowNext] = useState(false);
   const [showPrevious, toggleShowPrevious] = useState(false);
+  const [nextHovered, setNextHovered] = useState(false);
+  const [previousHovered, setPreviousHovered] = useState(false);
+  const [addHovered, setAddHovered] = useState(false);
 
   const addHandler = () => {
     let isDuplicate = false;
@@ -54,15 +59,25 @@ const Outfit = ({ defaultProduct }) => {
   return (
     <div className="outfits">
       <div className="toggleCurrent">
-      {showPrevious && <button onClick={previousHandler}>previous</button>}
+      {showPrevious && <FontAwesomeIcon icon={faCaretLeft} style={{
+        color: previousHovered ? 'Ea2213' : 'EC6F7F',
+        fontSize: '4em',
+      }} onClick={previousHandler} onMouseEnter={() => { setPreviousHovered(true); }}
+      onMouseLeave={() => { setPreviousHovered(false); }}/>}
       </div>
-      <div className="add">
-      <button onClick={addHandler}>add outfit</button>
-      </div>
+      <FontAwesomeIcon icon={faPlus} style={{
+        color: addHovered ? 'Ea2213' : 'EC6F7F',
+        fontSize: '10em',
+      }} className='add' onClick={addHandler} onMouseEnter={() => { setAddHovered(true); }}
+      onMouseLeave={() => { setAddHovered(false); }} />
       {currentList.map((product, index) => <CreateOutfit
     key={index} product={product} handler={deleteHandler} />)}
     <div className="toggleCurrent">
-    {showNext && <button onClick={nextHandler}>next</button>}
+    {showNext && <FontAwesomeIcon icon={faCaretRight} style={{
+      color: nextHovered ? 'Ea2213' : 'EC6F7F',
+      fontSize: '4em',
+    }} onClick={nextHandler} onMouseEnter={() => { setNextHovered(true); }}
+    onMouseLeave={() => { setNextHovered(false); }}/>}
     </div>
     </div>
   );

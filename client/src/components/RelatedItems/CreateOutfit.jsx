@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import StaticStarRating from '../overview/StaticStarRating.jsx';
 
 const CreateOutfit = ({ product, handler }) => {
   const [image, setImage] = useState('');
+  const [deleteHovered, setDeleteHovered] = useState(false);
 
   useEffect(() => {
     axios({
@@ -21,7 +24,10 @@ const CreateOutfit = ({ product, handler }) => {
   return (
     <div className="outfit">
       <div className="deleteButton">
-      <button onClick={() => { handler(product.id); }}>delete</button>
+      <FontAwesomeIcon icon={faCircleXmark} style={{
+        color: deleteHovered ? 'Ea2213' : 'EC6F7F',
+      }} onClick={() => { handler(product.id); }} onMouseEnter={() => { setDeleteHovered(true); }}
+      onMouseLeave={() => { setDeleteHovered(false); }}/>
       </div>
         <img className="image" src={image || 'image cannot be displayed'}/>
     <div className="trait">Category: {product.category}</div>

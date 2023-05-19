@@ -37,6 +37,7 @@ const MeaningContainer = styled.div`
   justify-content: center;
   align-items: center;
   grid-row: 3;
+  font-family: 'Manrope', sans-serif;
   padding: 5px;
   font-size: 10px;
 `;
