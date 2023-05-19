@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import CreateOutfit from './CreateOutfit.jsx';
 
-const Outfit = ({ defaultProduct }) => {
+const Outfit = ({ defaultProduct, animationClass }) => {
   const [list, setList] = useState([]);
   const [currentList, setCurrentList] = useState([]);
   const [showNext, toggleShowNext] = useState(false);
@@ -58,27 +58,25 @@ const Outfit = ({ defaultProduct }) => {
 
   return (
     <div className="outfits">
-      <div className="toggleCurrent">
-      {showPrevious && <FontAwesomeIcon icon={faCaretLeft} style={{
+      {showPrevious ? <div className='empty'><FontAwesomeIcon className='autowidth' icon={faCaretLeft} style={{
         color: previousHovered ? 'Ea2213' : 'EC6F7F',
-        fontSize: '4em',
       }} onClick={previousHandler} onMouseEnter={() => { setPreviousHovered(true); }}
-      onMouseLeave={() => { setPreviousHovered(false); }}/>}
-      </div>
-      <FontAwesomeIcon icon={faPlus} style={{
+      onMouseLeave={() => { setPreviousHovered(false); }}/></div> : <div className="empty"/>}
+      <div className={`slider-container ${animationClass}`}>
+        <div className='addContainer'>
+      <FontAwesomeIcon icon={faPlus} className='add' style={{
         color: addHovered ? 'Ea2213' : 'EC6F7F',
-        fontSize: '10em',
-      }} className='add' onClick={addHandler} onMouseEnter={() => { setAddHovered(true); }}
+        fontSize: '50%',
+      }} onClick={addHandler} onMouseEnter={() => { setAddHovered(true); }}
       onMouseLeave={() => { setAddHovered(false); }} />
+        </div>
       {currentList.map((product, index) => <CreateOutfit
     key={index} product={product} handler={deleteHandler} />)}
-    <div className="toggleCurrent">
-    {showNext && <FontAwesomeIcon icon={faCaretRight} style={{
+      </div>
+    {showNext ? <div className='empty'><FontAwesomeIcon className='autowidth' icon={faCaretRight} style={{
       color: nextHovered ? 'Ea2213' : 'EC6F7F',
-      fontSize: '4em',
     }} onClick={nextHandler} onMouseEnter={() => { setNextHovered(true); }}
-    onMouseLeave={() => { setNextHovered(false); }}/>}
-    </div>
+    onMouseLeave={() => { setNextHovered(false); }}/></div> : <div className="empty"/>}
     </div>
   );
 };

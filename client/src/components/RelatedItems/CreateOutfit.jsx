@@ -29,11 +29,13 @@ const CreateOutfit = ({ product, handler }) => {
       }} onClick={() => { handler(product.id); }} onMouseEnter={() => { setDeleteHovered(true); }}
       onMouseLeave={() => { setDeleteHovered(false); }}/>
       </div>
+      <div className='imageContainer'>
         <img className="image" src={image || 'image cannot be displayed'}/>
-    <div className="trait">Category: {product.category}</div>
-    <div className="trait">Product Name: {product.name}</div>
-    <div className="trait">Price: {product.default_price}</div>
-    <div className="trait">Rating:{<StaticStarRating rating={4}/>}</div>
+      </div>
+    <div className="trait category">Category: {product.category}</div>
+    <div className="trait name">Product Name: {product.name}</div>
+    <div className="trait price">Price: {product.default_price}</div>
+    <div className="trait rating">Rating:{<StaticStarRating rating={4}/>}</div>
     </div>
   );
 };

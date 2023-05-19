@@ -137,9 +137,11 @@ const CreateRelated = ({
       <Compare features1={product.features}
       features2={defaultProduct.features} name1={product.name} name2={defaultProduct.name} />
       </div>)}
-    <img className="image" src={image} onMouseEnter={() => { toggleShowImages(true); setHoveredOnDefaultImage(true); }} onMouseLeave={() => {
-      setHoveredOnDefaultImage(false);
-    }}/>
+      <div className='imageContainer'>
+<img className="image" src={image} onMouseEnter={() => { toggleShowImages(true); setHoveredOnDefaultImage(true); }} onMouseLeave={() => {
+  setHoveredOnDefaultImage(false);
+}}/>
+      </div>
       {showImages && <Images setHoveredOnImages={setHoveredOnImages} images={images}
        showNext={showNext} nextHandler={nextHandler} showPrevious={showPrevious}
        previousHandler={previousHandler} active={active}/>}

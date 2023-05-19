@@ -109,7 +109,7 @@ const RelatedItems = () => {
   }, [list]);
 
   return (
-    <div>
+    <div className='relatedItemsMain'>
     <div>
       <h2>related products</h2>
   <ProductList list={currentList} products={products} defaultProduct={defaultProduct}
@@ -118,7 +118,7 @@ const RelatedItems = () => {
    previousHandler={previousHandler} showPrevious={showPrevious} animationClass={animationClass}
    imageList={imageList} currentPosition={currentPosition}/>
     </div>
-    <div>
+    <div >
     <h2>your outfit</h2>
     <Outfit defaultProduct={defaultProduct} />
     </div>
