@@ -207,7 +207,7 @@ describe('ProductCharacteristics', () => {
   it('should render all characteristics', () => {
     const { getByText } = render(
       <ProductCharacteristics
-        characteristics={{}}
+        characteristics={ {} }
         setCharacteristics={setCharacteristics}
         characteristicsData={metaData.characteristics}
       />,

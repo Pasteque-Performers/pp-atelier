@@ -4,28 +4,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const StarContainer = styled.div`
-display: inline-block;
-position: relative;
-font-size: 20px;
-color: #ddd;
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  color: #ddd;
 `;
 
 const FilledStarIcon = styled.div`
-display: inline-block;
-position: relative;
-width: ${(props) => props.width}%;
-overflow: hidden;
-color: #ffd700;
-white-space: nowrap;
-z-index: 1;
+  display: inline-block;
+  position: relative;
+  width: ${(props) => props.width}%;
+  overflow: hidden;
+  color: #ffd700;
+  white-space: nowrap;
+  z-index: 1;
 `;
 
 const EmptyStarIcon = styled(FontAwesomeIcon)`
-position: absolute;
-left: 0;
-top: 0;
-color: #ddd;
-z-index: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #ddd;
+  z-index: 0;
 `;
 
 const RatingSummary = () => {
