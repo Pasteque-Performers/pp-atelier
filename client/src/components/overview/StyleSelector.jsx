@@ -53,7 +53,7 @@ const StyleSelector = ({ productId, onStyleSelect }) => {
       .catch((error) => {
         console.error('Error fetching style data: ', error.response || error);
       });
-  }, [onStyleSelect]);
+  }, [productId, onStyleSelect]);
 
   return (
     <StyleContainer>
