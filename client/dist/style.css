@@ -62,4 +62,6 @@ body {
   z-index: 5;
   background-color: white;
   overflow: scroll;
+
+  animation:fadein .5s;
 }
