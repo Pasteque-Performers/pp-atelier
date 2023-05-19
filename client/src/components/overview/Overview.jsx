@@ -12,11 +12,8 @@ const OverviewContainer = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 10 10px;
-  max-width: 1500px;
-  // @media (max-width: 1000px) {
-  //   flex-direction: column;
-  //   align-items: center;
-  }
+  max-width: 1400px;
+
 `;
 
 const Title = styled.h1`
