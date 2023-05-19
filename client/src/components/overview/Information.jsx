@@ -16,7 +16,8 @@ const ProductSlogan = styled.p`
 `;
 
 const ProductDescription = styled.p`
-
+  margin-bottom: 15px;
+  color: #222;
 `;
 
 const ProductCategory = styled.p`
