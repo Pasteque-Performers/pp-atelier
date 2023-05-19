@@ -145,10 +145,11 @@ const CreateRelated = ({
       {showImages && <Images setHoveredOnImages={setHoveredOnImages} images={images}
        showNext={showNext} nextHandler={nextHandler} showPrevious={showPrevious}
        previousHandler={previousHandler} active={active}/>}
-    <div className="trait category">Category: {category}</div>
-    <div className="trait name">Product Name: {name}</div>
-    <div className="trait price">Price: {price}</div>
-    <div className="trait rating">Rating: {<StaticStarRating rating={4}/>}</div>
+    <div className='categoryTitle'>Category</div>
+    <div className="trait category">{category}</div>
+    <div className="trait name">{name}</div>
+    <div className="trait price">${price}</div>
+    <div className="trait rating">{<StaticStarRating rating={4}/>}</div>
     </div>
   );
 };

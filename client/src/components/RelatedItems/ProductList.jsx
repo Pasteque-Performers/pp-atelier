@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { faCaretLeft, faCaretRight, faRectangleVertical } from '@fortawesome/free-solid-svg-icons';
 import CreateRelated from './CreateRelated.jsx';
 
 const ProductList = ({

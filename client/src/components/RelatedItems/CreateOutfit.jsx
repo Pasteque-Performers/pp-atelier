@@ -32,9 +32,10 @@ const CreateOutfit = ({ product, handler }) => {
       <div className='imageContainer'>
         <img className="image" src={image || 'image cannot be displayed'}/>
       </div>
+    <div className='categoryTitle'>Category</div>
     <div className="trait category">Category: {product.category}</div>
     <div className="trait name">Product Name: {product.name}</div>
-    <div className="trait price">Price: {product.default_price}</div>
+    <div className="trait price">Price: ${product.default_price}</div>
     <div className="trait rating">Rating:{<StaticStarRating rating={4}/>}</div>
     </div>
   );
