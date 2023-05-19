@@ -69,9 +69,8 @@ const SubmitBtn = styled.input`
 
 const UserInfo = styled.input`
   flex-grow: 1;
-  width: 150px;
   height: 30px;
-  margin: 0px 0 0px 10px;
+  margin: 5px 0 0 0;
   border-radius: 25px;
   padding-left: 10px;
   font-family: inherit;
@@ -87,7 +86,8 @@ const UserInfoContainer = styled.div`
 
 const UserInfoLabel = styled.label`
   display: flex;
-  margin: 10px 0 0 0;
+  flex-direction: column;
+  margin: 10px 0 0 90px;
 `;
 
 const AnswerTextBox = styled.textarea`
@@ -98,8 +98,15 @@ const AnswerTextBox = styled.textarea`
   padding: 10px;
   font-family: inherit;
   font-size: 15px;
-  marginLeft: 10px;
+  margin: 10px 0 0 0;
+  border: 2px solid;
   border-radius: 25px;
+`;
+
+const AnswerTextBoxLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  margin-left: 90px;
 `;
 
 const AnswerModal = ({
@@ -144,13 +151,13 @@ const AnswerModal = ({
         <h1>Add an answer for:</h1>
         <h3>{question}</h3>
         <div>
-          <label style={{ display: 'flex', alignItems: 'justify-content' }}>Your Answer*:
+          <AnswerTextBoxLabel >Your Answer*:
             <AnswerTextBox
             type='text'
             onChange={(e) => setBody(e.target.value)}
             required
             maxLength={1000}/>
-          </label>
+          </AnswerTextBoxLabel>
         </div>
         <UserInfoContainer>
           <UserInfoLabel>Your Username*:

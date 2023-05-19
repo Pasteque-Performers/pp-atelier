@@ -64,6 +64,7 @@ const QuestionBody = styled.textarea`
   padding: 10px;
   font-size: 15px;
   font-family: inherit;
+  border: 2px solid;
 `;
 
 const UserInfo = styled.input`

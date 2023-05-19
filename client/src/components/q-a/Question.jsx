@@ -13,10 +13,9 @@ const BoldTitle = styled.strong`
 `;
 
 const QuestionButtonContainer = styled.div`
-  max-width: 1100px;
+  max-width: 1500px;
   height: auto;
   display: flex;
-  justify-content: space-between;
 `;
 
 const QuestionButton = styled.button`
@@ -35,8 +34,8 @@ const QuestionButton = styled.button`
 
 const QuestionAndReportBtns = styled.div`
   display: flex;
-  justify-content: space-between;
-  max-width: 500px;
+  align-items: center;
+  margin-left: auto;
   gap: 20px;
   cursor: pointer;
 `;
@@ -158,7 +157,7 @@ const Question = ({
       <QuestionButtonContainer>
         <div><BoldTitle>Q: </BoldTitle>{question.question_body}</div>
         <QuestionAndReportBtns>
-            <div>Helpful? {!localStorage[question.question_id]
+            <div>Was this quesiton helpful? {!localStorage[question.question_id]
               ? <HelpfulButton onClick={updateQuestionHelpfulness}>
               Yes({question.question_helpfulness})</HelpfulButton>
               : <span>Yes({question.question_helpfulness})</span>}
