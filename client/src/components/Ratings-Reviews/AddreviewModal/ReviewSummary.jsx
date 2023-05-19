@@ -10,6 +10,8 @@ const SummaryTextarea = styled.textarea`
   height: 60px;
   padding: 10px;
   font-size: 12px;
+  font-family: 'Manrope', sans-serif;
+  font-family: 'Manrope', sans-serif;
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: none;
