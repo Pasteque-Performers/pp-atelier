@@ -16,8 +16,8 @@ const ModalOverlay = styled.div`
 `;
 
 const EnlargedImage = styled.img`
-  max-width: 70%;
-  max-height: 70%;
+  max-width: 80%;
+  max-height: 80%;
   display: block;
   margin: auto;
 `;

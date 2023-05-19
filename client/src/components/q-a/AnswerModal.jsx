@@ -47,18 +47,23 @@ const ImgBox = styled.label`
   height: 60px;
 `;
 
-const CloseButton = styled.input`
+const SubmitBtn = styled.input`
   background-color: #100E04;
   color: white;
   border-radius: 25px;
+  padding: 10px 15px 10px 15px;
   margin-left: auto;
 `;
 
 const UserInfo = styled.input`
   flex-grow: 1;
+  width: 150px;
   height: 30px;
   margin: 0px 0 0px 10px;
   border-radius: 25px;
+  padding-left: 10px;
+  font-family: inherit;
+  font-size: 15px;
 `;
 
 const UserInfoContainer = styled.div`
@@ -71,6 +76,18 @@ const UserInfoContainer = styled.div`
 const UserInfoLabel = styled.label`
   display: flex;
   margin: 10px 0 0 0;
+`;
+
+const AnswerTextBox = styled.textarea`
+  width: 500px;
+  height: 300px;
+  display: block;
+  vertical-align: top;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  marginLeft: 10px;
+  border-radius: 25px;
 `;
 
 const AnswerModal = ({
@@ -96,14 +113,15 @@ const AnswerModal = ({
       photos: filteredPhotos,
     })
       .then(() => {
-        getAnswers(1);
+        getAnswers();
       })
       .catch((error) => console.log('Error posting new answer', error));
   };
 
   return (
     <ModalOverlay onClick={() => setDisplayModal(false)}>
-      <AnswerForm onClick={(e) => e.stopPropagation()} onSubmit={() => {
+      <AnswerForm onClick={(e) => e.stopPropagation()} onSubmit={(e) => {
+        e.preventDefault();
         postAnswer();
         setDisplayModal(false);
       }}>
@@ -114,19 +132,20 @@ const AnswerModal = ({
         <h1>Add an answer for:</h1>
         <h3>{question}</h3>
         <div>
-          <label style={{ display: 'flex', alignItems: 'justify-content' }}>Your Answer:
-            <input
+          <label style={{ display: 'flex', alignItems: 'justify-content' }}>Your Answer*:
+            <AnswerTextBox
             type='text'
             onChange={(e) => setBody(e.target.value)}
-            style={{ width: '500px', height: '300px', marginLeft: '10px' }}/>
+            required
+            maxLength={1000}/>
           </label>
         </div>
         <UserInfoContainer>
-          <UserInfoLabel>Your Username:
-            <UserInfo type='text' onChange={(e) => setName(e.target.value)} style={{ width: '150px', height: '30px' }}/>
+          <UserInfoLabel>Your Username*:
+            <UserInfo type='text' onChange={(e) => setName(e.target.value)} required maxLength={60}/>
           </UserInfoLabel>
-          <UserInfoLabel>Your Email Address:
-            <UserInfo type='text' onChange={(e) => setEmail(e.target.value)} style={{ width: '150px', height: '30px' }}/>
+          <UserInfoLabel>Your Email Address*:
+            <UserInfo type='text' onChange={(e) => setEmail(e.target.value)} required maxLength={60}/>
           </UserInfoLabel>
         </UserInfoContainer>
         <ImageUpload>
@@ -145,7 +164,7 @@ const AnswerModal = ({
         <ImgBox>Photo 5:
           <input type='text' placeholder='Insert Photo URL' onChange={(e) => insertPhotos(4, e.target.value)} />
         </ImgBox>
-        <CloseButton type='submit' value='Submit Answer' />
+        <SubmitBtn type='submit' value='Submit Answer' />
         </ImageUpload>
       </AnswerForm>
     </ModalOverlay>

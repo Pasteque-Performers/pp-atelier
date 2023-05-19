@@ -51,8 +51,6 @@ const QaBody = ({ productId, ScrollableList }) => {
   const [searching, setSearching] = useState(false);
   const [loadedQuestions, setLoadedQuestions] = useState(false);
   const [displayModal, setDisplayModal] = useState(false);
-  // Find a way to store this state in the cookie for user sessions if needed
-  const [helpfulQuestions, setHelpfulQuestions] = useState([]);
 
   const setReportedQuestion = (questionId) => {
     const updatedQuestions = questions.filter((question) => question.question_id !== questionId);
@@ -69,7 +67,7 @@ const QaBody = ({ productId, ScrollableList }) => {
       params: {
         product_id: productId,
         page: 1,
-        count: 120,
+        count: 80,
       },
     })
       .then((results) => {
@@ -93,7 +91,6 @@ const QaBody = ({ productId, ScrollableList }) => {
             if (loadedQuestions) {
               setShowQuestions(updatedQuestions);
             } else {
-              console.log(updatedQuestions.slice(0, 2));
               setShowQuestions(updatedQuestions.slice(0, 2));
             }
           });
