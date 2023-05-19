@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-// Here are the styled-components:
-
 const CartContainer = styled.div``;
 
 const Message = styled.div`
@@ -25,8 +23,6 @@ const AddToCartButton = styled.button`
   padding: 10px;
   margin: 5px;
 `;
-
-// And here's your AddToCart component:
 
 const AddToCart = ({ selectedStyle }) => {
   const [sizes, setSizes] = useState([]);
@@ -76,7 +72,6 @@ const AddToCart = ({ selectedStyle }) => {
       alert('Please select quantity');
     } else {
       console.log(`Size: ${selectedSize}, Quantity: ${selectedQuantity}`);
-      // Add the product to the user's cart here
     }
   };
 
