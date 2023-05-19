@@ -1,36 +1,36 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import AddReviewModalMain from './AddReviewModal/AddReviewModalMain.jsx';
+import ReviewListMain from './ReviewList/ReviewListMain.jsx';
 import ReviewBreakdownMain from './ReviewBreakdown/ReviewBreakdownMain.jsx';
+import styled from 'styled-components';
 
-const RatingsAndReviewsMain = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [metaData, setMetaData] = useState({});
+const ReviewContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  margin: 20px;
+`;
 
-  const handleButtonClick = () => {
-    setShowModal(true);
-  };
-
-  const productId = 40347;
+const RatingsAndReviewsMain = ({ productId, metaData }) => {
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    axios.get('classes/reviews/meta', { params: { productId } })
+    axios.get('classes/reviews', { params: { productId } })
       .then((response) => {
-        console.log('successfully got meta data', response.data);
-        setMetaData(response.data);
-        console.log('this is metaData >>>>>>>>>>>>>>>>>>>> ', metaData);
+        console.log('successfully got review data', response.data);
+        setReviews(response.data.results);
       })
       .catch((err) => {
-        console.error('Error getting meta data', err);
+        console.error('Error getting reviews', err);
       });
   }, [productId]);
 
   return (
-    <div>
+    <ReviewContainer>
       <ReviewBreakdownMain/>
-      <button onClick={handleButtonClick}>Add a review</button>
-      {showModal && <AddReviewModalMain metaData={metaData} />}
-    </div>
+      <ReviewListMain metaData={metaData} reviews={reviews} setReviews={setReviews}
+       productId={productId}/>
+    </ReviewContainer>
   );
 };
 
