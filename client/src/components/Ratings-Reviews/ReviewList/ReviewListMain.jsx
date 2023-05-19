@@ -29,7 +29,7 @@ const ReviewButton = styled.button`
   }
 `;
 
-const ReviewListMain = ({ reviews, setReviews, metaData, productId }) => {
+const ReviewListMain = ({ reviews, metaData, productId }) => {
   const [displayedReviews, setDisplayedReviews] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [displayCount, setDisplayCount] = useState(2);
