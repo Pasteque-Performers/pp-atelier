@@ -30,7 +30,7 @@ module.exports = {
         res.status(200).send(response.data.results);
       }))
       .catch((error) => {
-        console.log('Error getting answers for question', error);
+        console.log('Error getting answers for question', error.response.data);
         res.sendStatus(404);
       });
   },
@@ -45,7 +45,7 @@ module.exports = {
         res.sendStatus(204);
       })
       .catch((error) => {
-        console.log('Error updating question helpfulness:', error);
+        console.log('Error updating question helpfulness:', error.response.data);
         res.sendStatus(404);
       });
   },
@@ -60,7 +60,7 @@ module.exports = {
         res.sendStatus(204);
       })
       .catch((error) => {
-        console.log('Error updating answer helpfulness:', error);
+        console.log('Error updating answer helpfulness:', error.response.data);
         res.sendStatus(404);
       });
   },
@@ -75,7 +75,7 @@ module.exports = {
         res.sendStatus(204);
       })
       .catch((error) => {
-        console.log('Error reporting answer', error);
+        console.log('Error reporting answer', error.response.data);
         res.sendStatus(404);
       });
   },
@@ -90,7 +90,7 @@ module.exports = {
         res.sendStatus(204);
       })
       .catch((error) => {
-        console.log('Error reporting question', error);
+        console.log('Error reporting question', error.response.data);
         res.sendStatus(404);
       });
   },
@@ -112,7 +112,7 @@ module.exports = {
         res.sendStatus(201);
       })
       .catch((error) => {
-        console.log('Error posting new question', error);
+        console.log('Error posting new question', error.response.data);
         res.sendStatus(404);
       });
   },
@@ -135,7 +135,7 @@ module.exports = {
         res.sendStatus(201);
       })
       .catch((error) => {
-        console.log('Error posting new answer', error);
+        console.log('Error posting new answer', error.response.data);
         res.sendStatus(404);
       });
   },

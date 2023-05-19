@@ -16,25 +16,61 @@ const ModalOverlay = styled.div`
   align-items: center;
 `;
 
+const ImageUpload = styled.div`
+  width: auto;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-items: space-between;
+`;
+
 const AnswerForm = styled.form`
   margin-top: 40px;
   width: 50vw;
-  height: 800px;
+  height: auto;
   background-color: white;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 25px;
 `;
 
 const CloseBtn = styled.input`
   width: 70px;
   height: 30px;
+  background-color: #100E04;
+  color: white;
+  border-radius: 25px;
 `;
 
 const ImgBox = styled.label`
-  margin-top: 10px;
-  width: 60px;
+  margin: 10px 15px 0 0;
+  width: auto;
   height: 60px;
-  border: 2px solid black;
+`;
+
+const CloseButton = styled.input`
+  background-color: #100E04;
+  color: white;
+  border-radius: 25px;
+  margin-left: auto;
+`;
+
+const UserInfo = styled.input`
+  flex-grow: 1;
+  height: 30px;
+  margin: 0px 0 0px 10px;
+  border-radius: 25px;
+`;
+
+const UserInfoContainer = styled.div`
+  display: flex;
+  width: 550px;
+  flex-direction: column;
+  margin: 10px 0 10px 0;
+`;
+
+const UserInfoLabel = styled.label`
+  display: flex;
+  margin: 10px 0 0 0;
 `;
 
 const AnswerModal = ({
@@ -44,21 +80,6 @@ const AnswerModal = ({
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
-
-  // const handlePhotoChange = (event, index) => {
-  //   const file = event.target.files[0];
-  //   const reader = new FileReader();
-
-  //   reader.onLoad = (e) => {
-  //     const dataUrl = reader.result;
-  //     const cloudinaryUrl = `https://res.cloudinary.com/fec-cars/image/upload/${index + 1}/${encodeURIComponent(file.name)}`;
-  //     const updatedPhotos = [...photos];
-  //     updatedPhotos[index] = cloudinaryUrl;
-  //     setPhotos(updatedPhotos);
-  //   };
-
-  //   reader.readAsDataURL(file);
-  // };
 
   const insertPhotos = (index, url) => {
     const updatedPhoto = [...photos];
@@ -100,16 +121,15 @@ const AnswerModal = ({
             style={{ width: '500px', height: '300px', marginLeft: '10px' }}/>
           </label>
         </div>
-        <div>
-          <label>Your Username:
-            <input type='text' onChange={(e) => setName(e.target.value)} style={{ width: '150px', height: '30px' }}/>
-          </label>
-        </div>
-        <div>
-          <label>Your Email Address:
-            <input type='text' onChange={(e) => setEmail(e.target.value)} style={{ width: '150px', height: '30px' }}/>
-          </label>
-        </div>
+        <UserInfoContainer>
+          <UserInfoLabel>Your Username:
+            <UserInfo type='text' onChange={(e) => setName(e.target.value)} style={{ width: '150px', height: '30px' }}/>
+          </UserInfoLabel>
+          <UserInfoLabel>Your Email Address:
+            <UserInfo type='text' onChange={(e) => setEmail(e.target.value)} style={{ width: '150px', height: '30px' }}/>
+          </UserInfoLabel>
+        </UserInfoContainer>
+        <ImageUpload>
         <ImgBox>Photo 1:
           <input type='text' placeholder='Insert Photo URL' onChange={(e) => insertPhotos(0, e.target.value)} />
         </ImgBox>
@@ -125,7 +145,8 @@ const AnswerModal = ({
         <ImgBox>Photo 5:
           <input type='text' placeholder='Insert Photo URL' onChange={(e) => insertPhotos(4, e.target.value)} />
         </ImgBox>
-        <input type='submit' value='Submit Answer' />
+        <CloseButton type='submit' value='Submit Answer' />
+        </ImageUpload>
       </AnswerForm>
     </ModalOverlay>
   );
