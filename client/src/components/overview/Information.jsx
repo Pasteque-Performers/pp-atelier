@@ -1,5 +1,5 @@
 import React from 'react';
-// import './ProductCard.css';
+import StaticStarRating from './StaticStarRating.jsx';
 
 const ProductCard = ({ product }) => {
   if (!product) {
@@ -18,6 +18,7 @@ const ProductCard = ({ product }) => {
     <div className="product-card">
       <h3 className="product-name">{name}</h3>
       <p className="product-slogan">{slogan}</p>
+      <StaticStarRating product={product} />
       <p className="product-description">{description}</p>
       <p className="product-category">{category}</p>
       <p className="product-price">${(default_price && !isNaN(parseFloat(default_price))) ? parseFloat(default_price).toFixed(2) : 'N/A'}</p>
