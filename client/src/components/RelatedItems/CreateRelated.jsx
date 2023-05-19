@@ -70,7 +70,6 @@ const CreateRelated = ({
   const [productLoading, setProductLoading] = useState(true);
   const [active, setActive] = useState(0);
 
-
   useEffect(() => {
     if (product) {
       setProductLoading(false);
@@ -170,7 +169,7 @@ const CreateRelated = ({
   return (
     <RelatedItem onClick={() => { handler(id); }}>
       <div className="compareButton">
-      <FontAwesomeIcon icon={faStar} style={{
+      <FontAwesomeIcon icon={faStar} className='compareStar' style={{
         color: starHovered ? 'Ea2213' : 'EC6F7F',
       }} onClick={(e) => {
         e.stopPropagation();

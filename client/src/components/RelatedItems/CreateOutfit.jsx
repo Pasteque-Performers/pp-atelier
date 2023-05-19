@@ -63,7 +63,7 @@ const CategoryTitle = styled.div`
   width: 100%;
   font-size: 15px;
 `;
-const CreateOutfit = ({ product, handler }) => {
+const CreateOutfit = ({ product, handler, defaultHandler }) => {
   const [image, setImage] = useState('');
   const [deleteHovered, setDeleteHovered] = useState(false);
 
@@ -85,7 +85,8 @@ const CreateOutfit = ({ product, handler }) => {
       <div className="deleteButton">
       <FontAwesomeIcon icon={faCircleXmark} style={{
         color: deleteHovered ? 'Ea2213' : 'EC6F7F',
-      }} onClick={() => { handler(product.id); }} onMouseEnter={() => { setDeleteHovered(true); }}
+      }} onClick={(event) => { event.stopPropagation(); handler(product.id); }}
+      onMouseEnter={() => { setDeleteHovered(true); }}
       onMouseLeave={() => { setDeleteHovered(false); }}/>
       </div>
       <div className='imageContainer'>
