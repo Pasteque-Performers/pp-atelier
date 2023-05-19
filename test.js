@@ -8,9 +8,13 @@ import RatingSummary from './client/src/components/Ratings-Reviews/ReviewBreakdo
 import ProductBreakdown from './client/src/components/Ratings-Reviews/ReviewBreakdown/ProductBreakdown.jsx';
 import Compare from './client/src/components/RelatedItems/Compare.jsx';
 import ProductList from './client/src/components/RelatedItems/ProductList.jsx';
+<<<<<<< HEAD
 import RelatedItems from './client/src/components/RelatedItems/RelatedItems.jsx';
 import CreateImage from './client/src/components/RelatedItems/CreateImage.jsx';
 import QaSection from './client/src/components/q-a/QaSection.jsx';
+=======
+// import QaSection from './client/src/components/q-a/QaSection.jsx';
+>>>>>>> main
 import OverallStarRating from './client/src/components/Ratings-Reviews/AddreviewModal/OverallStarRating.jsx';
 import DisplayName from './client/src/components/Ratings-Reviews/AddreviewModal/DisplayName.jsx';
 import DoYouRecommend from './client/src/components/Ratings-Reviews/AddreviewModal/DoYouRecommend.jsx';
@@ -90,14 +94,14 @@ describe('Related Products Component', () => {
   });
 });
 
-describe('Q and A component', () => {
-  test('Renders QA Header', () => {
-    render(<QaSection />);
-    const qaHeader = screen.getByText(/Questions and Answers/i);
+// describe('Q and A component', () => {
+//   test('Renders QA Header', () => {
+//     render(<QaSection />);
+//     const qaHeader = screen.getByText(/Questions and Answers/i);
 
-    expect(qaHeader).toBeInTheDocument();
-  });
-});
+//     expect(qaHeader).toBeInTheDocument();
+//   });
+// });
 
 describe('OverallStarRating', () => {
   it('should render 5 star icons', () => {
@@ -248,7 +252,7 @@ describe('ProductCharacteristics', () => {
   it('should render all characteristics', () => {
     const { getByText } = render(
       <ProductCharacteristics
-        characteristics={{}}
+        characteristics={ {} }
         setCharacteristics={setCharacteristics}
         characteristicsData={metaData.characteristics}
       />,

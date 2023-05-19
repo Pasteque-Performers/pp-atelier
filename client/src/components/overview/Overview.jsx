@@ -1,10 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import '../../../dist/style.css';
+import styled from 'styled-components';
 import Information from './Information.jsx';
 import StyleSelector from './StyleSelector.jsx';
 import AddToCart from './AddToCart.jsx';
 import ImageGallery from './ImageGallery.jsx';
+
+const OverviewContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  color: #eb3b5a;
+  font-size: 50px;
+`;
+
+const ImageGalleryContainer = styled.div`
+`;
+
+const DetailsContainer = styled.div`
+`;
 
 const Overview = () => {
   const [product, setProduct] = useState(null);
@@ -21,21 +44,20 @@ const Overview = () => {
   }, []);
 
   return (
-    <div className="overview-container">
-      <h1>Watermelon Wear</h1>
+    <OverviewContainer>
+      <Title>Watermelon Wear</Title>
       {product && (
         <>
-          <div className="image-gallery-container">
+          <ImageGalleryContainer>
             {selectedStyle && <ImageGallery selectedStyle={selectedStyle} />}
-          </div>
-          <div className="details-container">
+          </ImageGalleryContainer>
+          <DetailsContainer>
             <Information product={product} />
-            <StyleSelector styles={product.styles} productId={product.id} onStyleSelect={setSelectedStyle} />
             {selectedStyle && <AddToCart selectedStyle={selectedStyle} />}
-          </div>
+          </DetailsContainer>
         </>
       )}
-    </div>
+    </OverviewContainer>
   );
 };
 

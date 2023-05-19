@@ -30,12 +30,18 @@ const BodyContainer = styled.div`
 `;
 
 const BodyButton = styled.button`
-  background-color: #100E04;
+  background-color: #20bf55;
+  border: none;
+  cursor: pointer;
   color: white;
   width: 200px;
   height: 30px;
   margin-top: 20px;
   border-radius: 25px;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
 `;
 
 const QuestionElement = styled.li`
@@ -51,8 +57,6 @@ const QaBody = ({ productId, ScrollableList }) => {
   const [searching, setSearching] = useState(false);
   const [loadedQuestions, setLoadedQuestions] = useState(false);
   const [displayModal, setDisplayModal] = useState(false);
-  // Find a way to store this state in the cookie for user sessions if needed
-  const [helpfulQuestions, setHelpfulQuestions] = useState([]);
 
   const setReportedQuestion = (questionId) => {
     const updatedQuestions = questions.filter((question) => question.question_id !== questionId);
@@ -69,7 +73,7 @@ const QaBody = ({ productId, ScrollableList }) => {
       params: {
         product_id: productId,
         page: 1,
-        count: 120,
+        count: 80,
       },
     })
       .then((results) => {
@@ -93,7 +97,6 @@ const QaBody = ({ productId, ScrollableList }) => {
             if (loadedQuestions) {
               setShowQuestions(updatedQuestions);
             } else {
-              console.log(updatedQuestions.slice(0, 2));
               setShowQuestions(updatedQuestions.slice(0, 2));
             }
           });

@@ -13,7 +13,7 @@ const BreakdownBarContainer = styled.div`
   display: flex;
   width: 100%;
   max-width: 200px;
-  height: 10px;
+  height: 5px;
   background-color: #333;
   margin-bottom: 10px;
   position: relative;
@@ -21,18 +21,19 @@ const BreakdownBarContainer = styled.div`
 
 const BreakdownIcon = styled.div`
   position: absolute;
-  bottom: 100%;
+  bottom: 80%;
   left: ${(props) => props.value}%;
-  transform: translateX(-50%);
+  transform: translateX(-40%);
   width: 0;
   height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
   border-top: 20px solid #000;
 `;
 
 const BreakdownLabel = styled.div`
   font-size: 14px;
+  font-family: 'Manrope', sans-serif;
   margin-bottom: 5px;
 `;
 
@@ -40,6 +41,7 @@ const ScaleLabel = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  font-family: 'Manrope', sans-serif;
   max-width: 200px;
   font-size: 12px;
   margin-top: 5px;

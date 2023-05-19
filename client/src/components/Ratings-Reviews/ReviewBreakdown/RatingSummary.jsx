@@ -29,7 +29,7 @@ z-index: 0;
 `;
 
 const ProgressBarContainer = styled.div`
-width: 20%;
+width: 40%;
 height: 10px;
 background-color: #ddd;
 border-radius: 5px;
@@ -47,6 +47,7 @@ width: ${(props) => props.percentage}%;
 
 const Label = styled.span`
 display: inline-block;
+font-family: 'Manrope', sans-serif;
 vertical-align: middle;
 `;
 
@@ -97,7 +98,7 @@ const RatingSummary = () => {
 
   return (
     <div>
-      <h2>Average Rating: {rating.toFixed(1)}</h2>
+      <h2>{rating.toFixed(1)}</h2>
       {[1, 2, 3, 4, 5].map((index) => (
         <StarContainer key={index}>
           <FilledStarIcon width={fillAmount(index)}>
