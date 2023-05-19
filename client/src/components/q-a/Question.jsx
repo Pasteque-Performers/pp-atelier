@@ -20,9 +20,17 @@ const QuestionButtonContainer = styled.div`
 `;
 
 const QuestionButton = styled.button`
-  background-color: #100E04;
+  background-color: #20bf55;
+  margin-top: 5px;
+  border: none;
   color: white;
+  padding: 5px 10px 5px 10px;
   border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Make the hover transition smooth */
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
 `;
 
 const QuestionAndReportBtns = styled.div`
@@ -30,11 +38,22 @@ const QuestionAndReportBtns = styled.div`
   justify-content: space-between;
   max-width: 500px;
   gap: 20px;
+  cursor: pointer;
+`;
+
+const HelpfulButton = styled.button`
+  border: none;
+  text-decoration: underline;
+  background: none;
+  color: #100E04;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
 `;
 
 const Question = ({
   question, getQuestions, questions, setQuestions,
-  setShowQuestions, setReportedQuestion, key, loadedQuestions,
+  setShowQuestions, setReportedQuestion, loadedQuestions,
 }) => {
   const [answers, setAnswers] = useState([]);
   const [showAnswers, setShowAnswers] = useState([]);
@@ -134,14 +153,14 @@ const Question = ({
   return (
     <div>
       {displayModal && <AnswerModal setDisplayModal={setDisplayModal}
-      questionId={question.question_id} getQuestions={getQuestions}
+      questionId={question.question_id} getAnswers={getAnswers}
        question={question.question_body}/>}
       <QuestionButtonContainer>
         <div><BoldTitle>Q: </BoldTitle>{question.question_body}</div>
         <QuestionAndReportBtns>
             <div>Helpful? {!localStorage[question.question_id]
-              ? <QuestionButton onClick={updateQuestionHelpfulness}>
-              Yes({question.question_helpfulness})</QuestionButton>
+              ? <HelpfulButton onClick={updateQuestionHelpfulness}>
+              Yes({question.question_helpfulness})</HelpfulButton>
               : <span>Yes({question.question_helpfulness})</span>}
             </div>
             <QuestionButton onClick={reportQuestion}>Report Question</QuestionButton>
@@ -157,12 +176,13 @@ const Question = ({
               setHelpfulAnswers={setHelpfulAnswers}
               setReportedAnswer={setReportedAnswer}
               BoldTitle={BoldTitle}
-              QuestionButton={QuestionButton}/>
+              QuestionButton={QuestionButton}
+              HelpfulButton={HelpfulButton}/>
             </AnswerElement>
           )) : <li>No answers yet</li>}
         </ul>
         {showAnswers.length < answers.length && !loadedAnswers && (
-        <QuestionButton onClick={loadMoreAnswers}>Load More Answers</QuestionButton>
+        <QuestionButton onClick={loadMoreAnswers} style={{ marginTop: '5px' }}>Load More Answers</QuestionButton>
         )}
         {loadedAnswers && (
           <QuestionButton onClick={collaposeAnswersList}>Collapse Answers List</QuestionButton>

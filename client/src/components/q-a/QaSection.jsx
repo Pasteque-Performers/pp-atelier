@@ -51,17 +51,13 @@ const ScrollableList = styled.ul`
   }
 `;
 
-const QaSection = () => {
-  const [productId, setProductId] = useState(40347);
-
-  return (
+const QaSection = ({ productId }) => (
     <ThemeProvider theme={theme}>
       <StyledSection>
         <QaHeader>Questions and Answers</QaHeader>
         <QaBody productId = {productId} ScrollableList={ScrollableList}/>
       </StyledSection>
     </ThemeProvider>
-  );
-};
+);
 
 export default QaSection;
