@@ -1,9 +1,37 @@
 import React from 'react';
+import styled from 'styled-components';
 import StaticStarRating from './StaticStarRating.jsx';
+
+// Define your styled components
+const ProductCardContainer = styled.div`
+  // Define your styles here. Example:
+  // padding: 16px;
+  // color: #333;
+`;
+
+const ProductName = styled.h3`
+  // Define your styles here.
+`;
+
+const ProductSlogan = styled.p`
+  // Define your styles here.
+`;
+
+const ProductDescription = styled.p`
+  // Define your styles here.
+`;
+
+const ProductCategory = styled.p`
+  // Define your styles here.
+`;
+
+const ProductPrice = styled.p`
+  // Define your styles here.
+`;
 
 const ProductCard = ({ product }) => {
   if (!product) {
-    return <div>Loading...</div>;
+    return <ProductCardContainer>Loading...</ProductCardContainer>;
   }
 
   const {
@@ -15,14 +43,14 @@ const ProductCard = ({ product }) => {
   } = product;
 
   return (
-    <div className="product-card">
-      <h3 className="product-name">{name}</h3>
-      <p className="product-slogan">{slogan}</p>
+    <ProductCardContainer>
+      <ProductName>{name}</ProductName>
+      <ProductSlogan>{slogan}</ProductSlogan>
       <StaticStarRating product={product} />
-      <p className="product-description">{description}</p>
-      <p className="product-category">{category}</p>
-      <p className="product-price">${(default_price && !isNaN(parseFloat(default_price))) ? parseFloat(default_price).toFixed(2) : 'N/A'}</p>
-    </div>
+      <ProductDescription>{description}</ProductDescription>
+      <ProductCategory>{category}</ProductCategory>
+      <ProductPrice>${(default_price && !isNaN(parseFloat(default_price))) ? parseFloat(default_price).toFixed(2) : 'N/A'}</ProductPrice>
+    </ProductCardContainer>
   );
 };
 
