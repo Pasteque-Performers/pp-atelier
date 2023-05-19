@@ -9,11 +9,9 @@ const ReviewContainer = styled.div`
   justify-content: flex-start;
   gap: 20px;
   margin: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
-const RatingsAndReviewsMain = ({ productId }) => {
-  const [metaData, setMetaData] = useState({});
+const RatingsAndReviewsMain = ({ productId, metaData }) => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
@@ -24,17 +22,6 @@ const RatingsAndReviewsMain = ({ productId }) => {
       })
       .catch((err) => {
         console.error('Error getting reviews', err);
-      });
-  }, [productId]);
-
-  useEffect(() => {
-    axios.get('classes/reviews/meta', { params: { productId } })
-      .then((response) => {
-        console.log('successfully got meta data', response.data);
-        setMetaData(response.data);
-      })
-      .catch((err) => {
-        console.error('Error getting meta data', err);
       });
   }, [productId]);
 
