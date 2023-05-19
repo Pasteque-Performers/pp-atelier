@@ -8,7 +8,7 @@ const ProductCardContainer = styled.div`
 `;
 
 const ProductName = styled.h3`
-
+  text-shadow: 1px 1px #eb3b5a;
 `;
 
 const ProductSlogan = styled.p`

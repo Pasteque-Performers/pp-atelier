@@ -6,23 +6,27 @@ import StyleSelector from './StyleSelector.jsx';
 import AddToCart from './AddToCart.jsx';
 import ImageGallery from './ImageGallery.jsx';
 
-// Define your styled components
 const OverviewContainer = styled.div`
-  // Define your styles here. Example:
-  // padding: 100px;
-  // color: #333;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Title = styled.h1`
-  // Define your styles here.
+  text-align: center;
+  color: #eb3b5a;
+  font-size: 50px;
 `;
 
 const ImageGalleryContainer = styled.div`
-  // Define your styles here.
 `;
 
 const DetailsContainer = styled.div`
-  // Define your styles here.
 `;
 
 const Overview = () => {
