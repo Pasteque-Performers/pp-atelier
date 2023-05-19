@@ -92,7 +92,11 @@ const Outfit = ({ defaultProduct, animationClass }) => {
       <FontAwesomeIcon icon={faPlus} className='add' style={{
         color: addHovered ? 'Ea2213' : 'EC6F7F',
         fontSize: '50%',
-
+        position: 'relative',
+        backgroundColor: 'grey',
+        alignItems: 'center',
+        maxWidth: '150px',
+        height: '100vw',
       }} onClick={addHandler} onMouseEnter={() => { setAddHovered(true); }}
       onMouseLeave={() => { setAddHovered(false); }} />
         </AddContainer>
