@@ -9,7 +9,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const ProductCardContainer = styled.div`
-  border: solid;
   display: block;
   justify-content: space-around;
   padding: 16px;
@@ -30,6 +29,7 @@ const ProductDescription = styled.p`
 `;
 
 const ProductCategory = styled.p`
+  color: #c2c2c2;
 `;
 
 const ProductPrice = styled.p`
@@ -40,6 +40,7 @@ const StyledScrollLink = styled.a`
   color: #20bf55;
   cursor: pointer;
   text-decoration: none;
+  transition: all 0.3s ease;
   &:hover {
     color: #eb3b5a;
   }
@@ -57,11 +58,6 @@ const ProductCard = ({ product }) => {
     category,
     default_price,
   } = product;
-
-  const handleScroll = () => {
-    const element = document.getElementById('ratingsAndReviews');
-    element.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <>
