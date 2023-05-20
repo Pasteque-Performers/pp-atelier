@@ -20,7 +20,7 @@ const App = () => {
     const first = queue[0];
     if (!loading && queue.length > 0) {
       setLoading(true);
-      axios.get('classes/reviews/meta', { params: { first } })
+      axios.get('classes/reviews/meta', { params: { productId } })
         .then((response) => {
           console.log('successfully got meta data', response.data);
           setMetaData(response.data);
