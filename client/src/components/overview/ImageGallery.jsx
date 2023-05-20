@@ -97,7 +97,7 @@ const ImageGallery = ({ selectedStyle }) => {
       {selectedStyle && selectedStyle.photos && (
         <div>
           <ImageContainer isExpanded={isExpanded}>
-            <PrevButton onClick={handlePrevClick}>
+            <PrevButton onClick={handlePrevClick} aria-label="Previous Image">
               <FontAwesomeIcon icon={faArrowLeft} />
               </PrevButton>
             <MainImage
@@ -105,10 +105,10 @@ const ImageGallery = ({ selectedStyle }) => {
               alt="Selected"
               isExpanded={isExpanded}
             />
-            <NextButton onClick={handleNextClick}>
+            <NextButton onClick={handleNextClick} aria-label="Next Image">
               <FontAwesomeIcon icon={faArrowRight} />
             </NextButton>
-            <ExpandButton onClick={isExpanded ? handleMinimize : handleExpand}>
+            <ExpandButton onClick={isExpanded ? handleMinimize : handleExpand} aria-label={isExpanded ? "Minimize Image" : "Expand Image"}>
               {isExpanded ? <FontAwesomeIcon icon={faCompress} /> : <FontAwesomeIcon icon={faExpand} />}
             </ExpandButton>
           </ImageContainer>
@@ -118,6 +118,7 @@ const ImageGallery = ({ selectedStyle }) => {
                 key={index}
                 src={photo.thumbnail_url}
                 alt="Thumbnail"
+                aria-label={`Thumbnail Image ${index + 1}`}
                 isExpanded={isExpanded}
                 onClick={() => setSelectedImageIndex(index)}
               />

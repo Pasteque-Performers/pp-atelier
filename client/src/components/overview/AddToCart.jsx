@@ -93,16 +93,22 @@ const AddToCart = ({ selectedStyle }) => {
   return (
     <CartContainer>
       {sizeMessage && <Message>{sizeMessage}</Message>}
-      <SelectSize ref={sizeDropdownRef} value={selectedSize} onChange={handleSizeChange} open={isSizeDropdownOpen}>
+      <SelectSize ref={sizeDropdownRef}
+      value={selectedSize}
+      onChange={handleSizeChange}
+      open={isSizeDropdownOpen}
+      aria-label="Select Size">
         <option value="">Select Size</option>
         {sizes.length > 0 ? sizes.map((size, index) => <option key={index} value={size}>{size}</option>) : <option value="OUT OF STOCK">OUT OF STOCK</option>}
       </SelectSize>
 
-      <SelectQuantity value={selectedQuantity} onChange={handleQuantityChange} disabled={selectedSize === '' || selectedSize === 'OUT OF STOCK'}>
+      <SelectQuantity value={selectedQuantity} onChange={handleQuantityChange} disabled={selectedSize === '' || selectedSize === 'OUT OF STOCK'}
+      aria-label="Selct Quantity">
         {quantityOptions.map((quantity, index) => <option key={index} value={quantity}>{quantity}</option>)}
       </SelectQuantity>
-
-      {sizes.length > 0 && <AddToCartButton onClick={handleAddToCart} disabled={!selectedSize || !selectedQuantity || selectedSize === 'OUT OF STOCK' || selectedQuantity === '-'}>Add to Cart</AddToCartButton>}
+      {sizes.length > 0 && <AddToCartButton
+      aria_label="Add to Cart"
+      onClick={handleAddToCart} disabled={!selectedSize || !selectedQuantity || selectedSize === 'OUT OF STOCK' || selectedQuantity === '-'}>Add to Cart</AddToCartButton>}
     </CartContainer>
   );
 };
