@@ -26,7 +26,7 @@ const StyledSection = styled.section`
   margin: 15px 0px 10px 10px;
   display: flex;
   flex-direction: column;
-  max-height: 700px;
+  max-height: 800px;
 `;
 
 const ScrollableList = styled.ul`

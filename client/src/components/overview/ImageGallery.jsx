@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight, faExpand, faCompress } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   width: 600px;
+  padding: 5px 5px;
 `;
 
 const ImageContainer = styled.div`
@@ -15,18 +18,21 @@ const ImageContainer = styled.div`
 const ThumbnailContainer = styled.div`
   display: flex;
   overflow-x: scroll;
+  justify-content: center;
+  padding: 1px;
 `;
 
 const ThumbnailImage = styled.img`
   width: ${(props) => (props.isExpanded ? '50px' : '70px')};
   height: ${(props) => (props.isExpanded ? '50px' : '70px')};
-  margin: 5px;
+  border-radius: 2px;
 `;
 
 const MainImage = styled.img`
   width: ${(props) => (props.isExpanded ? '1000px' : '500px')};
   height: ${(props) => (props.isExpanded ? '1000px' : '500px')};
   max-width: 100%;
+  border-radius: 2px;
 `;
 
 const Button = styled.button`
@@ -37,22 +43,22 @@ const Button = styled.button`
   border: none;
   padding: 10px;
   cursor: pointer;
-
+  transition: all 0.3s ease;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
   }
 `;
 
 const PrevButton = styled(Button)`
-  left: 5px;
+  left: 10%;
 `;
 
 const NextButton = styled(Button)`
-  right: 5px;
+  right: 10%;
 `;
 
 const ExpandButton = styled(Button)`
-  top: 5px;
+  bottom: 5px;
   right: 10%;
 `;
 
@@ -91,15 +97,19 @@ const ImageGallery = ({ selectedStyle }) => {
       {selectedStyle && selectedStyle.photos && (
         <div>
           <ImageContainer isExpanded={isExpanded}>
-            <PrevButton onClick={handlePrevClick}>⬅️</PrevButton>
+            <PrevButton onClick={handlePrevClick}>
+              <FontAwesomeIcon icon={faArrowLeft} />
+              </PrevButton>
             <MainImage
               src={selectedStyle.photos[selectedImageIndex].url}
               alt="Selected"
               isExpanded={isExpanded}
             />
-            <NextButton onClick={handleNextClick}>➡️</NextButton>
+            <NextButton onClick={handleNextClick}>
+              <FontAwesomeIcon icon={faArrowRight} />
+            </NextButton>
             <ExpandButton onClick={isExpanded ? handleMinimize : handleExpand}>
-              {isExpanded ? '[  ]' : '[  ]'}
+              {isExpanded ? <FontAwesomeIcon icon={faCompress} /> : <FontAwesomeIcon icon={faExpand} />}
             </ExpandButton>
           </ImageContainer>
           <ThumbnailContainer>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const CartContainer = styled.div``;
 
@@ -20,8 +21,22 @@ const SelectQuantity = styled.select`
 `;
 
 const AddToCartButton = styled.button`
-  padding: 10px;
-  margin: 5px;
+  background-color: #20bf55;
+  border: none;
+  cursor: pointer;
+  color: white;
+  width: 200px;
+  height: 30px;
+  margin-top: 20px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #eb3b5a; /* Watermelon red/pink color on hover */
+  }
+  &:disabled {
+    background-color: #ccc; /* Change color to gray when disabled */
+    cursor: not-allowed; /* Change cursor when disabled */
+  }
 `;
 
 const AddToCart = ({ selectedStyle }) => {
@@ -80,11 +95,11 @@ const AddToCart = ({ selectedStyle }) => {
       {sizeMessage && <Message>{sizeMessage}</Message>}
       <SelectSize ref={sizeDropdownRef} value={selectedSize} onChange={handleSizeChange} open={isSizeDropdownOpen}>
         <option value="">Select Size</option>
-        {sizes.length > 0 ? sizes.map((size) => <option key={size} value={size}>{size}</option>) : <option value="OUT OF STOCK">OUT OF STOCK</option>}
+        {sizes.length > 0 ? sizes.map((size, index) => <option key={index} value={size}>{size}</option>) : <option value="OUT OF STOCK">OUT OF STOCK</option>}
       </SelectSize>
 
       <SelectQuantity value={selectedQuantity} onChange={handleQuantityChange} disabled={selectedSize === '' || selectedSize === 'OUT OF STOCK'}>
-        {quantityOptions.map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)}
+        {quantityOptions.map((quantity, index) => <option key={index} value={quantity}>{quantity}</option>)}
       </SelectQuantity>
 
       {sizes.length > 0 && <AddToCartButton onClick={handleAddToCart} disabled={!selectedSize || !selectedQuantity || selectedSize === 'OUT OF STOCK' || selectedQuantity === '-'}>Add to Cart</AddToCartButton>}

@@ -6,38 +6,41 @@ import StyleSelector from './StyleSelector.jsx';
 import AddToCart from './AddToCart.jsx';
 import ImageGallery from './ImageGallery.jsx';
 
-// Define your styled components
 const OverviewContainer = styled.div`
-  // Define your styles here. Example:
-  // padding: 100px;
-  // color: #333;
+
+  font-family: 'Manrope', sans-serif;
+  display: flex;
+  justify-content: space-around;
+  padding: 10 10px;
+  max-width: 1400px;
+
 `;
 
 const Title = styled.h1`
-  // Define your styles here.
+  text-align: center;
+  color: #eb3b5a;
+  font-size: 50px;
 `;
 
 const ImageGalleryContainer = styled.div`
-  // Define your styles here.
 `;
 
 const DetailsContainer = styled.div`
-  // Define your styles here.
 `;
 
-const Overview = () => {
+const Overview = ({ productId }) => {
   const [product, setProduct] = useState(null);
   const [selectedStyle, setSelectedStyle] = useState(null);
 
   useEffect(() => {
-    axios.get('classes/products')
+    axios.get(`classes/products/${productId}`)
       .then((response) => {
-        setProduct(response.data[0]);
+        setProduct(response.data);
       })
       .catch((error) => {
         console.error('Error fetching data: ', error.response || error);
       });
-  }, []);
+  }, [productId]);
 
   return (
     <OverviewContainer>
@@ -49,6 +52,7 @@ const Overview = () => {
           </ImageGalleryContainer>
           <DetailsContainer>
             <Information product={product} />
+            <StyleSelector styles={product.styles} productId={product.id} onStyleSelect={setSelectedStyle} />
             {selectedStyle && <AddToCart selectedStyle={selectedStyle} />}
           </DetailsContainer>
         </>

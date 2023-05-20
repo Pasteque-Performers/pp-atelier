@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReviewListTile from './ReviewListTile.jsx';
-import AddReviewModalMain from '../AddReviewModal/AddReviewModalMain.jsx';
+import AddReviewModalMain from '../AddreviewModal/AddReviewModalMain.jsx';
 import styled from 'styled-components';
 
 const ReviewListContainer = styled.div`

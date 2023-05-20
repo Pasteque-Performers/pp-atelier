@@ -1,10 +1,55 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 import Compare from './Compare.jsx';
 import Images from './Images.jsx';
 import StaticStarRating from '../overview/StaticStarRating.jsx';
 
+const RelatedItem = styled.div`
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: start;
+  overflow-wrap: break-word;
+  border: solid;
+  width: 20%;
+  margin-right: 2%;
+  margin-left: 2%;
+  height: 100%;
+  border-radius: 5px;
+  `;
+
+const Category = styled.div`
+    display: flex;
+    width: 100%;
+    font-size: 1em;
+  `;
+
+const Name = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 1em;
+`;
+
+const Price = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 1em;
+`;
+
+const Rating = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 1em;
+  width: 200px;
+`;
+
+const CategoryTitle = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 15px;
+`;
 const CreateRelated = ({
   id, handler, defaultProduct, imageList, product, list,
 }) => {
@@ -18,12 +63,12 @@ const CreateRelated = ({
   const [images, setImages] = useState([]);
   const [hoveredOnDefaultImage, setHoveredOnDefaultImage] = useState(false);
   const [hoveredOnImages, setHoveredOnImages] = useState(false);
-  const [currentImages, setCurrentImages] = useState([]);
   const [showNext, toggleShowNext] = useState(false);
   const [showPrevious, toggleShowPrevious] = useState(false);
   const [starHovered, setStarHovered] = useState(false);
   const [loading, setLoading] = useState(true);
   const [productLoading, setProductLoading] = useState(true);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     if (product) {
@@ -56,13 +101,11 @@ const CreateRelated = ({
   };
 
   const nextHandler = () => {
-    const first = imageList.indexOf(currentImages[0]);
-    setCurrentImages(imageList.slice(first + 1, first + 5));
+    setActive(active + 1);
   };
 
   const previousHandler = () => {
-    const first = imageList.indexOf(currentImages[0]);
-    setCurrentImages(imageList.slice(first - 1, first + 3));
+    setActive(active - 1);
   };
 
   useEffect(() => {
@@ -74,7 +117,6 @@ const CreateRelated = ({
   useEffect(() => {
     if (imageList !== undefined) {
       setImage(imageList[0].photos[0].thumbnail_url);
-      setCurrentImages(imageList.slice(0, 4));
       setImages(imageList);
     }
   }, [id, imageList, loading, defaultProduct]);
@@ -104,30 +146,30 @@ const CreateRelated = ({
   useEffect(() => {
     if (!hoveredOnDefaultImage && !hoveredOnImages) {
       toggleShowImages(false);
+      setActive(0);
     }
   }, [hoveredOnDefaultImage, hoveredOnImages]);
 
   useEffect(() => {
-    if (imageList !== undefined) {
-      if (images.length > currentImages.length) {
-        toggleShowNext(true);
-      }
-      if (images.indexOf(currentImages[0]) > 0) {
-        toggleShowPrevious(true);
-      }
-      if (images.indexOf(currentImages[0]) === 0) {
-        toggleShowPrevious(false);
-      }
-      if (images.indexOf(currentImages[currentImages.length - 1]) === imageList.length - 1) {
-        toggleShowNext(false);
-      }
+    if (images.length < 4) {
+      toggleShowNext(false);
     }
-  }, [currentImages, images]);
+    if (active < images.length - 5) {
+      toggleShowNext(true);
+    } else {
+      toggleShowNext(false);
+    }
+    if (active > 0) {
+      toggleShowPrevious(true);
+    } else {
+      toggleShowPrevious(false);
+    }
+  }, [images, active]);
 
   return (
-    <div className="relatedItem" onClick={() => { handler(id); }}>
+    <RelatedItem onClick={() => { handler(id); }}>
       <div className="compareButton">
-      <FontAwesomeIcon icon={faStar} style={{
+      <FontAwesomeIcon icon={faStar} className='compareStar' style={{
         color: starHovered ? 'Ea2213' : 'EC6F7F',
       }} onClick={(e) => {
         e.stopPropagation();
@@ -140,17 +182,20 @@ const CreateRelated = ({
       <Compare features1={product.features}
       features2={defaultProduct.features} name1={product.name} name2={defaultProduct.name} />
       </div>)}
-    <img className="image" src={image} onMouseEnter={() => { toggleShowImages(true); setHoveredOnDefaultImage(true); }} onMouseLeave={() => {
-      setHoveredOnDefaultImage(false);
-    }}/>
-      {showImages && <Images setHoveredOnImages={setHoveredOnImages} images={currentImages}
+      <div className='imageContainer'>
+<img className="image" src={image} onMouseEnter={() => { toggleShowImages(true); setHoveredOnDefaultImage(true); }} onMouseLeave={() => {
+  setHoveredOnDefaultImage(false);
+}}/>
+      </div>
+      {showImages && <Images setHoveredOnImages={setHoveredOnImages} images={images}
        showNext={showNext} nextHandler={nextHandler} showPrevious={showPrevious}
-       previousHandler={previousHandler}/>}
-    <div className="trait category">Category: {category}</div>
-    <div className="trait name">Product Name: {name}</div>
-    <div className="trait price">Price: {price}</div>
-    <div className="trait rating">Rating: {<StaticStarRating rating={4}/>}</div>
-    </div>
+       previousHandler={previousHandler} active={active}/>}
+    <CategoryTitle>Category</CategoryTitle>
+    <Category>{category}</Category>
+    <Name>{name}</Name>
+    <Price>${price}</Price>
+    <Rating>{<StaticStarRating rating={4}/>}</Rating>
+    </RelatedItem>
   );
 };
 

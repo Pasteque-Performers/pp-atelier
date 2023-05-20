@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import ProductList from './ProductList.jsx';
 import Outfit from './Outfit.jsx';
 
-const RelatedItems = () => {
-  const [defaultProductID, setDefault] = useState(40344);
+const Body = styled.div`
+  font-family: 'Manrope', sans-serif;
+`;
+
+const RelatedItemsMain = styled.div`
+  position: relative;
+  width: fit-content;
+  height: 90vw;
+  max-height: 950px;
+  max-width: 1200px;
+  margin-bottom: 5%;
+  margin-top: 5%;
+`;
+const RelatedItems = ({ productId, setProductId }) => {
   const [defaultProduct, setDefaultProduct] = useState([]);
   const [list, setList] = useState([]);
   const [currentList, setCurrentList] = useState([]);
@@ -14,9 +27,10 @@ const RelatedItems = () => {
   const [imageList, setImageList] = useState([]);
   const [products, setProducts] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(0);
+  const [ratings, setRatings] = useState([]);
 
   const defaultHandler = (event) => {
-    setDefault(event);
+    setProductId(event);
     setCurrentPosition(0);
   };
 
@@ -51,12 +65,12 @@ const RelatedItems = () => {
       url: '/classes/productsquery',
       method: 'get',
       params: {
-        id: defaultProductID,
+        id: productId,
       },
     }).then((res) => {
       setDefaultProduct(res.data);
     });
-  }, [defaultProductID]);
+  }, [productId]);
 
   useEffect(() => {
     axios({
@@ -64,7 +78,7 @@ const RelatedItems = () => {
       method: 'get',
       params: {
         page: 'related',
-        id: defaultProductID,
+        id: productId,
       },
     }).then((res) => {
       setList(res.data);
@@ -75,7 +89,7 @@ const RelatedItems = () => {
         toggleShowNext(true);
       }
     });
-  }, [defaultProductID]);
+  }, [productId]);
 
   useEffect(() => {
     Promise.all(
@@ -109,20 +123,22 @@ const RelatedItems = () => {
   }, [list]);
 
   return (
+    <Body>
+        <RelatedItemsMain>
     <div>
-    <div>
-      <h2>related products</h2>
+      <h2>Related Products</h2>
   <ProductList list={currentList} products={products} defaultProduct={defaultProduct}
   defaultHandler={(event) => { defaultHandler(event); }} nextHandler={nextHandler}
   showNext={showNext}
-   previousHandler={previousHandler} showPrevious={showPrevious} animationClass={animationClass}
-   imageList={imageList} currentPosition={currentPosition}/>
+  previousHandler={previousHandler} showPrevious={showPrevious} animationClass={animationClass}
+  imageList={imageList} currentPosition={currentPosition}/>
     </div>
-    <div>
-    <h2>your outfit</h2>
-    <Outfit defaultProduct={defaultProduct} />
+    <div >
+    <h2>Your Outfit</h2>
+    <Outfit defaultProduct={defaultProduct} defaultHandler={(event) => { defaultHandler(event); }}/>
     </div>
-    </div>
+    </RelatedItemsMain>
+    </Body>
   );
 };
 

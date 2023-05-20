@@ -1,9 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight, faPlus } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 import CreateOutfit from './CreateOutfit.jsx';
 
-const Outfit = ({ defaultProduct }) => {
+const Outfits = styled.div`
+display: inline-flex;
+flex-direction: row;
+width: 1100px;
+height: 300px;
+background-color: #EBEBEB;
+padding: 3%;
+border: solid black;
+border-radius: 25px;
+`;
+
+const AddContainer = styled.div`
+position: relative;
+display: inline-flex;
+flex-direction: column;
+align-items: start;
+overflow-wrap: break-word;
+width: 20%;
+margin-right: 2%;
+margin-left: 2%;
+height: 100%;
+border-radius: 5px;
+`;
+
+const Outfit = ({ defaultProduct, defaultHandler, animationClass }) => {
   const [list, setList] = useState([]);
   const [currentList, setCurrentList] = useState([]);
   const [showNext, toggleShowNext] = useState(false);
@@ -57,29 +82,33 @@ const Outfit = ({ defaultProduct }) => {
   }, [list]);
 
   return (
-    <div className="outfits">
-      <div className="toggleCurrent">
-      {showPrevious && <FontAwesomeIcon icon={faCaretLeft} style={{
+    <Outfits>
+      {showPrevious ? <div className='empty'><FontAwesomeIcon className='autowidth' icon={faCaretLeft} style={{
         color: previousHovered ? 'Ea2213' : 'EC6F7F',
-        fontSize: '4em',
       }} onClick={previousHandler} onMouseEnter={() => { setPreviousHovered(true); }}
-      onMouseLeave={() => { setPreviousHovered(false); }}/>}
-      </div>
-      <FontAwesomeIcon icon={faPlus} style={{
+      onMouseLeave={() => { setPreviousHovered(false); }}/></div> : <div className="empty"/>}
+      <div className={`slider-container ${animationClass}`}>
+        <AddContainer>
+      <FontAwesomeIcon icon={faPlus} className='add' style={{
         color: addHovered ? 'Ea2213' : 'EC6F7F',
-        fontSize: '10em',
-      }} className='add' onClick={addHandler} onMouseEnter={() => { setAddHovered(true); }}
+        fontSize: '50%',
+        position: 'relative',
+        backgroundColor: 'grey',
+        alignItems: 'center',
+        maxWidth: '150px',
+        height: '100vw',
+      }} onClick={addHandler} onMouseEnter={() => { setAddHovered(true); }}
       onMouseLeave={() => { setAddHovered(false); }} />
+        </AddContainer>
       {currentList.map((product, index) => <CreateOutfit
-    key={index} product={product} handler={deleteHandler} />)}
-    <div className="toggleCurrent">
-    {showNext && <FontAwesomeIcon icon={faCaretRight} style={{
+    key={index} product={product} handler={deleteHandler}
+    defaultHandler={defaultHandler}/>)}
+      </div>
+    {showNext ? <div className='empty'><FontAwesomeIcon className='autowidth' icon={faCaretRight} style={{
       color: nextHovered ? 'Ea2213' : 'EC6F7F',
-      fontSize: '4em',
     }} onClick={nextHandler} onMouseEnter={() => { setNextHovered(true); }}
-    onMouseLeave={() => { setNextHovered(false); }}/>}
-    </div>
-    </div>
+    onMouseLeave={() => { setNextHovered(false); }}/></div> : <div className="empty"/>}
+    </Outfits>
   );
 };
 

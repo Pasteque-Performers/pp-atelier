@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import ReviewListMain from './ReviewList/ReviewListMain.jsx';
 import ReviewBreakdownMain from './ReviewBreakdown/ReviewBreakdownMain.jsx';
-import styled from 'styled-components';
 
 const ReviewContainer = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ const RatingsAndReviewsMain = ({ productId, metaData }) => {
 
   return (
     <ReviewContainer>
-      <ReviewBreakdownMain metaData={metaData}/>
+      <ReviewBreakdownMain/>
       <ReviewListMain metaData={metaData} reviews={reviews} setReviews={setReviews}
        productId={productId}/>
     </ReviewContainer>
