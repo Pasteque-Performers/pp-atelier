@@ -4,10 +4,20 @@ import styled from 'styled-components';
 import RatingSummary from './RatingSummary.jsx';
 import ProductBreakdown from './ProductBreakdown.jsx';
 
-const ReviewBreakdownMain = () => (
+const Title = styled.h2`
+    margin-top: 0;
+    color: #333;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Manrope', sans-serif;
+    text-align: left;
+`;
+
+const ReviewBreakdownMain = ({ metaData }) => (
     <div>
-    <RatingSummary/>
-    <ProductBreakdown/>
+      <Title>Ratings</Title>
+      <RatingSummary metaData={metaData}/>
+      <ProductBreakdown metaData={metaData}/>
     </div>
 );
 

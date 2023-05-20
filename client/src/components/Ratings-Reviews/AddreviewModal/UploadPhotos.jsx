@@ -29,16 +29,17 @@ const ImageName = styled.div`
   text-overflow: ellipsis;
 `;
 
-const FileInputLabel = styled.label`
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: #f0f0f0;
-  color: #333;
-  border-radius: 4px;
-  cursor: pointer;
-  &:hover {
-    background-color: #e0e0e0;
-  }
+const Upload = styled.label`
+padding: 10px 20px;
+border: none;
+background-color: #20bf55;
+color: white;
+border-radius: 5px;
+cursor: pointer;
+transition: all 0.3s ease;
+&:hover {
+  background-color: #eb3b5a;
+}
 `;
 
 const UploadPhotos = ({ formData, handleChange }) => {
@@ -68,7 +69,7 @@ const UploadPhotos = ({ formData, handleChange }) => {
           </ImagePreview>
         ))}
       </ImagePreviewContainer>
-      <FileInputLabel onClick={handleShowModal}>Upload Photos</FileInputLabel>
+      <Upload onClick={handleShowModal}>Upload Photos</Upload>
       {showModal && <ImageUploadModal onHideModal={handleHideModal} />}
     </div>
   );

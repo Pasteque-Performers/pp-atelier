@@ -29,8 +29,8 @@ z-index: 0;
 `;
 
 const ProgressBarContainer = styled.div`
-width: 40%;
-height: 10px;
+width: 68%;
+height: 12px;
 background-color: #ddd;
 border-radius: 5px;
 display: inline-block;
@@ -40,7 +40,7 @@ margin: 0 10px;
 
 const ProgressBarFill = styled.div`
 height: 100%;
-background-color: #008000;
+background-color: #20bf55;
 border-radius: inherit;
 width: ${(props) => props.percentage}%;
 `;
@@ -48,34 +48,37 @@ width: ${(props) => props.percentage}%;
 const Label = styled.span`
 display: inline-block;
 font-family: 'Manrope', sans-serif;
+font-size: 12px;
 vertical-align: middle;
 `;
 
-const RatingSummary = () => {
+const Paragraph = styled.p`
+font-size: 0.8rem;
+font-family: 'Manrope', sans-serif;
+color: #black;
+`;
+
+const RatingSummary = ({ metaData }) => {
   const [rating, setRating] = useState(0);
   const [totalReviews, setTotalReviews] = useState(0);
   const [recommendationPercentage, setRecommendationPercentage] = useState();
-
-  const exampleData = {
-    1: '139',
-    2: '201',
-    3: '316',
-    4: '301',
-    5: '668',
-  };
-
-  const recommended = {
-    false: '418',
-    true: '1207',
-  };
+  const [loading, setLoading] = useState(true);
+  const [metaRating, setMetaRating] = useState({});
 
   useEffect(() => {
+    if (!metaData.ratings || !metaData.recommended) {
+      setLoading(true);
+      return;
+    }
+
     let totalRatings = 0;
     let totalResponses = 0;
+    const { recommended, ratings } = metaData;
+    setMetaRating(ratings);
 
     for (let i = 1; i <= 5; i += 1) {
-      totalRatings += i * parseInt(exampleData[i], 10);
-      totalResponses += parseInt(exampleData[i], 10);
+      totalRatings += i * parseInt(ratings[i], 10);
+      totalResponses += parseInt(ratings[i], 10);
     }
     const averageRating = totalRatings / totalResponses;
     setRating(averageRating);
@@ -84,7 +87,9 @@ const RatingSummary = () => {
     const recommendationRatio = parseInt(recommended.true, 10) / (parseInt(recommended.true, 10)
      + parseInt(recommended.false, 10));
     setRecommendationPercentage(Math.round(recommendationRatio * 100));
-  }, []);
+
+    setLoading(false);
+  }, [metaData]);
 
   const fillAmount = (index) => {
     if (index <= Math.floor(rating)) {
@@ -96,7 +101,7 @@ const RatingSummary = () => {
     return 0;
   };
 
-  return (
+  return loading ? <div>Loading...</div> : (
     <div>
       <h2>{rating.toFixed(1)}</h2>
       {[1, 2, 3, 4, 5].map((index) => (
@@ -107,18 +112,18 @@ const RatingSummary = () => {
           <EmptyStarIcon icon={faStar} />
         </StarContainer>
       ))}
-      <p>{recommendationPercentage}% of reviewers recommend this product.</p>
+      <Paragraph>{recommendationPercentage}% of reviewers recommend this product.</Paragraph>
       <div>
     {[5, 4, 3, 2, 1].map((index) => (
       <div key={index}>
         <Label>{index} star</Label>
         <ProgressBarContainer>
-          <ProgressBarFill percentage={(parseInt(exampleData[index], 10) / totalReviews) * 100} />
+          <ProgressBarFill percentage={(parseInt(metaRating[index], 10) / totalReviews) * 100} />
         </ProgressBarContainer>
-        <Label>{Math.round((parseInt(exampleData[index], 10) / totalReviews) * 100)}%</Label>
+        <Label>{Math.round((parseInt(metaRating[index], 10) / totalReviews) * 100)}%</Label>
       </div>
     ))}
-    <p>Total reviews: {totalReviews}</p>
+    <Paragraph>Total reviews: {totalReviews}</Paragraph>
     </div>
    </div>
   );
