@@ -47,25 +47,10 @@ const ScaleLabel = styled.div`
   margin-top: 5px;
 `;
 
-const ProductBreakdown = () => {
-  const exampleData = {
-    Fit: {
-      id: 135219,
-      value: '3.3014705882352941',
-    },
-    Length: {
-      id: 135220,
-      value: '3.3251072961373391',
-    },
-    Comfort: {
-      id: 135221,
-      value: '3.3782559456398641',
-    },
-    Quality: {
-      id: 135222,
-      value: '3.3322222222222222',
-    },
-  };
+const ProductBreakdown = ({ metaData }) => {
+  const [loading, setLoading] = useState(true);
+  const [breakdownData, setBreakdownData] = useState([]);
+
   const meanings = {
     size: ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'],
     width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -75,13 +60,23 @@ const ProductBreakdown = () => {
     fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'],
   };
 
-  const breakdownData = Object.keys(exampleData).map((key) => ({
-    key,
-    value: parseFloat(exampleData[key].value),
-    scale: meanings[key.toLowerCase()],
-  }));
+  useEffect(() => {
+    if (!metaData.characteristics) {
+      setLoading(true);
+      return;
+    }
+    const metaCharacteristics = metaData.characteristics;
 
-  return (
+    setBreakdownData(Object.keys(metaCharacteristics).map((key) => ({
+      key,
+      value: parseFloat(metaCharacteristics[key].value),
+      scale: meanings[key.toLowerCase()],
+    })));
+
+    setLoading(false);
+  }, [metaData]);
+
+  return loading ? <div>Loading...</div> : (
     <div>
       {breakdownData.map(({ key, value, scale }) => (
         <BreakdownContainer key={key}>

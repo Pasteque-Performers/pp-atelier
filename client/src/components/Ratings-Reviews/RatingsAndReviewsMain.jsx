@@ -27,7 +27,7 @@ const RatingsAndReviewsMain = ({ productId, metaData }) => {
 
   return (
     <ReviewContainer>
-      <ReviewBreakdownMain/>
+      <ReviewBreakdownMain metaData={metaData}/>
       <ReviewListMain metaData={metaData} reviews={reviews} setReviews={setReviews}
        productId={productId}/>
     </ReviewContainer>
