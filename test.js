@@ -2,19 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import '@testing-library/jest-dom/extend-expect';
 import {
-  render, screen, fireEvent,
+  render, screen, fireEvent, waitFor,
 } from '@testing-library/react';
 import RatingSummary from './client/src/components/Ratings-Reviews/ReviewBreakdown/RatingSummary.jsx';
 import ProductBreakdown from './client/src/components/Ratings-Reviews/ReviewBreakdown/ProductBreakdown.jsx';
 import Compare from './client/src/components/RelatedItems/Compare.jsx';
 import ProductList from './client/src/components/RelatedItems/ProductList.jsx';
-<<<<<<< HEAD
-import RelatedItems from './client/src/components/RelatedItems/RelatedItems.jsx';
-import CreateImage from './client/src/components/RelatedItems/CreateImage.jsx';
-import QaSection from './client/src/components/q-a/QaSection.jsx';
-=======
 // import QaSection from './client/src/components/q-a/QaSection.jsx';
->>>>>>> main
 import OverallStarRating from './client/src/components/Ratings-Reviews/AddreviewModal/OverallStarRating.jsx';
 import DisplayName from './client/src/components/Ratings-Reviews/AddreviewModal/DisplayName.jsx';
 import DoYouRecommend from './client/src/components/Ratings-Reviews/AddreviewModal/DoYouRecommend.jsx';
@@ -41,33 +35,6 @@ describe('Related Products Component', () => {
     expect(table).toHaveProperty('tagName', 'TABLE');
   });
 
-<<<<<<< HEAD
-  test('ProductList should have 4 items', () => {
-    const productIDs = [40349, 40345, 40348, 40346];
-    const exampleImage = [
-      {
-        photos: [
-          {
-            thumbnail_url: 'https://images.unsplash.com/photo-1477420143023-6a0e0b04b69a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80',
-            url: 'https://images.unsplash.com/photo-1477420143023-6a0e0b04b69a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80'
-          },
-        ],
-      },
-    ];
-    const exampleImageList = [exampleImage, exampleImage, exampleImage, exampleImage];
-    const exampleProducts = [{
-      id: 40349,
-      name: 'Pumped Up Kicks',
-      category: 'Kicks',
-      default_price: '89.00',
-    }];
-    const exampleProductsList = [exampleProducts, exampleProducts, exampleProducts,
-      exampleProducts];
-    const { getByTestId } = render(<ProductList list={productIDs} imageList={exampleImageList}
-      currentPosition={0} products={exampleProductsList}/>);
-    const relatedItems = getByTestId('slider-container');
-    expect(relatedItems.children.length).toBe(4);
-=======
   test('table includes the correct booleans', () => {
     const features1 = [{ feature: 'wolf', value: 'silver' }, { feature: 'apple', value: 'red' }, { feature: 'car', value: 'tesla' }];
     const features2 = [{ feature: 'wolf', value: 'silver' }, { feature: 'apple', value: 'yellow' }, { feature: 'car', value: 'tesla' }];
@@ -81,7 +48,6 @@ describe('Related Products Component', () => {
     expect(cells[0]).toHaveTextContent('true');
     expect(cells[1]).toHaveTextContent('silver wolf');
     expect(cells[2]).toHaveTextContent('true');
->>>>>>> main
   });
 
   test('CreateImage renders an image', () => {
@@ -273,5 +239,64 @@ describe('ProductCharacteristics', () => {
     const radioButtons = getAllByRole('radio');
     fireEvent.click(radioButtons[0]);
     expect(setCharacteristics).toHaveBeenCalled();
+  });
+});
+
+jest.mock('axios');
+
+const mockData = {
+  data: {
+    id: 1,
+    name: 'Mock Product',
+    styles: [
+      {
+        id: 1,
+        name: 'Mock Style',
+        price: '100',
+      },
+      {
+        id: 2,
+        name: 'Mock Style 2',
+        price: '200',
+      },
+    ],
+  },
+};
+
+describe('Overview Component', () => {
+  beforeEach(() => {
+    axios.get.mockResolvedValue(mockData);
+  });
+
+  it('renders without crashing', async () => {
+    render(<Overview productId={1} />);
+
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
+
+    const title = screen.getByText('Watermelon Wear');
+    expect(title).toBeInTheDocument();
+
+    const productName = screen.getByText('Mock Product');
+    expect(productName).toBeInTheDocument();
+
+    const styles = screen.getAllByRole('button');
+    expect(styles).toHaveLength(2);
+  });
+
+  it('changes selected style when clicked', async () => {
+    render(<Overview productId={1} />);
+
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
+
+    const style1 = screen.getByText('Mock Style');
+    const style2 = screen.getByText('Mock Style 2');
+
+    fireEvent.click(style2);
+    expect(style2.className).toContain('selected');
+    expect(style1.className).not.toContain('selected');
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 });
