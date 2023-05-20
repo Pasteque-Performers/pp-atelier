@@ -6,11 +6,6 @@ body {
   font-family: 'Manrope', sans-serif;
 } */
 
-.slideEnter{
-  transform: translateX(-50%);
-  transition: transform 1s ease-in-out;
-}
-
 .slideExit{
   transform: translateX(50%);
   transition: transform 1s ease-in-out;

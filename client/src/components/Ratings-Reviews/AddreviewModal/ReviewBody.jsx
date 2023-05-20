@@ -27,7 +27,7 @@ const ReviewTextArea = styled.textarea`
 const CharacterCount = styled.div`
   margin-top: 5px;
   font-size: 14px;
-  color: ${(props) => (props.count >= 0 ? '#333' : '#f00')};
+  color: ${(props) => (props.count >= 0 ? '#333' : '#eb3b5a')};
 `;
 
 const ReviewBody = ({ formData, handleChange }) => {

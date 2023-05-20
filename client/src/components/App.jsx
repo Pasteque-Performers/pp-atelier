@@ -9,7 +9,7 @@ const App = () => {
   const [productId, setProductId] = useState(40344);
   const [metaData, setMetaData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [queue, setQueue] = useState([]);
+  const [queue, setQueue] = useState([40344]);
 
   useEffect(() => {
     setQueue([productId]);
