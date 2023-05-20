@@ -158,14 +158,14 @@ const Question = ({
         <div><BoldTitle>Q: </BoldTitle>{question.question_body}</div>
         <QuestionAndReportBtns>
             <div>Was this quesiton helpful? {!localStorage[question.question_id]
-              ? <HelpfulButton onClick={updateQuestionHelpfulness}>
+              ? <HelpfulButton onClick={updateQuestionHelpfulness} aria-label="Mark Question as Helpful Button">
               Yes({question.question_helpfulness})</HelpfulButton>
               : <span>Yes({question.question_helpfulness})</span>}
             </div>
-            <QuestionButton onClick={reportQuestion}>Report Question</QuestionButton>
+            <QuestionButton onClick={reportQuestion} aria-label="Report Question Button">Report Question</QuestionButton>
         </QuestionAndReportBtns>
       </QuestionButtonContainer>
-      <QuestionButton onClick={() => setDisplayModal(true)}>Add an Answer</QuestionButton>
+      <QuestionButton onClick={() => setDisplayModal(true)} aria-label="Add an answer Button">Add an Answer</QuestionButton>
       <ul>
           {question.answersList.length ? showAnswers.map((answer, i) => (
             <AnswerElement key={i}>
@@ -181,10 +181,10 @@ const Question = ({
           )) : <li>No answers yet</li>}
         </ul>
         {showAnswers.length < answers.length && !loadedAnswers && (
-        <QuestionButton onClick={loadMoreAnswers} style={{ marginTop: '5px' }}>Load More Answers</QuestionButton>
+        <QuestionButton onClick={loadMoreAnswers} style={{ marginTop: '5px' }} aria-label="Load More Answers Button">Load More Answers</QuestionButton>
         )}
         {loadedAnswers && (
-          <QuestionButton onClick={collaposeAnswersList}>Collapse Answers List</QuestionButton>
+          <QuestionButton onClick={collaposeAnswersList} aria-label="Collapse Answers List Button">Collapse Answers List</QuestionButton>
         )}
     </div>
   );
