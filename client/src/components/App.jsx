@@ -9,7 +9,7 @@ const App = () => {
   const [productId, setProductId] = useState(40344);
   const [metaData, setMetaData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [queue, setQueue] = useState([]);
+  const [queue, setQueue] = useState([40344]);
 
   useEffect(() => {
     setQueue([productId]);
@@ -20,7 +20,7 @@ const App = () => {
     const first = queue[0];
     if (!loading && queue.length > 0) {
       setLoading(true);
-      axios.get('classes/reviews/meta', { params: { first } })
+      axios.get('classes/reviews/meta', { params: { productId } })
         .then((response) => {
           console.log('successfully got meta data', response.data);
           setMetaData(response.data);
