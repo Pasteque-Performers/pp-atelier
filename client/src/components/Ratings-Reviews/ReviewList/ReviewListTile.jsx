@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const TileContainer = styled.div`
@@ -37,15 +36,16 @@ const Date = styled.p`
 `;
 
 const MoreButton = styled.button`
-  background-color: #0b7bc1;
-  color: white;
+  padding: 10px 20px;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
+  background-color: transparent;
+  color: black;
   font-family: 'Manrope', sans-serif;
-  margin-top: 10px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  &:hover {
+    color: #eb3b5a;
+  }
 `;
 
 const ReviewImage = styled.img`
@@ -62,6 +62,14 @@ const ReviewHeader = styled.div`
   align-items: center;
 `;
 
+const StarIcon = styled.i`
+  font-size: 20px;
+  color: ${({ filled }) => (filled ? '#ffd700' : 'lightgray')};
+  cursor: pointer;
+  font-variation-settings: ${({ filled }) => (filled ? "'FILL' 1" : "'FILL' 0")};
+  margin-right: 5px;
+`;
+
 const ReviewListTile = ({ review }) => {
   const [showFullBody, setShowFullBody] = useState(false);
 
@@ -72,6 +80,17 @@ const ReviewListTile = ({ review }) => {
   return (
     <TileContainer>
       <ReviewHeader>
+      <div>
+      {[1, 2, 3, 4, 5].map((index) => (
+        <StarIcon
+          key={index}
+          filled={index <= review.rating}
+          className={`material-symbols-outlined ${index <= review.rating ? 'filled' : ''}`}
+        >
+          star
+        </StarIcon>
+      ))}
+    </div>
         <Title>{review.summary}</Title>
         <div>
           <ReviewerName>{review.reviewer_name}</ReviewerName>
@@ -82,12 +101,12 @@ const ReviewListTile = ({ review }) => {
         {showFullBody ? review.body : review.body.slice(0, 250)}
       </ReviewText>
       {review.body.length > 250 && (
-        <MoreButton onClick={toggleShowFullBody}>
+        <MoreButton onClick={toggleShowFullBody} aria-label='view more text'>
           {showFullBody ? 'Show less' : 'Show more'}
         </MoreButton>
       )}
       {review.photos.map((photo, index) => (
-        <ReviewImage key={index} src={photo.url} alt="" />
+        <ReviewImage key={index} src={photo.url} alt="review images" />
       ))}
     </TileContainer>
   );

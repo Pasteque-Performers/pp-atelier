@@ -47,30 +47,7 @@ const SelectedCharacteristic = styled.div`
   padding: 10px;
 `;
 
-const RadioButton = styled.input.attrs({ type: 'radio' })`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  width: 16px;
-  height: 16px;
-
-  border: 1px solid #eb3b5a;
-  border-radius: 50%;
-
-  &:before {
-    content: '';
-    display: block;
-    width: 8px;
-    height: 8px;
-    margin: 3px auto;
-    border-radius: 50%;
-  }
-
-  &:checked:before {
-    background: #eb3b5a;
-  }
-`;
+const RadioButton = styled.input.attrs({ type: 'radio' })``;
 
 const ProductCharacteristics = ({ characteristics, setCharacteristics, characteristicsData }) => {
   const meanings = {
