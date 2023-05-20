@@ -62,10 +62,10 @@ const Answer = ({
       alt="Answer Img" />) : null }
       <div>By: {answer.answerer_name === 'Seller' ? <strong>{answer.answerer_name}</strong> : answer.answerer_name}, {formattedDate}</div>
       <div>Helpful? {!localStorage[answer.answer_id]
-        ? <HelpfulButton onClick={setAnswerHelpfulness}>Yes({answer.helpfulness})</HelpfulButton>
+        ? <HelpfulButton onClick={setAnswerHelpfulness} aria-label="Mark Answer as Helpful Button">Yes({answer.helpfulness})</HelpfulButton>
         : <span>Yes({answer.helpfulness})</span>}
       </div>
-      <QuestionButton onClick={reportAnswer}>Report Answer</QuestionButton>
+      <QuestionButton onClick={reportAnswer} aria-label="Report Answer Button">Report Answer</QuestionButton>
     </div>
   );
 };

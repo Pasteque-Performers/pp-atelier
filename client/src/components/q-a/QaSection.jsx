@@ -12,7 +12,7 @@ const theme = {
   },
 };
 
-const QaHeader = styled.h1`
+const QaHeader = styled.h2`
   font-family: ${(props) => props.theme.fontFamily};
   font-weight: ${(props) => props.theme.fontWeight.extraBold};
   font-size: 35px;

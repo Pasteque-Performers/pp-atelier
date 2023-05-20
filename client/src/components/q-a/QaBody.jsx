@@ -147,9 +147,9 @@ const QaBody = ({ productId, ScrollableList }) => {
       productId={productId} setDisplayModal={setDisplayModal}/>}
       <SearchTitle>Search</SearchTitle>
       <SearchBar type="text" placeholder="Search for a question" onChange={(e) => searchQuestions(e.target.value)}/>
-      <BodyButton onClick={() => setDisplayModal(true)}>Ask a Question</BodyButton>
+      <BodyButton onClick={() => setDisplayModal(true)} aria-label="Ask a Question Button">Ask a Question</BodyButton>
       {loadedQuestions && (<BodyButton
-      onClick={collapseQuestionsList}>Collapse Questions</BodyButton>)}
+      onClick={collapseQuestionsList} aria-label="Collapse Questions List Button">Collapse Questions</BodyButton>)}
       <ScrollableList style={{ listStyle: 'none', padding: 0 }}>
         {questions.length ? showQuestions.map((question, i) => (
           <QuestionElement key={i}>
@@ -166,7 +166,7 @@ const QaBody = ({ productId, ScrollableList }) => {
       </ScrollableList>
       {showQuestions.length < questions.length && searching === false && loadedQuestions === false
       && (
-      <BodyButton onClick={loadMoreQuestions}>Load More Questions</BodyButton>
+      <BodyButton onClick={loadMoreQuestions} aria-label="Load More Questions Button">Load More Questions</BodyButton>
       )}
     </BodyContainer>
   );

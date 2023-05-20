@@ -4,7 +4,7 @@
   "description": "FEC",
   "main": "server/index.js",
   "scripts": {
-    "start": "npm run server-dev & npm run react-dev",
+    "start": "npm run react-dev & npm run server-dev",
     "test": "jest",
     "build": "webpack",
     "server-dev": "nodemon server/index.js",
