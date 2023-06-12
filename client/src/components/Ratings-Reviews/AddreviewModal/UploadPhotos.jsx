@@ -64,12 +64,12 @@ const UploadPhotos = ({ formData, handleChange }) => {
       <ImagePreviewContainer>
         {formData.photos.map((photo, index) => (
           <ImagePreview key={index}>
-            <Image src={photo} />
+            <Image src={photo} alt='user added review image'/>
             <ImageName>{`Image ${index + 1}`}</ImageName>
           </ImagePreview>
         ))}
       </ImagePreviewContainer>
-      <Upload onClick={handleShowModal}>Upload Photos</Upload>
+      <Upload onClick={handleShowModal} aria-label='upload a photo' >Upload Photos</Upload>
       {showModal && <ImageUploadModal onHideModal={handleHideModal} />}
     </div>
   );

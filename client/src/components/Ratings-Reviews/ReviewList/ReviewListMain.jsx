@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import ReviewListTile from './ReviewListTile.jsx';
 import AddReviewModalMain from '../AddreviewModal/AddReviewModalMain.jsx';
 import styled from 'styled-components';
 
 const ReviewListContainer = styled.div`
   max-height: 500px;
-  overflowY: 'auto';
+  overflow-y: auto;
   padding: 20px;
 `;
 
@@ -56,17 +55,19 @@ const ReviewListMain = ({ reviews, metaData, productId }) => {
   }, [reviews]);
 
   return (
+    <div>
+    <Title>Customer Reviews</Title>
     <ReviewListContainer>
-      <Title>Customer Reviews</Title>
       {displayedReviews.map((review) => <ReviewListTile review={review} key={review.review_id} />)}
       <ButtonContainer>
         {reviews.length > displayedReviews.length
-          && <ReviewButton onClick={loadMoreReviews}>More Reviews</ReviewButton>}
-        <ReviewButton onClick={handleButtonClick}>Add a review</ReviewButton>
+          && <ReviewButton onClick={loadMoreReviews} aria-label='add a review' >More Reviews </ReviewButton>}
+        <ReviewButton onClick={handleButtonClick} aria-label='add a review'>Add a review</ReviewButton>
       </ButtonContainer>
       {showModal && <AddReviewModalMain metaData={metaData} productId={productId}
       setShowModal={setShowModal}/>}
     </ReviewListContainer>
+    </div>
   );
 };
 

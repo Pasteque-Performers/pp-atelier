@@ -6,12 +6,12 @@ margin-bottom: 1rem;
 padding: 10px;
 `;
 
-const Input = styled.textarea`
+const Input = styled.input`
 width: 60%;
 height: 15px;
 padding: 6px;
-font-size: 12px;
 font-family: 'Manrope', sans-serif;
+font-size: 12px;
 border: 1px solid #ccc;
 border-radius: 4px;
 resize: none;
